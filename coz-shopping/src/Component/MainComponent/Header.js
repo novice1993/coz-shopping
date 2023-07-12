@@ -5,6 +5,7 @@ import Menu from "./Menu";
 
 const Container = styled.nav`
  height: 100%;
+
  display: flex;
  flex-direction: row;
  justify-content: space-between;
@@ -36,7 +37,7 @@ const Name = styled.span`
 `
 
 const MenuContainer = styled.div`
-    position: relative;
+    z-index: 90;
     margin-right: 50px;
     margin-bottom: 5px;
 `

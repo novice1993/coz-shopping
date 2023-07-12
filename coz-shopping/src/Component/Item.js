@@ -13,6 +13,7 @@ const ImgContainer = styled.div`
 `
 
 const Img = styled.img`
+    z-index: 0;
     width: 264px;
     height: 210px;
     border-radius: 12px;
@@ -25,8 +26,6 @@ const BookmarkButton = styled.div`
     position: absolute;
     transform: translate(227px, -48px);
     color: ${(props) => (props.bookmark) ? '#FFD361;' : '#DFDFDF;'};
-    /* color: #FFD361; */
-    /* #DFDFDF; */
     font-size: 1.5rem;
     cursor: pointer;
 `

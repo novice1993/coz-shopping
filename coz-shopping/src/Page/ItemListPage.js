@@ -1,5 +1,6 @@
 import { styled } from "styled-components";
 import Header from "../Component/MainComponent/Header";
+import Footer from "../Component/MainComponent/Footer";
 
 const Container = styled.div`
     width: 100vw;
@@ -15,8 +16,12 @@ const HeaderBox = styled.header`
     border-bottom: 1px solid black;
 `
 
+const FooterBox = styled.header`
+    flex: 1 0 0;
+`
+
 const Main = styled.main`
-    flex: 9 0 0;
+    flex: 8 0 0;
 `
 
 function ItemListPage () {
@@ -26,6 +31,9 @@ function ItemListPage () {
                 <Header />
             </HeaderBox>
             <Main>ItemListPage</Main>
+            <FooterBox>
+                <Footer />
+            </FooterBox>
         </Container>
     )
 }

@@ -11,7 +11,7 @@ const Container = styled.nav`
  align-items: center;
 `
 
-const LogoName_Container = styled.div`
+const LogoNameContainer = styled.div`
 
     margin-left: 50px;
 
@@ -55,12 +55,12 @@ function Header () {
 
     return (
         <Container>
-            <LogoName_Container>
+            <LogoNameContainer>
                 <Link to='/' className="Link">
                     <Logo src="../../../public/img/logo.jpg"/>
                     <Name>COZ Shopping</Name>
                 </Link>
-            </LogoName_Container>
+            </LogoNameContainer>
             <MenuContainer>
                 <MenuButton onClick={() => setMenu(!menu)}>&#9776;</MenuButton>
                 {(menu) && <Menu />}

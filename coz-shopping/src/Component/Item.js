@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 import { useState } from "react";
 
 // 전체 type 공통 적용
-const Content_Container = styled.div`
+const ContentContainer = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -21,7 +21,7 @@ const Img = styled.img`
     margin-bottom: 5px;
 `
 
-const Bookmark_Button = styled.div`
+const BookmarkButton = styled.div`
     position: absolute;
     transform: translate(227px, -48px);
     color: ${(props) => (props.bookmark) ? '#FFD361;' : '#DFDFDF;'};
@@ -48,7 +48,7 @@ const SubTitle = styled.div`
 `
 
 // Brand type
-const Interested_Customer = styled.div`
+const InterestedCustomer = styled.div`
     font-weight: bolder;
 `
 
@@ -60,7 +60,7 @@ function Item ({ item }) {
 
     const [bookmark, setBookmark] = useState(false); // 아이템 북마크 여부
 
-    const bookmark_ButtonClick = (item) => { 
+    const bookmarkButtonClick = (item) => { 
         if(item.bookmark === undefined){
             setBookmark(true)
             item.bookmark = bookmark;
@@ -76,12 +76,12 @@ function Item ({ item }) {
             <div>
                 <ImgContainer>
                     <Img src={item.image_url}/>
-                    <Bookmark_Button onClick={() => bookmark_ButtonClick(item)} bookmark={bookmark}>&#9733;</Bookmark_Button>
+                    <BookmarkButton onClick={() => bookmarkButtonClick(item)} bookmark={bookmark}>&#9733;</BookmarkButton>
                 </ImgContainer>
-                <Content_Container>
+                <ContentContainer>
                     <Title>{item.title}</Title>
                     <DiscountPer>{(item.discountPercentage !== null) && `${item.discountPercentage}%`}</DiscountPer>
-                </Content_Container>
+                </ContentContainer>
                 <Price>{parseInt(item.price).toLocaleString()}원</Price>
             </div>
         )}
@@ -90,7 +90,7 @@ function Item ({ item }) {
             <div>
                 <ImgContainer>
                     <Img src={item.image_url}/>
-                    <Bookmark_Button onClick={() => bookmark_ButtonClick(item)} bookmark={bookmark}>&#9733;</Bookmark_Button>
+                    <BookmarkButton onClick={() => bookmarkButtonClick(item)} bookmark={bookmark}>&#9733;</BookmarkButton>
                 </ImgContainer>
                 <Title># {item.title}</Title>
             </div>
@@ -100,7 +100,7 @@ function Item ({ item }) {
             <div>
                 <ImgContainer>
                     <Img src={item.image_url}/>
-                    <Bookmark_Button onClick={() => bookmark_ButtonClick(item)} bookmark={bookmark}>&#9733;</Bookmark_Button>
+                    <BookmarkButton onClick={() => bookmarkButtonClick(item)} bookmark={bookmark}>&#9733;</BookmarkButton>
                 </ImgContainer>
                 <Title>{item.title}</Title>
                 <SubTitle>{item.sub_title}</SubTitle>
@@ -111,12 +111,12 @@ function Item ({ item }) {
             <div>
                 <ImgContainer>
                     <Img src={item.brand_image_url}/>
-                    <Bookmark_Button onClick={() => bookmark_ButtonClick(item)} bookmark={bookmark}>&#9733;</Bookmark_Button>
+                    <BookmarkButton onClick={() => bookmarkButtonClick(item)} bookmark={bookmark}>&#9733;</BookmarkButton>
                 </ImgContainer>
-                <Content_Container>
+                <ContentContainer>
                     <Title>{item.brand_name}</Title>
-                    <Interested_Customer>관심고객수</Interested_Customer>
-                </Content_Container>
+                    <InterestedCustomer>관심고객수</InterestedCustomer>
+                </ContentContainer>
                 <Followers>{parseInt(item.follower).toLocaleString()}</Followers>
             </div>
         )}

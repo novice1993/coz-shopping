@@ -14,9 +14,10 @@ const Container = styled.div`
   flex: 1 0 0;
 `
 
-function MainPage () {
+function MainPage ({ bookmark_List, setBookmark_List }) {
 
-  const [Items, SetItems] = useState([]); // 서버에서 받아온 상품 리스트
+  const [items, setItems] = useState([]); // 서버에서 받아온 상품 리스트
+
 
   useEffect(() => {
 
@@ -26,7 +27,7 @@ function MainPage () {
         const data = await res.json();
 
         console.log(data);
-        SetItems(data);
+        setItems(data);
       } catch (error) {
         console.log('Response error', error);
       }
@@ -36,14 +37,15 @@ function MainPage () {
 
   }, [])
 
+
     return (
       <>
       <header>
         <Header />
       </header>
       <Main>
-        <Container> <ItemList Items={Items}/> </Container>
-        <Container> <BookmarkList/> </Container>
+        <Container> <ItemList items={items}  bookmark_List={bookmark_List} setBookmark_List={setBookmark_List}/> </Container>
+        <Container> <BookmarkList bookmark_List={bookmark_List} setBookmark_List={setBookmark_List}/> </Container>
       </Main>
       <footer>
         <Footer />

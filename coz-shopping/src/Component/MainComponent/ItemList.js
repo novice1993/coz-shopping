@@ -23,16 +23,18 @@ const ItemBox = styled.div`
     flex-direction: row;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 80px;
+    gap: 95px;
+
+    margin-top: 10px;
 `
 
-function ItemList ({ Items }) {
+function ItemList ({ items, bookmark_List, setBookmark_List }) {
     return (
         <Container>
             <Title>상품 리스트</Title>
             <ItemBox>
-                {Items.map((item) => {
-                    return <Item key={item.id} item={item} />
+                {items.map((item) => {
+                    return <Item key={item.id} item={item} bookmark_List={bookmark_List} setBookmark_List={setBookmark_List}/>
                 })}
             </ItemBox>
         </Container>

@@ -1,5 +1,6 @@
 import { styled } from "styled-components";
 import { useState, useEffect } from "react";
+import { useFetcher } from "react-router-dom";
 
 // 전체 type 공통 적용
 const ContentContainer = styled.div`
@@ -55,78 +56,81 @@ const Followers = styled.div`
     text-align: right;
 `
 
-function Item ({ item, bookmark_List, setBookmark_List }) {
+function BookmakrItem ({ bookmarkItem, bookmark_List, setBookmark_List }) {
 
-    const [bookmark, setBookmark] = useState(false); // 아이템 북마크 여부
+    const [bookmark, setBookmark] = useState(true); // 아이템 북마크 여부
 
     const bookmarkButtonClick = () => { 
         setBookmark(!bookmark);
     }
 
     useEffect(() => {
-        (bookmark) ? setBookmark_List([...bookmark_List, item])
-        : (setBookmark_List(bookmark_List.filter((bookmarkItem) => {return bookmarkItem.id !== item.id})))
+        if(!bookmark){
+            setBookmark_List(bookmark_List.filter((item) => {
+                return item.id !== bookmarkItem.id
+            }))
+        }
+
     }, [bookmark])
 
-    useEffect(() => { // 북마크 리스트에서 북마크 해제 -> 상품 리스트 버튼에서도 해제
-        (bookmark_List.find((bookmakrItem) => bookmakrItem.id === item.id) === undefined) && setBookmark(false)
-        
-        const bookmarData = JSON.stringify(bookmark_List) // 로컬 스토리지에 저장
-        localStorage.setItem('bookmark', bookmarData);
+    useEffect(() => {
+        const bookmarkData = JSON.stringify(bookmark_List) // 로컬 스토리지에 저장
+        localStorage.setItem('bookmark', bookmarkData);
+
     }, [bookmark_List])
 
     return (
         <>
-        {(item.type === 'Product') && ( // product type
+        {(bookmarkItem.type === 'Product') && ( // product type
             <div>
                 <ImgContainer>
-                    <Img src={item.image_url}/>
+                    <Img src={bookmarkItem.image_url}/>
                     <BookmarkButton onClick={() => bookmarkButtonClick()} bookmark={bookmark}>&#9733;</BookmarkButton>
                 </ImgContainer>
                 <ContentContainer>
-                    <Title>{item.title}</Title>
-                    <DiscountPer>{(item.discountPercentage !== null) && `${item.discountPercentage}%`}</DiscountPer>
+                    <Title>{bookmarkItem.title}</Title>
+                    <DiscountPer>{(bookmarkItem.discountPercentage !== null) && `${bookmarkItem.discountPercentage}%`}</DiscountPer>
                 </ContentContainer>
-                <Price>{parseInt(item.price).toLocaleString()}원</Price>
+                <Price>{parseInt(bookmarkItem.price).toLocaleString()}원</Price>
             </div>
         )}
 
-        {(item.type === 'Category') && ( // Category type
+        {(bookmarkItem.type === 'Category') && ( // Category type
             <div>
                 <ImgContainer>
-                    <Img src={item.image_url}/>
-                    <BookmarkButton onClick={() => bookmarkButtonClick(item)} bookmark={bookmark}>&#9733;</BookmarkButton>
+                    <Img src={bookmarkItem.image_url}/>
+                    <BookmarkButton onClick={() => bookmarkButtonClick()} bookmark={bookmark}>&#9733;</BookmarkButton>
                 </ImgContainer>
-                <Title># {item.title}</Title>
+                <Title># {bookmarkItem.title}</Title>
             </div>
         )}
         
-        {(item.type === 'Exhibition') && ( // Exhibition type
+        {(bookmarkItem.type === 'Exhibition') && ( // Exhibition type
             <div>
                 <ImgContainer>
-                    <Img src={item.image_url}/>
-                    <BookmarkButton onClick={() => bookmarkButtonClick(item)} bookmark={bookmark}>&#9733;</BookmarkButton>
+                    <Img src={bookmarkItem.image_url}/>
+                    <BookmarkButton onClick={() => bookmarkButtonClick()} bookmark={bookmark}>&#9733;</BookmarkButton>
                 </ImgContainer>
-                <Title>{item.title}</Title>
-                <SubTitle>{item.sub_title}</SubTitle>
+                <Title>{bookmarkItem.title}</Title>
+                <SubTitle>{bookmarkItem.sub_title}</SubTitle>
             </div>
         )}
         
-        {(item.type === 'Brand') && ( // Brand type
+        {(bookmarkItem.type === 'Brand') && ( // Brand type
             <div>
                 <ImgContainer>
-                    <Img src={item.brand_image_url}/>
-                    <BookmarkButton onClick={() => bookmarkButtonClick(item)} bookmark={bookmark}>&#9733;</BookmarkButton>
+                    <Img src={bookmarkItem.brand_image_url}/>
+                    <BookmarkButton onClick={() => bookmarkButtonClick()} bookmark={bookmark}>&#9733;</BookmarkButton>
                 </ImgContainer>
                 <ContentContainer>
-                    <Title>{item.brand_name}</Title>
+                    <Title>{bookmarkItem.brand_name}</Title>
                     <InterestedCustomer>관심고객수</InterestedCustomer>
                 </ContentContainer>
-                <Followers>{parseInt(item.follower).toLocaleString()}</Followers>
+                <Followers>{parseInt(bookmarkItem.follower).toLocaleString()}</Followers>
             </div>
         )}
         </>
     )
 }
 
-export default Item;
+export default BookmakrItem;

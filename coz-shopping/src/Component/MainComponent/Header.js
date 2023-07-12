@@ -41,7 +41,7 @@ const MenuContainer = styled.div`
     margin-bottom: 5px;
 `
 
-const MenuButton = styled.div`
+const MenuButton = styled.span`
     font-size: 2.5rem;
 
     &:hover {
@@ -57,7 +57,7 @@ function Header () {
         <Container>
             <LogoName_Container>
                 <Link to='/' className="Link">
-                    <Logo src="./logo.jpg"/>
+                    <Logo src="../../../public/img/logo.jpg"/>
                     <Name>COZ Shopping</Name>
                 </Link>
             </LogoName_Container>

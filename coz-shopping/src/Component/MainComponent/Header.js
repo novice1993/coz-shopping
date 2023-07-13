@@ -2,16 +2,18 @@ import { useState } from "react";
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
 import Menu from "./Menu";
+import LogoImg from '../../img/logo.jpg'
 
 const Container = styled.nav`
  height: 100%;
+
  display: flex;
  flex-direction: row;
  justify-content: space-between;
  align-items: center;
 `
 
-const LogoName_Container = styled.div`
+const LogoNameContainer = styled.div`
 
     margin-left: 50px;
 
@@ -31,18 +33,18 @@ const Logo = styled.img`
 
 const Name = styled.span`
     padding-left: 10px;
-    font-size: 1.5rem;
-    font-weight: bolder;
+    font-size: 2.4rem;
+    font-weight: bold;
 `
 
 const MenuContainer = styled.div`
-    position: relative;
+    z-index: 90;
     margin-right: 50px;
-    margin-bottom: 5px;
+    /* margin-bottom: 5px; */
 `
 
 const MenuButton = styled.span`
-    font-size: 2.5rem;
+    font-size: 3.5rem;
 
     &:hover {
     cursor: pointer;
@@ -55,12 +57,12 @@ function Header () {
 
     return (
         <Container>
-            <LogoName_Container>
+            <LogoNameContainer>
                 <Link to='/' className="Link">
-                    <Logo src="../../../public/img/logo.jpg"/>
+                    <Logo src={LogoImg}/>
                     <Name>COZ Shopping</Name>
                 </Link>
-            </LogoName_Container>
+            </LogoNameContainer>
             <MenuContainer>
                 <MenuButton onClick={() => setMenu(!menu)}>&#9776;</MenuButton>
                 {(menu) && <Menu />}

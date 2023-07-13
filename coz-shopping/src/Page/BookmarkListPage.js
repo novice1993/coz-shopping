@@ -51,7 +51,6 @@ function BookmarkListPage ({ bookmark_List, setBookmark_List }) {
 
     useEffect(() => {
         setBookmarkPage(all_bookmark)
-        console.log(all_bookmark);
     }, [])
 
     
@@ -61,7 +60,7 @@ function BookmarkListPage ({ bookmark_List, setBookmark_List }) {
                 <Header />
             </HeaderBox>
             <Main>
-            <ItemFilter setItems={setBookmarkPage} all_Items={JSON.parse(localStorage.getItem('bookmark'))} />
+            <ItemFilter bookmarkPage_Items={bookmarkPage_Items} setItems={setBookmarkPage} all_Items={all_bookmark} />
                 <ItemBox>
                     {bookmarkPage_Items.map((item) => {
                         return (<BookmarkItem 

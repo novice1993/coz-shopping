@@ -2,6 +2,7 @@ import { useState } from "react";
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
 import Menu from "./Menu";
+import LogoImg from '../../img/logo.jpg'
 
 const Container = styled.nav`
  height: 100%;
@@ -32,18 +33,18 @@ const Logo = styled.img`
 
 const Name = styled.span`
     padding-left: 10px;
-    font-size: 1.5rem;
-    font-weight: bolder;
+    font-size: 2.4rem;
+    font-weight: bold;
 `
 
 const MenuContainer = styled.div`
     z-index: 90;
     margin-right: 50px;
-    margin-bottom: 5px;
+    /* margin-bottom: 5px; */
 `
 
 const MenuButton = styled.span`
-    font-size: 2.5rem;
+    font-size: 3.5rem;
 
     &:hover {
     cursor: pointer;
@@ -58,7 +59,7 @@ function Header () {
         <Container>
             <LogoNameContainer>
                 <Link to='/' className="Link">
-                    <Logo src="../../../public/img/logo.jpg"/>
+                    <Logo src={LogoImg}/>
                     <Name>COZ Shopping</Name>
                 </Link>
             </LogoNameContainer>

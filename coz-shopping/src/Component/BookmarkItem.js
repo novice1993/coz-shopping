@@ -2,6 +2,7 @@ import { styled } from "styled-components";
 import { useState, useEffect } from "react";
 import Modal from "./Modal";
 
+
 // 전체 type 공통 적용
 const ContentContainer = styled.div`
     display: flex;
@@ -77,16 +78,13 @@ function BookmarkItem ({ bookmarkItem, bookmark_List, setBookmark_List, bookmark
                 return item.id !== bookmarkItem.id
             }))
 
-            if((bookmarkPage_Items !== undefined && setBookmarkPage !== undefined)){ // 북마크 리스트 페이지에서 화면에 표시되는 데이터 갱신
+            if(bookmarkPage_Items !== undefined ){ // 북마크 리스트 페이지에서 화면에 표시되는 데이터 갱신
                 setBookmarkPage(bookmarkPage_Items.filter((item) => {
                     return item.id !== bookmarkItem.id
                 }))
             }
         }
-
-        
-
-    }, [bookmark])
+    }, [bookmark]) // 북마크에 변화 (버튼 클릭) -> 화면 렌더링에 관여하는 데이터를 갱신 (해당 화면에서는 갱신 ok)
 
     useEffect(() => {
         const bookmarkData = JSON.stringify(bookmark_List) // 로컬 스토리지에 저장
@@ -99,12 +97,10 @@ function BookmarkItem ({ bookmarkItem, bookmark_List, setBookmark_List, bookmark
         {(modal) && <Modal item={bookmarkItem} setModal={setModal} bookmark={bookmark} setBookmark={setBookmark}/>}
         {(bookmarkItem.type === 'Product') && ( // product type
             <div onClick={modalButtonClick}>
-                <ImgContainer>
-                    <Img src={bookmarkItem.image_url}/>
-                    <BookmarkButton onClick={(event) => {
-                        event.stopPropagation();
-                        bookmarkButtonClick()}} bookmark={bookmark}>&#9733;</BookmarkButton>
-                </ImgContainer>
+                <Img src={bookmarkItem.image_url}/>
+                <BookmarkButton onClick={(event) => {
+                    event.stopPropagation();
+                    bookmarkButtonClick()}} bookmark={bookmark}>&#9733;</BookmarkButton>
                 <ContentContainer>
                     <Title>{bookmarkItem.title}</Title>
                     <DiscountPer>{(bookmarkItem.discountPercentage !== null) && `${bookmarkItem.discountPercentage}%`}</DiscountPer>
@@ -115,24 +111,20 @@ function BookmarkItem ({ bookmarkItem, bookmark_List, setBookmark_List, bookmark
 
         {(bookmarkItem.type === 'Category') && ( // Category type
             <div onClick={modalButtonClick}>
-                <ImgContainer>
-                    <Img src={bookmarkItem.image_url}/>
-                    <BookmarkButton onClick={(event) => {
-                        event.stopPropagation();
-                        bookmarkButtonClick()}} bookmark={bookmark}>&#9733;</BookmarkButton>
-                </ImgContainer>
+                <Img src={bookmarkItem.image_url}/>
+                <BookmarkButton onClick={(event) => {
+                    event.stopPropagation();
+                    bookmarkButtonClick()}} bookmark={bookmark}>&#9733;</BookmarkButton>
                 <Title># {bookmarkItem.title}</Title>
             </div>
         )}
         
         {(bookmarkItem.type === 'Exhibition') && ( // Exhibition type
             <div onClick={modalButtonClick}>
-                <ImgContainer>
-                    <Img src={bookmarkItem.image_url}/>
-                    <BookmarkButton onClick={(event) => {
-                        event.stopPropagation();
-                        bookmarkButtonClick()}} bookmark={bookmark}>&#9733;</BookmarkButton>
-                </ImgContainer>
+                <Img src={bookmarkItem.image_url}/>
+                <BookmarkButton onClick={(event) => {
+                    event.stopPropagation();
+                    bookmarkButtonClick()}} bookmark={bookmark}>&#9733;</BookmarkButton>
                 <Title>{bookmarkItem.title}</Title>
                 <SubTitle>{bookmarkItem.sub_title}</SubTitle>
             </div>
@@ -140,12 +132,10 @@ function BookmarkItem ({ bookmarkItem, bookmark_List, setBookmark_List, bookmark
         
         {(bookmarkItem.type === 'Brand') && ( // Brand type
             <div onClick={modalButtonClick}>
-                <ImgContainer>
-                    <Img src={bookmarkItem.brand_image_url}/>
-                    <BookmarkButton onClick={(event) => {
-                        event.stopPropagation();
-                        bookmarkButtonClick()}} bookmark={bookmark}>&#9733;</BookmarkButton>
-                </ImgContainer>
+                <Img src={bookmarkItem.brand_image_url}/>
+                <BookmarkButton onClick={(event) => {
+                    event.stopPropagation();
+                    bookmarkButtonClick()}} bookmark={bookmark}>&#9733;</BookmarkButton>
                 <ContentContainer>
                     <Title>{bookmarkItem.brand_name}</Title>
                     <InterestedCustomer>관심고객수</InterestedCustomer>

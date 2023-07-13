@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
 import { styled } from "styled-components";
+import allImg from '../img/all.jpg';
+import productImg from '../img/product.jpg';
+import categoryImg from '../img/category.png';
+import exhibitionImg from '../img/exhibition.png';
+import brandImg from '../img/brand.png';
 
 const Container = styled.div`
     display: flex;
@@ -28,42 +33,48 @@ const Text = styled.div`
     text-align: center;
 `
 
-function ItemFilter ({ setItems, all_Items }) {
+function ItemFilter ({ setItems, all_Items, bookmarkPage_Items }) {
 
     const [filter, setFilter] = useState(''); // 필터링 조건
 
     useEffect(() => {
 
-        (filter === 'all') ? setItems(all_Items)
-        : setItems(all_Items.filter((item) => item.type === filter))
-
+        // 1. 상품 리스트에서 필터링 할 때
+        if(bookmarkPage_Items === undefined){
+            (filter === 'all') ? setItems(all_Items)
+            : setItems(all_Items.filter((item) => item.type === filter))
+        // 2. 북마크 리스트에서 필터링 할 때
+        } else {
+            (filter === 'all') ? setItems(all_Items)
+            : setItems(bookmarkPage_Items.filter((item) => item.type === filter))
+        }
     }, [filter])
 
 
     return (
         <Container>
             <ButtonContainer onClick={() => {setFilter('all')}}>
-                <Img src="https://m.munguland.com/web/product/big/201810/c52ab7e6724aca49540a62832cf76b3d.jpg"/>
+                <Img src={allImg}/>
                 <Text>전체</Text>
             </ButtonContainer>
 
             <ButtonContainer onClick={() => setFilter('Product')}>
-                <Img src="https://m.munguland.com/web/product/big/201810/c52ab7e6724aca49540a62832cf76b3d.jpg"/>
+                <Img src={productImg}/>
                 <Text>상품</Text>
             </ButtonContainer>
 
             <ButtonContainer onClick={() => setFilter('Category')}>
-                <Img src="https://m.munguland.com/web/product/big/201810/c52ab7e6724aca49540a62832cf76b3d.jpg"/>
+                <Img src={categoryImg}/>
                 <Text>카테고리</Text>
             </ButtonContainer>
 
             <ButtonContainer onClick={() => setFilter('Exhibition')}>
-                <Img src="https://m.munguland.com/web/product/big/201810/c52ab7e6724aca49540a62832cf76b3d.jpg"/>
+                <Img src={exhibitionImg}/>
                 <Text>기획전</Text>
             </ButtonContainer>
 
             <ButtonContainer onClick={() => setFilter('Brand')}>
-                <Img src="https://m.munguland.com/web/product/big/201810/c52ab7e6724aca49540a62832cf76b3d.jpg"/>
+                <Img src={brandImg}/>
                 <Text>브랜드</Text>
             </ButtonContainer>
         </Container>

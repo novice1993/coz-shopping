@@ -24,6 +24,7 @@ const ItemBox = styled.div`
     justify-content: center;
     flex-wrap: wrap;
     gap: 95px;
+
 `
 
 const Emptybox = styled.div`

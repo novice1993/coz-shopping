@@ -44,7 +44,7 @@ const ModalCloseButton = styled.div`
 
 const Container = styled.div`
     position: absolute;
-    transform: translateY(-50px);
+    transform: translate(10px, -50px);
     padding: 0px;
 
     display: flex;
@@ -70,11 +70,11 @@ const Title = styled.div`
 
 function Modal ({ item, setModal, bookmark, setBookmark }) {
     return (
-        <Background>
+        <Background onClick={() => {setModal(false)}}>
             <Content>
                 <img src={(item.type === 'Brand') ? item.brand_image_url : item.image_url} />
                 <ModalCloseButton onClick={() => {setModal(false)}}>&#10005;</ModalCloseButton>
-                <Container>\
+                <Container>
                     <BookmarkButton bookmark={bookmark} onClick={() => {setBookmark(!bookmark)}} >&#9733;</BookmarkButton>
                     <Title>{(item.type === 'Category') && '# '}{(item.type === 'Brand') ? item.brand_name : item.title}</Title>
                 </Container>

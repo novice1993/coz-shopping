@@ -9,12 +9,9 @@ const ContentContainer = styled.div`
     justify-content: space-between;
 `
 
-const ImgContainer = styled.div`
-    position: relative;
-`
-
 const Img = styled.img`
-    z-index: 0;
+    position: relative;
+    z-index: -200;
     width: 264px;
     height: 210px;
     border-radius: 12px;
@@ -25,6 +22,7 @@ const Img = styled.img`
 
 const BookmarkButton = styled.div`
     position: absolute;
+    z-index: 50;
     transform: translate(227px, -48px);
     color: ${(props) => (props.bookmark) ? '#FFD361;' : '#DFDFDF;'};
     font-size: 1.5rem;
@@ -99,12 +97,10 @@ function Item ({ item, bookmark_List, setBookmark_List }) {
 
         {(item.type === 'Product') && ( // product type
             <div onClick={modalButtonClick}>
-                <ImgContainer>
-                    <Img src={item.image_url}/>
-                    <BookmarkButton onClick={(event) => {
-                        event.stopPropagation();
-                        bookmarkButtonClick()}} bookmark={bookmark}>&#9733;</BookmarkButton>
-                </ImgContainer>
+                <Img src={item.image_url}/>
+                <BookmarkButton onClick={(event) => {
+                    event.stopPropagation();
+                    bookmarkButtonClick()}} bookmark={bookmark}>&#9733;</BookmarkButton>
                 <ContentContainer>
                     <Title>{item.title}</Title>
                     <DiscountPer>{(item.discountPercentage !== null) && `${item.discountPercentage}%`}</DiscountPer>
@@ -115,24 +111,20 @@ function Item ({ item, bookmark_List, setBookmark_List }) {
 
         {(item.type === 'Category') && ( // Category type
             <div onClick={modalButtonClick}>
-                <ImgContainer>
-                    <Img src={item.image_url}/>
-                    <BookmarkButton onClick={(event) => {
-                        event.stopPropagation();
-                        bookmarkButtonClick()}} bookmark={bookmark}>&#9733;</BookmarkButton>
-                </ImgContainer>
+                <Img src={item.image_url}/>
+                <BookmarkButton onClick={(event) => {
+                    event.stopPropagation();
+                    bookmarkButtonClick()}} bookmark={bookmark}>&#9733;</BookmarkButton>
                 <Title># {item.title}</Title>
             </div>
         )}
         
         {(item.type === 'Exhibition') && ( // Exhibition type
             <div onClick={modalButtonClick}>
-                <ImgContainer>
-                    <Img src={item.image_url}/>
-                    <BookmarkButton onClick={(event) => {
-                        event.stopPropagation();
-                        bookmarkButtonClick()}} bookmark={bookmark}>&#9733;</BookmarkButton>
-                </ImgContainer>
+                <Img src={item.image_url}/>
+                <BookmarkButton onClick={(event) => {
+                    event.stopPropagation();
+                    bookmarkButtonClick()}} bookmark={bookmark}>&#9733;</BookmarkButton>
                 <Title>{item.title}</Title>
                 <SubTitle>{item.sub_title}</SubTitle>
             </div>
@@ -140,12 +132,10 @@ function Item ({ item, bookmark_List, setBookmark_List }) {
         
         {(item.type === 'Brand') && ( // Brand type
             <div onClick={modalButtonClick}>
-                <ImgContainer>
-                    <Img src={item.brand_image_url}/>
-                    <BookmarkButton onClick={(event) => {
-                        event.stopPropagation();
-                        bookmarkButtonClick()}} bookmark={bookmark}>&#9733;</BookmarkButton>
-                </ImgContainer>
+                <Img src={item.brand_image_url}/>
+                <BookmarkButton onClick={(event) => {
+                    event.stopPropagation();
+                    bookmarkButtonClick()}} bookmark={bookmark}>&#9733;</BookmarkButton>
                 <ContentContainer>
                     <Title>{item.brand_name}</Title>
                     <InterestedCustomer>관심고객수</InterestedCustomer>

@@ -51,8 +51,8 @@ function BookmarkList ({ bookmark_List, setBookmark_List }) {
             <Title>북마크 리스트</Title>
             <ItemBox>
                 { (bookmark_List.length !== 0) ?
-                bookmark_List.map((bookmarkItem) => {
-                    return <BookmakrItem key={bookmarkItem.id} bookmarkItem={bookmarkItem} bookmark_List={bookmark_List} setBookmark_List={setBookmark_List}/>
+                bookmark_List.map((bookmarkItem, idx) => {
+                    return (idx < 4) && <BookmakrItem key={bookmarkItem.id} bookmarkItem={bookmarkItem} bookmark_List={bookmark_List} setBookmark_List={setBookmark_List}/>
                 })
                 : <Emptybox>상품이 없습니다</Emptybox>
                 }

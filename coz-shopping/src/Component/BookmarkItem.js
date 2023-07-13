@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 import { useState, useEffect } from "react";
-import { useFetcher } from "react-router-dom";
+import Modal from "./Modal";
 
 // 전체 type 공통 적용
 const ContentContainer = styled.div`
@@ -59,9 +59,14 @@ const Followers = styled.div`
 function BookmakrItem ({ bookmarkItem, bookmark_List, setBookmark_List }) {
 
     const [bookmark, setBookmark] = useState(true); // 아이템 북마크 여부
+    const [modal, setModal] = useState(false); // 모달창 on/off 
 
     const bookmarkButtonClick = () => { 
         setBookmark(!bookmark);
+    }
+
+    const modalButtonClick = () => {
+        setModal(!modal);
     }
 
     useEffect(() => {
@@ -81,11 +86,14 @@ function BookmakrItem ({ bookmarkItem, bookmark_List, setBookmark_List }) {
 
     return (
         <>
+        {(modal) && <Modal item={bookmarkItem} setModal={setModal} bookmark={bookmark} setBookmark={setBookmark}/>}
         {(bookmarkItem.type === 'Product') && ( // product type
-            <div>
+            <div onClick={modalButtonClick}>
                 <ImgContainer>
                     <Img src={bookmarkItem.image_url}/>
-                    <BookmarkButton onClick={() => bookmarkButtonClick()} bookmark={bookmark}>&#9733;</BookmarkButton>
+                    <BookmarkButton onClick={(event) => {
+                        event.stopPropagation();
+                        bookmarkButtonClick()}} bookmark={bookmark}>&#9733;</BookmarkButton>
                 </ImgContainer>
                 <ContentContainer>
                     <Title>{bookmarkItem.title}</Title>
@@ -96,20 +104,24 @@ function BookmakrItem ({ bookmarkItem, bookmark_List, setBookmark_List }) {
         )}
 
         {(bookmarkItem.type === 'Category') && ( // Category type
-            <div>
+            <div onClick={modalButtonClick}>
                 <ImgContainer>
                     <Img src={bookmarkItem.image_url}/>
-                    <BookmarkButton onClick={() => bookmarkButtonClick()} bookmark={bookmark}>&#9733;</BookmarkButton>
+                    <BookmarkButton onClick={(event) => {
+                        event.stopPropagation();
+                        bookmarkButtonClick()}} bookmark={bookmark}>&#9733;</BookmarkButton>
                 </ImgContainer>
                 <Title># {bookmarkItem.title}</Title>
             </div>
         )}
         
         {(bookmarkItem.type === 'Exhibition') && ( // Exhibition type
-            <div>
+            <div onClick={modalButtonClick}>
                 <ImgContainer>
                     <Img src={bookmarkItem.image_url}/>
-                    <BookmarkButton onClick={() => bookmarkButtonClick()} bookmark={bookmark}>&#9733;</BookmarkButton>
+                    <BookmarkButton onClick={(event) => {
+                        event.stopPropagation();
+                        bookmarkButtonClick()}} bookmark={bookmark}>&#9733;</BookmarkButton>
                 </ImgContainer>
                 <Title>{bookmarkItem.title}</Title>
                 <SubTitle>{bookmarkItem.sub_title}</SubTitle>
@@ -117,10 +129,12 @@ function BookmakrItem ({ bookmarkItem, bookmark_List, setBookmark_List }) {
         )}
         
         {(bookmarkItem.type === 'Brand') && ( // Brand type
-            <div>
+            <div onClick={modalButtonClick}>
                 <ImgContainer>
                     <Img src={bookmarkItem.brand_image_url}/>
-                    <BookmarkButton onClick={() => bookmarkButtonClick()} bookmark={bookmark}>&#9733;</BookmarkButton>
+                    <BookmarkButton onClick={(event) => {
+                        event.stopPropagation();
+                        bookmarkButtonClick()}} bookmark={bookmark}>&#9733;</BookmarkButton>
                 </ImgContainer>
                 <ContentContainer>
                     <Title>{bookmarkItem.brand_name}</Title>

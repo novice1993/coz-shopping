@@ -25,9 +25,8 @@ function MainPage ({ bookmark_List, setBookmark_List }) {
       try {
         const res = await fetch('http://cozshopping.codestates-seb.link/api/v1/products?count=4') 
         const data = await res.json();
-
-        console.log(data);
         setItems(data);
+
       } catch (error) {
         console.log('Response error', error);
       }

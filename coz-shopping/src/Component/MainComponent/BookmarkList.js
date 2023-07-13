@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import BookmakrItem from "../BookmarkItem";
+import BookmarkItem from "../BookmarkItem";
 
 const Container = styled.div`
     height: 100%;
@@ -52,7 +52,7 @@ function BookmarkList ({ bookmark_List, setBookmark_List }) {
             <ItemBox>
                 { (bookmark_List.length !== 0) ?
                 bookmark_List.map((bookmarkItem, idx) => {
-                    return (idx < 4) && <BookmakrItem key={bookmarkItem.id} bookmarkItem={bookmarkItem} bookmark_List={bookmark_List} setBookmark_List={setBookmark_List}/>
+                    return (idx < 4) && <BookmarkItem key={bookmarkItem.id} bookmarkItem={bookmarkItem} bookmark_List={bookmark_List} setBookmark_List={setBookmark_List}/>
                 })
                 : <Emptybox>상품이 없습니다</Emptybox>
                 }

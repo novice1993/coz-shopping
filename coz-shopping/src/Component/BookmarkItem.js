@@ -56,10 +56,11 @@ const Followers = styled.div`
     text-align: right;
 `
 
-function BookmakrItem ({ bookmarkItem, bookmark_List, setBookmark_List }) {
+function BookmarkItem ({ bookmarkItem, bookmark_List, setBookmark_List, bookmarkPage_Items, setBookmarkPage}) {
 
     const [bookmark, setBookmark] = useState(true); // 아이템 북마크 여부
     const [modal, setModal] = useState(false); // 모달창 on/off 
+
 
     const bookmarkButtonClick = () => { 
         setBookmark(!bookmark);
@@ -69,12 +70,21 @@ function BookmakrItem ({ bookmarkItem, bookmark_List, setBookmark_List }) {
         setModal(!modal);
     }
 
+
     useEffect(() => {
         if(!bookmark){
             setBookmark_List(bookmark_List.filter((item) => {
                 return item.id !== bookmarkItem.id
             }))
+
+            if((bookmarkPage_Items !== undefined && setBookmarkPage !== undefined)){ // 북마크 리스트 페이지에서 화면에 표시되는 데이터 갱신
+                setBookmarkPage(bookmarkPage_Items.filter((item) => {
+                    return item.id !== bookmarkItem.id
+                }))
+            }
         }
+
+        
 
     }, [bookmark])
 
@@ -147,4 +157,4 @@ function BookmakrItem ({ bookmarkItem, bookmark_List, setBookmark_List }) {
     )
 }
 
-export default BookmakrItem;
+export default BookmarkItem;

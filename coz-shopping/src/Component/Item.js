@@ -43,6 +43,7 @@ const DiscountPer = styled.div`
     font-weight: bolder;
     color: blue;
 `
+
 // Exhibition type 
 const SubTitle = styled.div`
 `
@@ -60,34 +61,42 @@ function Item ({ item, bookmark_List, setBookmark_List }) {
 
     const [bookmark, setBookmark] = useState(false); // 아이템 북마크 여부
     const [modal, setModal] = useState(false); // 모달창 on/off 
+    const check = bookmark_List.find((bookmakrItem) => bookmakrItem.id === item.id); // 기존 북마크에 포함된 정보인지 체크
 
     const bookmarkButtonClick = () => { 
         setBookmark(!bookmark);
     }
     
     const modalButtonClick = () => {
-        setModal(!modal);
+        setModal(true);
     }
 
-    useEffect(() => {
-        (bookmark) ? setBookmark_List([...bookmark_List, item])
-        : (setBookmark_List(bookmark_List.filter((bookmarkItem) => {return bookmarkItem.id !== item.id})))
-    }, [bookmark])
 
-    useEffect(() => { // 서버에서 데이터 받아왔을 때 -> 기존 북마크와 대조
-        bookmark_List.find((bookmarkItem) => bookmarkItem.id === item.id) && setBookmark(true);
+    useEffect(() => { // 1. 서버에서 item 불러오거나, 필터링 했을 때 -> 이전에 북마크 기처리 했을 시 별표에 색상 
+        (check !== undefined) && setBookmark(true);
     }, [item])
 
-    useEffect(() => { // 북마크 해제 => 상품 리스트에도 연동
-        (bookmark_List.find((bookmakrItem) => bookmakrItem.id === item.id) === undefined) && setBookmark(false)
 
-        const bookmarData = JSON.stringify(bookmark_List) // 로컬 스토리지에 저장
+    useEffect(() => { // bookmark true일 때 -> 신규로 체크한 것만 북마크에 추가 (1번 useEffect로 인한 외부효과 방지)
+
+        (bookmark && check === undefined) && setBookmark_List([...bookmark_List, item]);
+        (!bookmark) && (setBookmark_List(bookmark_List.filter((bookmarkItem) => {return bookmarkItem.id !== item.id})));
+    }, [bookmark])
+
+
+    useEffect(() => { // 북마크 체크 해제 시 -> 로컬 스토리지에 기록 저장
+        
+        (check === undefined) && setBookmark(false)
+
+        const bookmarData = JSON.stringify(bookmark_List)
         localStorage.setItem('bookmark', bookmarData);
+    
     }, [bookmark_List])
 
     return (
         <>
         {(modal) && <Modal item={item} setModal={setModal} bookmark={bookmark} setBookmark={setBookmark}/>}
+
         {(item.type === 'Product') && ( // product type
             <div onClick={modalButtonClick}>
                 <ImgContainer>

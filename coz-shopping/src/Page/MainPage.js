@@ -31,7 +31,7 @@ function MainPage ({ bookmark_List, setBookmark_List }) {
         console.log('Response error', error);
       }
     }
-
+    
     request();
 
   }, [])

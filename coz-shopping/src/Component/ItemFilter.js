@@ -36,14 +36,26 @@ const Text = styled.div`
 function ItemFilter ({
     filter, setFilter, // 필터 관련 상태
     setItems, // 북마크 전역 상태관리 함수
-    all_Items // 로컬 스토리지 데이터
+    all_Items,  // 로컬 스토리지 데이터
+    index 
 }) {
 
     useEffect(() => { // 필터를 변경했을 때
 
-        (filter === 'all') ? setItems(all_Items) // if) 전체 데이터 : 북마크 전역 상태를 로컬 스토리지 데이터로 변경
-        : setItems(all_Items.filter((item) => item.type === filter)) // if-2) 특정 조건 : 로컬 스토리지 데이터를 필터링 해서 전역 상태로 설정
-    
+        if(filter === '' || filter === 'all'){
+            const renderingItems = all_Items.filter((item, idx) => (index-8 <= idx && idx < index))
+            
+            console.log(index);
+            setItems(renderingItems);
+
+          } else {
+            const filtered = all_Items.filter((item) => item.type === filter);
+            const filtered_data = filtered.filter((item, idx) => (index-8 <= idx && idx < index));
+            
+            console.log(index);
+            setItems(filtered_data)
+          }
+
     }, [filter])
 
 

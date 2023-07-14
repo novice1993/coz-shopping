@@ -51,25 +51,29 @@ function BookmarkListPage ({
     const [filter, setFilter] = useState(''); 
     const [index, setIndex] = useState(0); // 화면에 표시할 아이템 개수 관련 상태
 
-    useEffect(() => {setIndex(8) }, []) // 화면에 표시할 아이템 개수
+    useEffect(() => {setIndex(8)}, []) // 화면에 표시할 아이템 개수
+    useEffect(() => {setIndex(8)}, [filter]) // filter 변경 -> index 초기화
 
-    
+
     useEffect(() => { // index 혹은 filter 변경 -> 화면에 렌더링 되는 아이템 변화 (scroll 움직임과 연동)
+
         
         // 1) 필터링 설정 안하거나 or '전체' 선택했을 때
         if(filter === '' || filter === 'all'){
             const data = all_bookmark.filter((item, idx) => (index-8 <= idx && idx < index))
+
+            console.log(data);
             setBookmark_List(data)}
 
         // 2) 특정 필터링 설정했을 때
         else {
-            setIndex(8); // index 값 초기화
-
             const filtered = all_bookmark.filter((item) => item.type === filter);
             const filtered_data = filtered.filter((item, idx) => (index-8 <= idx && idx < index));
+
+            console.log(filtered_data);
             setBookmark_List(filtered_data)}
 
-    }, [index, filter])
+    }, [index])
 
 
     const handleScroll =() => { // 스크롤 위,아래로 이동 -> 렌더링되는 아이템 변경
@@ -112,7 +116,7 @@ function BookmarkListPage ({
             </HeaderBox>
             <Main>
             <ItemFilter
-            filter={filter} setFilter={setFilter}  bookmark_List={bookmark_List} setItems={setBookmark_List} all_Items={all_bookmark} />
+            filter={filter} setFilter={setFilter}  bookmark_List={bookmark_List} setItems={setBookmark_List} all_Items={all_bookmark} index={index} />
                 <ItemBox>
                     {bookmark_List.map((item) => {
                         return (<BookmarkItem 

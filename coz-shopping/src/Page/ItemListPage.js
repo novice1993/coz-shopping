@@ -53,7 +53,7 @@ function ItemListPage ({ bookmark_List, setBookmark_List }) {
     const all_Items = JSON.parse(localStorage.getItem('all_Items')); // 로컬에 저장한 상품 데이터
 
     useEffect(() => {setIndex(8)}, []) // 화면에 표시할 아이템 개수
-    useState(() => { setIndex(8)}, [filter]) // 필터 변경 -> index 초기화
+    useEffect(() => { setIndex(8)}, [filter]) // 필터 변경 -> index 초기화
 
 
     useEffect(() => { // index 혹은 filter 변경 -> 화면에 렌더링 되는 아이템 변화 (scroll 움직임과 연동)
@@ -86,25 +86,23 @@ function ItemListPage ({ bookmark_List, setBookmark_List }) {
             // 서버에서 받아온 데이터 저장 
             localStorage.setItem('all_Items', JSON.stringify(data));}
 
-            
-
-          if(filter === '' || filter === 'all'){
-            const renderingItems = all_Items.filter((item, idx) => (index-8 <= idx && idx < index))
-            setItems(renderingItems);
-          } else {
-            const filtered = all_Items.filter((item) => item.type === filter);
-            const filtered_data = filtered.filter((item, idx) => (index-8 <= idx && idx < index));
-            setItems(filtered_data)
-          }
-
-          
-
         } catch (error) {
           console.log('Response error', error);
         }
       }
   
       request();
+
+      if(filter === '' || filter === 'all'){
+        const renderingItems = all_Items.filter((item, idx) => (index-8 <= idx && idx < index))
+        
+        setItems(renderingItems);
+      } else {
+        const filtered = all_Items.filter((item) => item.type === filter);
+        const filtered_data = filtered.filter((item, idx) => (index-8 <= idx && idx < index));
+        
+        setItems(filtered_data)
+      }
 
       }, [index])
 
@@ -119,8 +117,14 @@ function ItemListPage ({ bookmark_List, setBookmark_List }) {
             window.scrollTo(0,1)}
 
         if (scrollTop + clientHeight >= scrollHeight) {
+
+          if(items.length < 1){ // 더 이상 렌더링할 아이템이 없을 경우 -> index를 증가시키지 않음
+            setIndex(index-8);
+            return;
+          }
+
           setIndex(index+8);
-          window.scrollTo(0, scrollTop-1)}
+          window.scrollTo(0, scrollTop-5)}
       }
 
       useEffect(() => {
@@ -136,7 +140,7 @@ function ItemListPage ({ bookmark_List, setBookmark_List }) {
                 <Header />
             </HeaderBox>
             <Main>
-                <ItemFilter filter={filter} setFilter={setFilter} setItems={setItems} all_Items={all_Items} />
+                <ItemFilter filter={filter} setFilter={setFilter} setItems={setItems} all_Items={all_Items} index={index}/>
                 <ItemBox>
                     {items.map((item) => {
                         return <Item key={item.id} item={item} bookmark_List={bookmark_List} setBookmark_List={setBookmark_List}/>

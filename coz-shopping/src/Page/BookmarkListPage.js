@@ -49,9 +49,57 @@ function BookmarkListPage ({
 
     const all_bookmark = JSON.parse(localStorage.getItem('bookmark'));
     const [filter, setFilter] = useState(''); 
+    const [index, setIndex] = useState(0); // 렌더링 될 상품 index 관련 상태 
 
-    // 1. 화면 마운트 -> 로컬 데이터를 전역 상태로 지정
-    useEffect(() => {setBookmark_List(all_bookmark)}, [])
+
+    // 🔴 현재 스크롤 움직임에 따라 (top, bottom) index 상태가 변경 -> 화면에 렌더링 되는 아이템 개수도 변경되고 있음
+    // 🔴 변경해야 하는 점 -> index를 전체 개수에 맞추다보니 -> 필터링 걸었을 때도 해당 조건에 맞추어 변경됨 -> 필터에 해당하는 아이템 개수가 8개 미만이어도 index 값을 증가시킴
+    //  => filter 상태 활용하여 수정 필요함
+
+    useEffect(() => {
+        setIndex(index+8)
+    }, [])
+
+      useEffect(() => { // index 변화 -> 화면에 렌더링 되는 아이템 idx도 변화 (화면 scroll과 연동)
+        
+        // 1) 필터링 설정 안하거나  2) 전체 선택했을 때
+        if(filter === '' || filter === 'all'){
+            const data = all_bookmark.filter((item, idx) => (index-8 <= idx && idx < index))
+            setBookmark_List(data)}
+
+        // 2) 특정 필터링 설정했을 때
+        else {
+            const filtered_data = all_bookmark.filter((item) => item.type === filter);
+            const data = filtered_data.filter((item, idx) => (index-8 <= idx && idx < index));
+            setBookmark_List(data)}
+
+    }, [index, filter])
+
+
+    // 무한 스크롤 -> 레퍼런스 참고해서 구현함 => 이를 활용해서 데이터 올바르게 처리할 로직 구현해야 함 (https://abangpa1ace.tistory.com/118) 참고
+    const handleScroll =() => {
+
+        const { scrollHeight, scrollTop, clientHeight } = document.documentElement;
+
+        if(scrollTop === 0){
+            console.log('top');
+
+            (0 < index-8) && setIndex(index-8);
+            window.scrollTo(0,1);
+        }
+
+        if (scrollTop + clientHeight >= scrollHeight) {
+            console.log('bottom');
+            
+            (index < all_bookmark.length) && setIndex(index+8)
+            window.scrollTo(0, scrollTop-1)
+        }
+      }
+
+      useEffect(() => {
+        window.addEventListener('scroll', handleScroll); 
+        return () => window.removeEventListener('scroll', handleScroll);}, [handleScroll])
+
 
     return (
         <Container>
@@ -78,51 +126,3 @@ function BookmarkListPage ({
 }
 
 export default BookmarkListPage;
-
-
-/**
- * 
- * // 🔴 배열의 index 값 이용해서 무한 스크롤 구현 중 -> 아래/위로 자유롭게 이동 가능하도록 구현 (스크롤 윗 부분도 알아볼 것)
-   // 상품 리스트도 동일한 로직 적용해서 수정
- * 
- * 1. index 관련 상태
- * const [index, setIndex] = useState(4); // 화면엪 표시될 상품 index 관련 상태 
- * 
- * 
- * 2. 마운트 시 useEffect 
- * const data = all_bookmark.filter((item, idx) => {
-            return (idx<index);
-        })
-        setBookmarkPage(data);
-
-
-    3. 무한 스크롤 관련 로직
-
-    // 무한 스크롤 -> 레퍼런스 참고해서 구현함 => 이를 활용해서 데이터 올바르게 처리할 로직 구현해야 함 (https://abangpa1ace.tistory.com/118) 참고
-    const handleScroll =() => {
-
-        const { scrollHeight, scrollTop, clientHeight } = document.documentElement;
-
-        if (scrollTop + clientHeight >= scrollHeight) {
-            if(index < all_bookmark.length){
-            setIndex(index+4);}
-
-            window.scrollTo(0, scrollTop-1)
-        }
-      }
-
-      useEffect(() => {
-        window.addEventListener('scroll', handleScroll); 
-        return () => window.removeEventListener('scroll', handleScroll);
-      }, [handleScroll])
-
-      useEffect(() => {
-        const data = all_bookmark.filter((item, idx) => {
-            return (idx>index-5 && idx<index)
-        })
-        setBookmarkPage(data);
-
-      }, [index])
-
-
- */

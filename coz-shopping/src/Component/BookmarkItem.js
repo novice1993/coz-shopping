@@ -57,40 +57,29 @@ const Followers = styled.div`
     text-align: right;
 `
 
-function BookmarkItem ({ bookmarkItem, bookmark_List, setBookmark_List, bookmarkPage_Items, setBookmarkPage}) {
+function BookmarkItem ({
+     bookmarkItem, // 렌더링 할 개별 아이템
+     bookmark_List, setBookmark_List // 북마크 전역상태, 상태관리 함수 
+    }) {
 
-    const [bookmark, setBookmark] = useState(true); // 아이템 북마크 여부
-    const [modal, setModal] = useState(false); // 모달창 on/off 
+    const [bookmark, setBookmark] = useState(true); 
+    const [modal, setModal] = useState(false); 
 
-
-    const bookmarkButtonClick = () => { 
-        setBookmark(!bookmark);
-    }
-
-    const modalButtonClick = () => {
-        setModal(!modal);
-    }
+    const bookmarkButtonClick = () => { setBookmark(!bookmark); }
+    const modalButtonClick = () => { setModal(!modal); }
 
 
+    // 2. 북마크 취소 -> 1) 로컬 스토리지 데이터 갱신  2) 전역 상태 변경 ( 북마크 리스트에서 해당 아이템 삭제 )
     useEffect(() => {
+
         if(!bookmark){
-            setBookmark_List(bookmark_List.filter((item) => {
-                return item.id !== bookmarkItem.id
-            }))
 
-            if(bookmarkPage_Items !== undefined ){ // 북마크 리스트 페이지에서 화면에 표시되는 데이터 갱신
-                setBookmarkPage(bookmarkPage_Items.filter((item) => {
-                    return item.id !== bookmarkItem.id
-                }))
-            }
-        }
-    }, [bookmark]) // 북마크에 변화 (버튼 클릭) -> 화면 렌더링에 관여하는 데이터를 갱신 (해당 화면에서는 갱신 ok)
+            const bookmarData = (bookmark_List.filter((item) => item.id !== bookmarkItem.id))
 
-    useEffect(() => {
-        const bookmarkData = JSON.stringify(bookmark_List) // 로컬 스토리지에 저장
-        localStorage.setItem('bookmark', bookmarkData);
-
-    }, [bookmark_List])
+            localStorage.setItem('bookmark', JSON.stringify(bookmarData));
+            setBookmark_List(bookmarData)
+            
+        }}, [bookmark]) 
 
     return (
         <>

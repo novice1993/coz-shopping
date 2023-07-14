@@ -18,7 +18,6 @@ function MainPage ({ bookmark_List, setBookmark_List }) {
 
   const [items, setItems] = useState([]); // 서버에서 받아온 상품 리스트
 
-
   useEffect(() => {
 
     const request = async () => {
@@ -29,12 +28,9 @@ function MainPage ({ bookmark_List, setBookmark_List }) {
 
       } catch (error) {
         console.log('Response error', error);
-      }
-    }
-    
-    request();
-
-  }, [])
+      }}
+      
+    request();}, [])
 
 
     return (

@@ -44,25 +44,61 @@ const ItemBox = styled.div`
     margin-top: 10px;
 `
 
-function BookmarkListPage ({ bookmark_List, setBookmark_List }) {
+function BookmarkListPage ({
+    bookmark_List, setBookmark_List }) { // 북마크 관련 전역 상태
 
     const all_bookmark = JSON.parse(localStorage.getItem('bookmark'));
-    const [filter, setFilter] = useState(''); // 필터링 조건 
-    const [bookmarkPage_Items, setBookmarkPage] = useState([]); // 북마크 페이지 화면에 노출되는 데이터 
-    const [index, setIndex] = useState(4); // 화면엪 표시될 상품 index 관련 상태 
+    const [filter, setFilter] = useState(''); 
 
-    // 🔴 배열의 index 값 이용해서 무한 스크롤 구현 중 -> 아래/위로 자유롭게 이동 가능하도록 구현 (스크롤 윗 부분도 알아볼 것)
-    // 상품 리스트도 동일한 로직 적용해서 수정
+    // 1. 화면 마운트 -> 로컬 데이터를 전역 상태로 지정
+    useEffect(() => {setBookmark_List(all_bookmark)}, [])
 
-    useEffect(() => {
-        const data = all_bookmark.filter((item, idx) => {
+    return (
+        <Container>
+            <HeaderBox>
+                <Header />
+            </HeaderBox>
+            <Main>
+            <ItemFilter
+            filter={filter} setFilter={setFilter}  bookmark_List={bookmark_List} setItems={setBookmark_List} all_Items={all_bookmark} />
+                <ItemBox>
+                    {bookmark_List.map((item) => {
+                        return (<BookmarkItem 
+                            key={item.id}
+                            // props  1) 렌더링에 사용될 개별 요소  2) 북마크 전역 상태  3) 전역 상태관리 함수 
+                            bookmarkItem={item} bookmark_List={bookmark_List} setBookmark_List={setBookmark_List} />) 
+                    })}
+                </ItemBox>
+            </Main>
+            <FooterBox>
+                <Footer />
+            </FooterBox>
+        </Container>
+    )
+}
+
+export default BookmarkListPage;
+
+
+/**
+ * 
+ * // 🔴 배열의 index 값 이용해서 무한 스크롤 구현 중 -> 아래/위로 자유롭게 이동 가능하도록 구현 (스크롤 윗 부분도 알아볼 것)
+   // 상품 리스트도 동일한 로직 적용해서 수정
+ * 
+ * 1. index 관련 상태
+ * const [index, setIndex] = useState(4); // 화면엪 표시될 상품 index 관련 상태 
+ * 
+ * 
+ * 2. 마운트 시 useEffect 
+ * const data = all_bookmark.filter((item, idx) => {
             return (idx<index);
         })
         setBookmarkPage(data);
-    }, [])
 
 
-    // // 무한 스크롤 -> 레퍼런스 참고해서 구현함 => 이를 활용해서 데이터 올바르게 처리할 로직 구현해야 함 (https://abangpa1ace.tistory.com/118) 참고
+    3. 무한 스크롤 관련 로직
+
+    // 무한 스크롤 -> 레퍼런스 참고해서 구현함 => 이를 활용해서 데이터 올바르게 처리할 로직 구현해야 함 (https://abangpa1ace.tistory.com/118) 참고
     const handleScroll =() => {
 
         const { scrollHeight, scrollTop, clientHeight } = document.documentElement;
@@ -88,28 +124,5 @@ function BookmarkListPage ({ bookmark_List, setBookmark_List }) {
 
       }, [index])
 
-    
-    return (
-        <Container>
-            <HeaderBox>
-                <Header />
-            </HeaderBox>
-            <Main>
-            <ItemFilter filter={filter} setFilter={setFilter} bookmarkPage_Items={bookmarkPage_Items} setItems={setBookmarkPage} all_Items={all_bookmark} />
-                <ItemBox>
-                    {bookmarkPage_Items.map((item) => {
-                        return (<BookmarkItem 
-                            key={item.id}
-                            bookmarkItem={item} bookmark_List={bookmark_List} setBookmark_List={setBookmark_List} // 로컬에 저장된 북마크 데이터
-                            bookmarkPage_Items={bookmarkPage_Items} setBookmarkPage={setBookmarkPage}/>) // 북마크 리스트 페이지에 렌더링 되는 데이터 (필터링에 따라 변경됨)
-                    })}
-                </ItemBox>
-            </Main>
-            <FooterBox>
-                <Footer />
-            </FooterBox>
-        </Container>
-    )
-}
 
-export default BookmarkListPage;
+ */

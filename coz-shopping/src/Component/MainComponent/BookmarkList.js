@@ -1,5 +1,6 @@
 import { styled } from "styled-components";
 import BookmarkItem from "../BookmarkItem";
+import { useEffect } from "react";
 
 const Container = styled.div`
     height: 100%;
@@ -47,6 +48,13 @@ const Emptybox = styled.div`
 
 
 function BookmarkList ({ bookmark_List, setBookmark_List }) {
+
+    // MainPage로 이동 시 -> 로컬 스토리지에 있는 전체 북마크 리스트를 화면에 불러옴
+    useEffect(() => {
+        const all_bookmark = JSON.parse(localStorage.getItem('bookmark'));
+        setBookmark_List(all_bookmark);
+    }, [])
+
     return (
         <Container>
             <Title>북마크 리스트</Title>

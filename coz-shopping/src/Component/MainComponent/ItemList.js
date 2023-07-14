@@ -28,7 +28,7 @@ const ItemBox = styled.div`
     margin-top: 10px;
 `
 
-function ItemList ({ items, bookmark_List, setBookmark_List }) {
+function ItemList ({ items, bookmark_List, setBookmark_List }) { // 1) MainPage가 마운트 될 때 서버에서 받아온 데이터  2) 북마크 관련 전역 상태 
     return (
         <Container>
             <Title>상품 리스트</Title>

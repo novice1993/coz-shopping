@@ -57,39 +57,36 @@ const Followers = styled.div`
 
 function Item ({ item, bookmark_List, setBookmark_List }) {
 
-    const [bookmark, setBookmark] = useState(false); // 아이템 북마크 여부
-    const [modal, setModal] = useState(false); // 모달창 on/off 
-    const check = bookmark_List.find((bookmakrItem) => bookmakrItem.id === item.id); // 기존 북마크에 포함된 정보인지 체크
+    const [bookmark, setBookmark] = useState(false); 
+    const [modal, setModal] = useState(false); 
+    const check = bookmark_List.find((bookmakrItem) => bookmakrItem.id === item.id); // 이전에 북마크 등록된 아이템인지 체크
 
-    const bookmarkButtonClick = () => { 
-        setBookmark(!bookmark);
-    }
-    
-    const modalButtonClick = () => {
-        setModal(true);
-    }
+    const bookmarkButtonClick = () => { setBookmark(!bookmark); }
 
+    const modalButtonClick = () => { setModal(true); }
 
-    useEffect(() => { // 1. 서버에서 item 불러오거나, 필터링 했을 때 -> 이전에 북마크 기처리 했을 시 별표에 색상 
-        (check !== undefined) && setBookmark(true);
-    }, [item])
+    useEffect(() => { // item 정보 다시 불러왔을 때 -> 이전에 북마크 등록한 item일 경우 -> true값 부여
+        (check !== undefined) && setBookmark(true)}, [item]) 
 
 
-    useEffect(() => { // bookmark true일 때 -> 신규로 체크한 것만 북마크에 추가 (1번 useEffect로 인한 외부효과 방지)
+    useEffect(() => { // 신규 등록 혹은 해제 -> 1) 로컬 데이터 갱신  2) 북마크 전역상태 갱신
 
-        (bookmark && check === undefined) && setBookmark_List([...bookmark_List, item]);
-        (!bookmark) && (setBookmark_List(bookmark_List.filter((bookmarkItem) => {return bookmarkItem.id !== item.id})));
+        if(bookmark === true && check === undefined){
+
+            const newData = [...bookmark_List, item]
+            
+            localStorage.setItem('bookmark', JSON.stringify(newData));
+            setBookmark_List(newData);
+
+        } else if (bookmark === false) {
+
+            const newData = bookmark_List.filter((bookmarkItem) => {return bookmarkItem.id !== item.id});
+            
+            localStorage.setItem('bookmark', JSON.stringify(newData));
+            setBookmark_List(newData)
+        }
     }, [bookmark])
 
-
-    useEffect(() => { // 북마크 체크 해제 시 -> 로컬 스토리지에 기록 저장
-        
-        (check === undefined) && setBookmark(false)
-
-        const bookmarData = JSON.stringify(bookmark_List)
-        localStorage.setItem('bookmark', bookmarData);
-    
-    }, [bookmark_List])
 
     return (
         <>

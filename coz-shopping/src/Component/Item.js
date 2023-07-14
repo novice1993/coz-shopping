@@ -69,19 +69,17 @@ function Item ({ item, bookmark_List, setBookmark_List }) {
         (check !== undefined) && setBookmark(true)}, [item]) 
 
 
-    useEffect(() => { // 신규 등록 혹은 해제 -> 1) 로컬 데이터 갱신  2) 북마크 전역상태 갱신
+    useEffect(() => { // 북마크 신규 등록 or 해제 -> 1) 로컬 데이터 갱신  2) 북마크 전역상태 갱신
 
         if(bookmark === true && check === undefined){
 
             const newData = [...bookmark_List, item]
-            
             localStorage.setItem('bookmark', JSON.stringify(newData));
             setBookmark_List(newData);
 
         } else if (bookmark === false) {
-
-            const newData = bookmark_List.filter((bookmarkItem) => {return bookmarkItem.id !== item.id});
             
+            const newData = bookmark_List.filter((bookmarkItem) => {return bookmarkItem.id !== item.id});
             localStorage.setItem('bookmark', JSON.stringify(newData));
             setBookmark_List(newData)
         }

@@ -47,27 +47,66 @@ const ItemBox = styled.div`
 function ItemListPage ({ bookmark_List, setBookmark_List }) {
 
     const [items, setItems] = useState([]); // 서버에서 받아오는 상품 데이터
-    const [filter, setFilter] = useState(''); // 필터링 조건
+    const [filter, setFilter] = useState(''); 
+    const [index, setIndex] = useState(0); // 화면에 표시할 아이템 개수 관련 상태
+
     const all_Items = JSON.parse(localStorage.getItem('all_Items')); // 로컬에 저장한 상품 데이터
 
-    useEffect(() => {
+    useEffect(() => {setIndex(8)}, []) // 화면에 표시할 아이템 개수
+    useState(() => { setIndex(8)}, [filter]) // 필터 변경 -> index 초기화
 
-        const request = async () => {
-          try {
-            const res = await fetch('http://cozshopping.codestates-seb.link/api/v1/products?count=8') 
-            const data = await res.json();
 
-            localStorage.setItem('all_Items', JSON.stringify(data)); // 불러온 데이터 로컬 스토리지에 저장
-            setItems(data);
+    useEffect(() => { // index 혹은 filter 변경 -> 화면에 렌더링 되는 아이템 변화 (scroll 움직임과 연동)
+      
+      const request = async () => {
+        try {
+        
+          // 1. index가 변경되면 -> 서버에서 데이터를 받아오고
+          const res = await fetch('http://cozshopping.codestates-seb.link/api/v1/products?count=8') 
+          const data = await res.json();
+      
+          // 2. 기존에 저장했던 데이터를 불러와서
+          const previousItem = JSON.parse(localStorage.getItem('all_Items')); 
+      
+          // 3-1. 저장했던 데이터가 있을 경우
+          if(previousItem !== null){
+            // 중복 체크를 시행함
+            const newItem = data.filter((item) => { 
+              let result = 0;
+              for(let i=0; i<previousItem.length; i++){(previousItem[i].id === item.id) && (result = result + 1)} 
+              return (result === 0);
+            })
+      
+            // 기존 + 신규 데이터 합산한 새로운 데이터 -> 로컬 데이터에 저장
+            const newItemList =  [...previousItem, ...newItem] 
+            localStorage.setItem('all_Items', JSON.stringify(newItemList));
+
+            // 3-22. 저장했던 데이터가 없을 경우
+          } else {
+            // 서버에서 받아온 데이터 저장 
+            localStorage.setItem('all_Items', JSON.stringify(data));}
+
             
-          } catch (error) {
-            console.log('Response error', error);
+
+          if(filter === '' || filter === 'all'){
+            const renderingItems = all_Items.filter((item, idx) => (index-8 <= idx && idx < index))
+            setItems(renderingItems);
+          } else {
+            const filtered = all_Items.filter((item) => item.type === filter);
+            const filtered_data = filtered.filter((item, idx) => (index-8 <= idx && idx < index));
+            setItems(filtered_data)
           }
+
+          
+
+        } catch (error) {
+          console.log('Response error', error);
         }
-    
-        request();
-    
-      }, [])
+      }
+  
+      request();
+
+      }, [index])
 
 
       // 무한 스크롤 -> 레퍼런스 참고해서 구현함 => 이를 활용해서 데이터 올바르게 처리할 로직 구현해야 함 (https://abangpa1ace.tistory.com/118) 참고
@@ -75,40 +114,13 @@ function ItemListPage ({ bookmark_List, setBookmark_List }) {
 
         const { scrollHeight, scrollTop, clientHeight } = document.documentElement;
 
+        if(scrollTop === 0){
+            (0 < index-8) && setIndex(index-8);
+            window.scrollTo(0,1)}
+
         if (scrollTop + clientHeight >= scrollHeight) {
-
-            const request = async () => {
-                try {
-                  const res = await fetch('http://cozshopping.codestates-seb.link/api/v1/products?count=8') 
-                  const data = await res.json();
-      
-                  const previousItem = JSON.parse(localStorage.getItem('all_Items')); // 1) 기존에 로컬에 저장한 상품 데이터 
-
-                  console.log(previousItem);
-
-                  const newItem = data.filter((item) => { // 2) 기존 데이터 - 새로 불러온 데이터 : 중복 검사
-                    let result = 0;
-                    for(let i=0; i<previousItem.length; i++){(previousItem[i].id === item.id) && (result = result + 1)} 
-                    return (result === 0);
-                  })
-
-                  console.log(newItem);
-                
-                  const newItemList =  [...previousItem, ...newItem] // 3) 기존 데이터 + 신규 데이터 => 로컬에 저장
-                  localStorage.setItem('all_Items', JSON.stringify(newItemList));
-
-                  (filter === '' || filter === 'all') ? setItems(newItemList) // 4) 현재 필터 고려 -> 렌더링 될 상태로 설정
-                  : setItems(newItemList.filter((item) => item.type === filter))  
-                  
-                } catch (error) {
-                  console.log('Response error', error);
-                }
-              }
-          
-              request();
-
-          window.scrollTo(0, scrollTop-1)
-        }
+          setIndex(index+8);
+          window.scrollTo(0, scrollTop-1)}
       }
 
       useEffect(() => {

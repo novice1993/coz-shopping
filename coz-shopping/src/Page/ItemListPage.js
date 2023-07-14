@@ -57,6 +57,8 @@ function ItemListPage ({ bookmark_List, setBookmark_List }) {
 
 
     useEffect(() => { // index 혹은 filter 변경 -> 화면에 렌더링 되는 아이템 변화 (scroll 움직임과 연동)
+
+      console.log(index);
       
       const request = async () => {
         try {
@@ -95,20 +97,19 @@ function ItemListPage ({ bookmark_List, setBookmark_List }) {
 
       if(filter === '' || filter === 'all'){
         const renderingItems = all_Items.filter((item, idx) => (index-8 <= idx && idx < index))
-        
         setItems(renderingItems);
       } else {
         const filtered = all_Items.filter((item) => item.type === filter);
         const filtered_data = filtered.filter((item, idx) => (index-8 <= idx && idx < index));
-        
         setItems(filtered_data)
       }
 
-      }, [index])
-
+      }, [index, filter])
 
       // 무한 스크롤 -> 레퍼런스 참고해서 구현함 => 이를 활용해서 데이터 올바르게 처리할 로직 구현해야 함 (https://abangpa1ace.tistory.com/118) 참고
       const handleScroll =() => {
+
+        console.log('스크롤 이벤트 발생 중')
 
         const { scrollHeight, scrollTop, clientHeight } = document.documentElement;
 
@@ -118,12 +119,12 @@ function ItemListPage ({ bookmark_List, setBookmark_List }) {
 
         if (scrollTop + clientHeight >= scrollHeight) {
 
-          if(items.length < 1){ // 더 이상 렌더링할 아이템이 없을 경우 -> index를 증가시키지 않음
+          if(items.length === 0 || document.documentElement.scrollHeight <= document.documentElement.clientHeight){ // 더 이상 렌더링할 아이템이 없을 경우 -> index를 증가시키지 않음
             setIndex(index-8);
             return;
+          } else {
+            setIndex(index+8);
           }
-
-          setIndex(index+8);
           window.scrollTo(0, scrollTop-5)}
       }
 
@@ -140,7 +141,7 @@ function ItemListPage ({ bookmark_List, setBookmark_List }) {
                 <Header />
             </HeaderBox>
             <Main>
-                <ItemFilter filter={filter} setFilter={setFilter} setItems={setItems} all_Items={all_Items} index={index}/>
+                <ItemFilter setFilter={setFilter}/>
                 <ItemBox>
                     {items.map((item) => {
                         return <Item key={item.id} item={item} bookmark_List={bookmark_List} setBookmark_List={setBookmark_List}/>

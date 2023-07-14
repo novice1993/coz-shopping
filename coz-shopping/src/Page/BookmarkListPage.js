@@ -73,7 +73,7 @@ function BookmarkListPage ({
             console.log(filtered_data);
             setBookmark_List(filtered_data)}
 
-    }, [index])
+    }, [index, filter])
 
 
     const handleScroll =() => { // 스크롤 위,아래로 이동 -> 렌더링되는 아이템 변경
@@ -115,8 +115,7 @@ function BookmarkListPage ({
                 <Header />
             </HeaderBox>
             <Main>
-            <ItemFilter
-            filter={filter} setFilter={setFilter}  bookmark_List={bookmark_List} setItems={setBookmark_List} all_Items={all_bookmark} index={index} />
+                <ItemFilter setFilter={setFilter}/>
                 <ItemBox>
                     {bookmark_List.map((item) => {
                         return (<BookmarkItem 

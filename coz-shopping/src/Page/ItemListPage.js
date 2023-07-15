@@ -83,7 +83,7 @@ function ItemListPage ({ bookmark_List, setBookmark_List }) {
             const newItemList =  [...previousItem, ...newItem] 
             localStorage.setItem('all_Items', JSON.stringify(newItemList));
 
-            // 3-22. 저장했던 데이터가 없을 경우
+            // 3-2. 저장했던 데이터가 없을 경우
           } else {
             // 서버에서 받아온 데이터 저장 
             localStorage.setItem('all_Items', JSON.stringify(data));}
@@ -115,25 +115,23 @@ function ItemListPage ({ bookmark_List, setBookmark_List }) {
 
         if(scrollTop === 0){
             (0 < index-8) && setIndex(index-8);
-            window.scrollTo(0,1)}
+            window.scrollTo(0,15)}
 
         if (scrollTop + clientHeight >= scrollHeight) {
 
           if(items.length === 0 || document.documentElement.scrollHeight <= document.documentElement.clientHeight){ // 더 이상 렌더링할 아이템이 없을 경우 -> index를 증가시키지 않음
             setIndex(index-8);
-            return;
           } else {
             setIndex(index+8);
           }
-          window.scrollTo(0, scrollTop-5)}
+          window.scrollTo(0, scrollTop-15)}
       }
 
       useEffect(() => {
         window.addEventListener('scroll', handleScroll); 
         return () => window.removeEventListener('scroll', handleScroll);
       }, [handleScroll])
-      
-
+    
 
     return (
         <Container>

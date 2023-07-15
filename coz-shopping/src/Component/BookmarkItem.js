@@ -60,14 +60,18 @@ const Followers = styled.div`
 function BookmarkItem ({
      bookmarkItem, // 렌더링 할 개별 아이템
      bookmark_List, setBookmark_List,
-     all_bookmark, index, filter, // 1) 로컬 스토리지 (북마크 리스트)  2) 렌더링할 아이템 기준 index  3) 필터링 조건
+     all_bookmark, index, filter,  // 1) 로컬 스토리지 (북마크 리스트)  2) 렌더링할 아이템 기준 index  3) 필터링 조건
+     setToast, setToastContent
     }) {
 
     const [bookmark, setBookmark] = useState(true); 
     const [modal, setModal] = useState(false); 
 
-    const bookmarkButtonClick = () => { setBookmark(!bookmark); }
-    const modalButtonClick = () => { setModal(!modal); }
+    const bookmarkButtonClick = () => {
+        setBookmark(!bookmark)
+        setToast(true)}
+
+    const modalButtonClick = () => { setModal(!modal) }
 
 
     // 북마크 취소 -> 1) 로컬 스토리지 데이터 갱신  2) 전역 상태 변경 ( 북마크 리스트에서 해당 아이템 삭제 )
@@ -75,22 +79,26 @@ function BookmarkItem ({
 
         if(!bookmark){
 
-            const bookmarData = (all_bookmark.filter((item) => item.id !== bookmarkItem.id))
+            setToastContent('상품이 북마크에서 제거되었습니다.');
+            setTimeout(() => { setToast(false) }, 2000);
+            
+
+            const bookmarkData = (all_bookmark.filter((item) => item.id !== bookmarkItem.id)) // 갱신된 북마크 리스트 (북마크 해제한 아이템 제외)
+            localStorage.setItem('bookmark', JSON.stringify(bookmarkData));
 
             // 1. MainPage의 BookmarkList에서 아이템 삭제했을 때
             if (filter === undefined) {
-                localStorage.setItem('bookmark', JSON.stringify(bookmarData));
-                setBookmark_List(bookmarData)
-            }
+                // localStorage.setItem('bookmark', JSON.stringify(bookmarkData));
+                setBookmark_List(bookmarkData)}
 
             // 2. BookmarkListPage 에서 아이템 삭제했을 때 -> filter 조건에 맞춰서 렌더링 설정
             else {
                 if(filter === '' || filter === 'all'){
-                    const data = bookmarData.filter((item, idx) => (index-8 <= idx && idx < index))
+                    const data = bookmarkData.filter((item, idx) => (index-8 <= idx && idx < index))
                     setBookmark_List(data)}
         
                 else {
-                    const filtered = bookmarData.filter((item) => item.type === filter);
+                    const filtered = bookmarkData.filter((item) => item.type === filter);
                     const filtered_data = filtered.filter((item, idx) => (index-8 <= idx && idx < index));
                     setBookmark_List(filtered_data)}
             }

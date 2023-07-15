@@ -20,7 +20,7 @@ const HeaderBox = styled.header`
     border-bottom: 1px solid black;
 `
 
-const FooterBox = styled.header`
+const FooterBox = styled.div`
     flex: 1 0 0;
 `
 
@@ -56,8 +56,7 @@ function BookmarkListPage ({
 
 
     useEffect(() => { // index 혹은 filter 변경 -> 화면에 렌더링 되는 아이템 변화 (scroll 움직임과 연동)
-
-        
+  
         // 1) 필터링 설정 안하거나 or '전체' 선택했을 때
         if(filter === '' || filter === 'all'){
             const data = all_bookmark.filter((item, idx) => (index-8 <= idx && idx < index))
@@ -120,8 +119,10 @@ function BookmarkListPage ({
                     {bookmark_List.map((item) => {
                         return (<BookmarkItem 
                             key={item.id}
-                            bookmarkItem={item} bookmark_List={bookmark_List} setBookmark_List={setBookmark_List}
-                            all_bookmark={all_bookmark} index={index} filter={filter}/>) 
+                            bookmarkItem={item} // 1) 렌더링 할 개별 아이템
+                            bookmark_List={bookmark_List} setBookmark_List={setBookmark_List} // 2) 북마크 관련 전역 상태 -> 북마크 등록/삭제 연관
+                            all_bookmark={all_bookmark} index={index} filter={filter}
+                            />)
                     })}
                 </ItemBox>
             </Main>

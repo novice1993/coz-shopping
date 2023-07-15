@@ -62,7 +62,6 @@ function Item ({ item, bookmark_List, setBookmark_List }) {
     const check = bookmark_List.find((bookmakrItem) => bookmakrItem.id === item.id); // 이전에 북마크 등록된 아이템인지 체크
 
     const bookmarkButtonClick = () => { setBookmark(!bookmark); }
-
     const modalButtonClick = () => { setModal(true); }
 
     useEffect(() => { // item 정보 다시 불러왔을 때 -> 이전에 북마크 등록한 item일 경우 -> true값 부여
@@ -80,10 +79,18 @@ function Item ({ item, bookmark_List, setBookmark_List }) {
         } else if (bookmark === false) {
             
             const newData = bookmark_List.filter((bookmarkItem) => {return bookmarkItem.id !== item.id});
-            localStorage.setItem('bookmark', JSON.stringify(newData));
-            setBookmark_List(newData)
+            
+            // 상품 리스트에서 북마크 해제 했을 때
+            if(bookmark_List.length !== newData.length){
+                localStorage.setItem('bookmark', JSON.stringify(newData));
+                setBookmark_List(newData)
+            }
         }
     }, [bookmark])
+
+    // 북마크 리스트에서 북마크 해제했을 때 (상품 리스트 연동 해제)
+    useEffect(() => {
+        (check === undefined) && setBookmark(false)}, [bookmark_List])
 
 
     return (

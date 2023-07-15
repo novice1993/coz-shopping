@@ -47,14 +47,11 @@ const Emptybox = styled.div`
 `
 
 
-function BookmarkList ({ bookmark_List, setBookmark_List }) {
+function BookmarkList ({ bookmark_List, setBookmark_List, setToast, setToastContent }) {
 
     // MainPage로 이동 시 -> 로컬 스토리지에 있는 전체 북마크 리스트를 화면에 불러옴
     const all_bookmark = JSON.parse(localStorage.getItem('bookmark'));
-
-    useEffect(() => {
-        setBookmark_List(all_bookmark);
-    }, [])
+    useEffect(() => { setBookmark_List(all_bookmark) }, [])
 
     return (
         <Container>
@@ -64,7 +61,8 @@ function BookmarkList ({ bookmark_List, setBookmark_List }) {
                 bookmark_List.map((bookmarkItem, idx) => {
                     return (idx < 4) && <BookmarkItem key={bookmarkItem.id}
                     bookmarkItem={bookmarkItem} bookmark_List={bookmark_List} setBookmark_List={setBookmark_List}
-                    all_bookmark={all_bookmark}/>
+                    all_bookmark={all_bookmark}
+                    setToast={setToast} setToastContent={setToastContent}/>
                 })
                 : <Emptybox>상품이 없습니다</Emptybox>
                 }

@@ -20,9 +20,14 @@ const Content2 = styled.div`
     flex: 1 0 0;
     text-align: center;
 `
+const Test = styled.div`
+    text-align: center;
+    font-size: 1.5rem;
+`
 
 
 function Footer () {
+
     return (
         <Container>
             <Content1>개인정보 처리방침 | 이용 약관</Content1>

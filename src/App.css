@@ -25,10 +25,10 @@ main {
 }
 
 footer {
-  flex: 1 0 0;
+  flex: 0.7 0 0;
 }
 
-div {
+/* div {
   border: 1px solid black;
-}
+} */
 

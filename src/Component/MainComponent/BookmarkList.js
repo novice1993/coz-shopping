@@ -24,7 +24,6 @@ const ItemBox = styled.div`
     flex-direction: row;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 95px;
 
 `
 
@@ -41,6 +40,7 @@ const Emptybox = styled.div`
     border: 1px solid gray;
     width: 100%;
     margin: 10px;
+    margin-bottom: 20px;
     margin-left: 45px;
     margin-right: 45px;
 

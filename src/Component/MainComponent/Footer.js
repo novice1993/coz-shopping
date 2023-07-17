@@ -4,6 +4,7 @@ const Container = styled.div`
     height: 100%;
     display: flex;
     flex-direction: column;
+    border-top: 0.1px solid gray;
 
     color: gray;
 `

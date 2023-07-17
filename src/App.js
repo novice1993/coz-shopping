@@ -1,5 +1,5 @@
 import './App.css';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import MainPage from './Page/MainPage';
 import ItemListPage from './Page/ItemListPage';
 import BookmarkListPage from './Page/BookmarkListPage';
@@ -12,8 +12,6 @@ function App() {
   const [bookmark_List, setBookmark_List] = useState( (bookmarkData !== null) ? bookmarkData : [] );
 
   
-
-
   return (
     <BrowserRouter>
       <Routes>

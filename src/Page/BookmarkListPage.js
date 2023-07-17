@@ -4,24 +4,23 @@ import Header from "../Component/MainComponent/Header";
 import Footer from "../Component/MainComponent/Footer";
 import ItemFilter from "../Component/ItemFilter";
 import BookmarkItem from "../Component/BookmarkItem";
+import Toast from "../Component/Toast";
 
 
 const Container = styled.div`
     width: 100vw;
     height: 100vh;
-
+    
     display: flex;
     flex-direction: column;
 `
 
 const HeaderBox = styled.header`
     flex: 1 0 0;
-
-    border-bottom: 1px solid black;
 `
 
 const FooterBox = styled.div`
-    flex: 1 0 0;
+    flex: 0.7 0 0;
 `
 
 const Main = styled.main`
@@ -39,9 +38,6 @@ const ItemBox = styled.div`
     flex-direction: row;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 95px;
-
-    margin-top: 10px;
 `
 
 function BookmarkListPage ({
@@ -50,6 +46,9 @@ function BookmarkListPage ({
     const all_bookmark = JSON.parse(localStorage.getItem('bookmark'));
     const [filter, setFilter] = useState(''); 
     const [index, setIndex] = useState(0); // 화면에 표시할 아이템 개수 관련 상태
+
+    const [toast, setToast] = useState(false); // toast 메세지 띄울지 여부
+    const [toastContent, setToastContent] = useState(''); // toast에 들어가는 문구
 
     useEffect(() => {setIndex(8)}, []) // 화면에 표시할 아이템 개수
     useEffect(() => {setIndex(8)}, [filter]) // filter 변경 -> index 초기화
@@ -122,13 +121,14 @@ function BookmarkListPage ({
                             bookmarkItem={item} // 1) 렌더링 할 개별 아이템
                             bookmark_List={bookmark_List} setBookmark_List={setBookmark_List} // 2) 북마크 관련 전역 상태 -> 북마크 등록/삭제 연관
                             all_bookmark={all_bookmark} index={index} filter={filter}
-                            />)
+                            setToast={setToast} setToastContent={setToastContent}/>)
                     })}
                 </ItemBox>
             </Main>
             <FooterBox>
                 <Footer />
             </FooterBox>
+            <Toast toast={toast} toastContent={toastContent}/>
         </Container>
     )
 }

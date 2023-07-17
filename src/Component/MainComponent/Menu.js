@@ -1,5 +1,6 @@
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
+import itemImg from '../../img/item.png'
 
 const Container = styled.div`
     position: relative;
@@ -13,22 +14,21 @@ const Arrow = styled.div`
     right: 15%;
     border-left: 30px solid transparent;
     border-right: 30px solid transparent;
-    border-bottom: 30px solid blue; 
+    border-bottom: 30px solid white; 
 `
 
-// 🔴 해당부분 리뷰 부탁드립니다 (z-index 값을 주어서 해당 태그가 가장 위로 올라오도록 설정했는데, Item 컴포넌트의 이미지에 가려져서 최상단에 위치히지 않습니다. 무슨 문제일까요?)
 const Box = styled.div`
     display: flex;
     flex-direction: column;
 
     position: absolute;
-    /* z-index: 200; */
-    transform: translate(-80px, 20px);
-    width: 150px;
+    transform: translate(-110px, 20px);
+    width: 180px;
     height: 140px;
-    background-color: blue;
+    background-color: white;
+    box-shadow: 4px 4px 10px rgba(184, 184, 184, 0.89);;
     border-radius: 10%;
-    color: white;
+    color: black;
 `
 
 const Content = styled.div`
@@ -48,8 +48,13 @@ const Content = styled.div`
     }
 
     & .Link {
-        color: white;
+        color: black;
         text-decoration: none;
+
+        & img {
+            width: 15px;
+            height: auto;
+        }
     }
 `
 
@@ -60,10 +65,10 @@ function Menu () {
             <Box>
                 <Content>OOO님, 안녕하세요!</Content>
                 <Content>
-                    <Link to='/products/list' className="Link">상품리스트 페이지</ Link>
+                    <Link to='/products/list' className="Link"><img src={itemImg}/> 상품리스트 페이지</ Link>
                 </Content>
                 <Content>
-                    <Link to='/bookmark' className="Link">북마크 페이지</Link>
+                    <Link to='/bookmark' className="Link">&#9734; 북마크 페이지</Link>
                 </Content>
             </Box>
             

@@ -2,8 +2,15 @@ import { styled } from "styled-components";
 import { useState, useEffect } from "react";
 import Modal from "./Modal";
 
-
 // 전체 type 공통 적용
+
+const Container = styled.div`
+    margin-left: 45px;
+    margin-right: 45px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+`
+
 const ContentContainer = styled.div`
     display: flex;
     flex-direction: row;
@@ -80,15 +87,13 @@ function BookmarkItem ({
         if(!bookmark){
 
             setToastContent('상품이 북마크에서 제거되었습니다.');
-            setTimeout(() => { setToast(false) }, 2000);
+            setTimeout(() => { setToast(false) }, 3000);
             
-
             const bookmarkData = (all_bookmark.filter((item) => item.id !== bookmarkItem.id)) // 갱신된 북마크 리스트 (북마크 해제한 아이템 제외)
             localStorage.setItem('bookmark', JSON.stringify(bookmarkData));
 
             // 1. MainPage의 BookmarkList에서 아이템 삭제했을 때
             if (filter === undefined) {
-                // localStorage.setItem('bookmark', JSON.stringify(bookmarkData));
                 setBookmark_List(bookmarkData)}
 
             // 2. BookmarkListPage 에서 아이템 삭제했을 때 -> filter 조건에 맞춰서 렌더링 설정
@@ -108,9 +113,14 @@ function BookmarkItem ({
 
     return (
         <>
-        {(modal) && <Modal item={bookmarkItem} setModal={setModal} bookmark={bookmark} setBookmark={setBookmark}/>}
+        {(modal) && 
+            <Modal
+            item={bookmarkItem} setModal={setModal}
+            bookmark={bookmark} setBookmark={setBookmark}
+            setToast={setToast} setToastContent={setToastContent}/>}
+
         {(bookmarkItem.type === 'Product') && ( // product type
-            <div onClick={modalButtonClick}>
+            <Container onClick={modalButtonClick}>
                 <Img src={bookmarkItem.image_url}/>
                 <BookmarkButton onClick={(event) => {
                     event.stopPropagation();
@@ -120,32 +130,32 @@ function BookmarkItem ({
                     <DiscountPer>{(bookmarkItem.discountPercentage !== null) && `${bookmarkItem.discountPercentage}%`}</DiscountPer>
                 </ContentContainer>
                 <Price>{parseInt(bookmarkItem.price).toLocaleString()}원</Price>
-            </div>
+            </Container>
         )}
 
         {(bookmarkItem.type === 'Category') && ( // Category type
-            <div onClick={modalButtonClick}>
+            <Container onClick={modalButtonClick}>
                 <Img src={bookmarkItem.image_url}/>
                 <BookmarkButton onClick={(event) => {
                     event.stopPropagation();
                     bookmarkButtonClick()}} bookmark={bookmark}>&#9733;</BookmarkButton>
                 <Title># {bookmarkItem.title}</Title>
-            </div>
+            </Container>
         )}
         
         {(bookmarkItem.type === 'Exhibition') && ( // Exhibition type
-            <div onClick={modalButtonClick}>
+            <Container onClick={modalButtonClick}>
                 <Img src={bookmarkItem.image_url}/>
                 <BookmarkButton onClick={(event) => {
                     event.stopPropagation();
                     bookmarkButtonClick()}} bookmark={bookmark}>&#9733;</BookmarkButton>
                 <Title>{bookmarkItem.title}</Title>
                 <SubTitle>{bookmarkItem.sub_title}</SubTitle>
-            </div>
+            </Container>
         )}
         
         {(bookmarkItem.type === 'Brand') && ( // Brand type
-            <div onClick={modalButtonClick}>
+            <Container onClick={modalButtonClick}>
                 <Img src={bookmarkItem.brand_image_url}/>
                 <BookmarkButton onClick={(event) => {
                     event.stopPropagation();
@@ -155,7 +165,7 @@ function BookmarkItem ({
                     <InterestedCustomer>관심고객수</InterestedCustomer>
                 </ContentContainer>
                 <Followers>{parseInt(bookmarkItem.follower).toLocaleString()}</Followers>
-            </div>
+            </Container>
         )}
         </>
     )

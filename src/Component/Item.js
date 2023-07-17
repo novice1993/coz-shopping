@@ -3,6 +3,13 @@ import { useState, useEffect } from "react";
 import Modal from "./Modal";
 
 // 전체 type 공통 적용
+const Container = styled.div`
+    margin-left: 45px;
+    margin-right: 45px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+`
+
 const ContentContainer = styled.div`
     display: flex;
     flex-direction: row;
@@ -55,13 +62,17 @@ const Followers = styled.div`
     text-align: right;
 `
 
-function Item ({ item, bookmark_List, setBookmark_List }) {
+// setToast={setToast} setToastContent={setToastContent}
+function Item ({ item, bookmark_List, setBookmark_List, setToast, setToastContent }) {
 
     const [bookmark, setBookmark] = useState(false); 
     const [modal, setModal] = useState(false); 
     const check = bookmark_List.find((bookmakrItem) => bookmakrItem.id === item.id); // 이전에 북마크 등록된 아이템인지 체크
 
-    const bookmarkButtonClick = () => { setBookmark(!bookmark); }
+    const bookmarkButtonClick = () => {
+        setBookmark(!bookmark)
+        setToast(true)}
+
     const modalButtonClick = () => { setModal(true); }
 
     useEffect(() => { // item 정보 다시 불러왔을 때 -> 이전에 북마크 등록한 item일 경우 -> true값 부여
@@ -72,11 +83,17 @@ function Item ({ item, bookmark_List, setBookmark_List }) {
 
         if(bookmark === true && check === undefined){
 
+            setToastContent('상품이 북마크에 추가되었습니다.');
+            setTimeout(() => { setToast(false) }, 3000);
+
             const newData = [...bookmark_List, item]
             localStorage.setItem('bookmark', JSON.stringify(newData));
             setBookmark_List(newData);
 
         } else if (bookmark === false) {
+
+            setToastContent('상품이 북마크에서 제거되었습니다.');
+            setTimeout(() => { setToast(false) }, 3000);
             
             const newData = bookmark_List.filter((bookmarkItem) => {return bookmarkItem.id !== item.id});
             
@@ -88,17 +105,21 @@ function Item ({ item, bookmark_List, setBookmark_List }) {
         }
     }, [bookmark])
 
-    // 북마크 리스트에서 북마크 해제했을 때 (상품 리스트 연동 해제)
+    // 북마크 리스트에서 북마크 해제했을 때 (상품 리스트에도 연동)
     useEffect(() => {
         (check === undefined) && setBookmark(false)}, [bookmark_List])
 
 
     return (
         <>
-        {(modal) && <Modal item={item} setModal={setModal} bookmark={bookmark} setBookmark={setBookmark}/>}
+        {(modal) && 
+            <Modal
+            item={item} setModal={setModal}
+            bookmark={bookmark} setBookmark={setBookmark}
+            setToast={setToast} setToastContent={setToastContent}/>}
 
         {(item.type === 'Product') && ( // product type
-            <div onClick={modalButtonClick}>
+            <Container onClick={modalButtonClick}>
                 <Img src={item.image_url}/>
                 <BookmarkButton onClick={(event) => {
                     event.stopPropagation();
@@ -108,32 +129,32 @@ function Item ({ item, bookmark_List, setBookmark_List }) {
                     <DiscountPer>{(item.discountPercentage !== null) && `${item.discountPercentage}%`}</DiscountPer>
                 </ContentContainer>
                 <Price>{parseInt(item.price).toLocaleString()}원</Price>
-            </div>
+            </Container>
         )}
 
         {(item.type === 'Category') && ( // Category type
-            <div onClick={modalButtonClick}>
+            <Container onClick={modalButtonClick}>
                 <Img src={item.image_url}/>
                 <BookmarkButton onClick={(event) => {
                     event.stopPropagation();
                     bookmarkButtonClick()}} bookmark={bookmark}>&#9733;</BookmarkButton>
                 <Title># {item.title}</Title>
-            </div>
+            </Container>
         )}
         
         {(item.type === 'Exhibition') && ( // Exhibition type
-            <div onClick={modalButtonClick}>
+            <Container onClick={modalButtonClick}>
                 <Img src={item.image_url}/>
                 <BookmarkButton onClick={(event) => {
                     event.stopPropagation();
                     bookmarkButtonClick()}} bookmark={bookmark}>&#9733;</BookmarkButton>
                 <Title>{item.title}</Title>
                 <SubTitle>{item.sub_title}</SubTitle>
-            </div>
+            </Container>
         )}
         
         {(item.type === 'Brand') && ( // Brand type
-            <div onClick={modalButtonClick}>
+            <Container onClick={modalButtonClick}>
                 <Img src={item.brand_image_url}/>
                 <BookmarkButton onClick={(event) => {
                     event.stopPropagation();
@@ -143,7 +164,7 @@ function Item ({ item, bookmark_List, setBookmark_List }) {
                     <InterestedCustomer>관심고객수</InterestedCustomer>
                 </ContentContainer>
                 <Followers>{parseInt(item.follower).toLocaleString()}</Followers>
-            </div>
+            </Container>
         )}
         </>
     )

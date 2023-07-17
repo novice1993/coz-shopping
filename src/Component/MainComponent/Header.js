@@ -6,6 +6,8 @@ import LogoImg from '../../img/logo.jpg'
 
 const Container = styled.nav`
  height: 100%;
+ border-bottom: 1px solid rgba(184, 184, 184, 0.89);
+ box-shadow: 0px 2px 15px rgba(184, 184, 184, 0.89);
 
  display: flex;
  flex-direction: row;

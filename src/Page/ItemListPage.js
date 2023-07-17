@@ -4,6 +4,7 @@ import Header from "../Component/MainComponent/Header";
 import Footer from "../Component/MainComponent/Footer";
 import ItemFilter from "../Component/ItemFilter";
 import Item from "../Component/Item";
+import Toast from "../Component/Toast";
 
 
 const Container = styled.div`
@@ -16,12 +17,10 @@ const Container = styled.div`
 
 const HeaderBox = styled.header`
     flex: 1 0 0;
-
-    border-bottom: 1px solid black;
 `
 
 const FooterBox = styled.header`
-    flex: 1 0 0;
+    flex: 0.7 0 0;
 `
 
 const Main = styled.main`
@@ -39,16 +38,18 @@ const ItemBox = styled.div`
     flex-direction: row;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 95px;
 
-    margin-top: 10px;
+    /* gap: 95px; */
 `
+
 
 function ItemListPage ({ bookmark_List, setBookmark_List }) {
 
     const [items, setItems] = useState([]); // 서버에서 받아오는 상품 데이터
     const [filter, setFilter] = useState(''); 
     const [index, setIndex] = useState(0); // 화면에 표시할 아이템 개수 관련 상태
+    const [toast, setToast] = useState(false); // toast 메세지 띄울지 여부
+    const [toastContent, setToastContent] = useState(''); // toast에 들어가는 문구
 
     const all_Items = JSON.parse(localStorage.getItem('all_Items')); // 로컬에 저장한 상품 데이터
 
@@ -57,8 +58,6 @@ function ItemListPage ({ bookmark_List, setBookmark_List }) {
 
 
     useEffect(() => { // index 혹은 filter 변경 -> 화면에 렌더링 되는 아이템 변화 (scroll 움직임과 연동)
-
-      console.log(index);
       
       const request = async () => {
         try {
@@ -89,15 +88,15 @@ function ItemListPage ({ bookmark_List, setBookmark_List }) {
             localStorage.setItem('all_Items', JSON.stringify(data));}
 
         } catch (error) {
-          console.log('Response error', error);
+          console.log('Response error', error)}
         }
-      }
   
       request();
 
       if(filter === '' || filter === 'all'){
         const renderingItems = all_Items.filter((item, idx) => (index-8 <= idx && idx < index))
         setItems(renderingItems);
+
       } else {
         const filtered = all_Items.filter((item) => item.type === filter);
         const filtered_data = filtered.filter((item, idx) => (index-8 <= idx && idx < index));
@@ -109,28 +108,25 @@ function ItemListPage ({ bookmark_List, setBookmark_List }) {
       // 무한 스크롤 -> 레퍼런스 참고해서 구현함 => 이를 활용해서 데이터 올바르게 처리할 로직 구현해야 함 (https://abangpa1ace.tistory.com/118) 참고
       const handleScroll =() => {
 
-        console.log('스크롤 이벤트 발생 중')
-
         const { scrollHeight, scrollTop, clientHeight } = document.documentElement;
 
-        if(scrollTop === 0){
-            (0 < index-8) && setIndex(index-8);
-            window.scrollTo(0,15)}
+        if(scrollTop === 0 && 0 < index-8){
+            setIndex(index-8);
+            window.scrollTo(0,1)}
 
         if (scrollTop + clientHeight >= scrollHeight) {
-
           if(items.length === 0 || document.documentElement.scrollHeight <= document.documentElement.clientHeight){ // 더 이상 렌더링할 아이템이 없을 경우 -> index를 증가시키지 않음
             setIndex(index-8);
           } else {
             setIndex(index+8);
           }
-          window.scrollTo(0, scrollTop-15)}
+
+          window.scrollTo(0, scrollTop-1)}
       }
 
       useEffect(() => {
         window.addEventListener('scroll', handleScroll); 
-        return () => window.removeEventListener('scroll', handleScroll);
-      }, [handleScroll])
+        return () => window.removeEventListener('scroll', handleScroll)}, [handleScroll])
     
 
     return (
@@ -142,13 +138,17 @@ function ItemListPage ({ bookmark_List, setBookmark_List }) {
                 <ItemFilter setFilter={setFilter}/>
                 <ItemBox>
                     {items.map((item) => {
-                        return <Item key={item.id} item={item} bookmark_List={bookmark_List} setBookmark_List={setBookmark_List}/>
+                        return <Item 
+                        key={item.id} item={item} 
+                        bookmark_List={bookmark_List} setBookmark_List={setBookmark_List}
+                        setToast={setToast} setToastContent={setToastContent}/>
                     })}
                 </ItemBox>
             </Main>
             <FooterBox>
                 <Footer />
             </FooterBox>
+            <Toast toast={toast} toastContent={toastContent}/>
         </Container>
     )
 }

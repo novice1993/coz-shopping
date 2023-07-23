@@ -11,68 +11,28 @@ function ItemListPage ({ bookmark_List, setBookmark_List }) {
     const [items, setItems] = useState([]); // 서버에서 받아오는 상품 데이터
     const [filter, setFilter] = useState(''); 
 
-    const all_Items = JSON.parse(localStorage.getItem('all_Items')); // 로컬에 저장한 상품 데이터
-
     /**
-     *  1. 로직을 3개 만들어야 하나?
-     *    1) 처음에 컴포넌트 마운트 되었을 때 -> 서버에서 데이터 받아온 후 렌더링 (중복 검사는 안해도 될듯?)
-     *    2) 스크롤 이벤트 발생했을 때 (새롭게 데이터 받아옴 + 중복검사?)
-     *    3) 필터 설정했을 때 (필터 설정,,,) -> 해당 상태 필터로 옮기는 게 더 맞지 않나?
+     * 🔴 ItemListPage 무한스크롤 렌더링 관련 로직은 수정함
+     *    1) 필터링 관련 로직 수정 필요 -> 상태 어디서 관리할 것인가? + 구현 로직
+     *      1-2) 필터 관련 상태/상태관리함수 네이밍 수정
+     *    2) 무한 스크롤 다시 알아본 후 로직 수정 (지금 가독성이 너무 떨어짐 + 내가 제대로 이해 못한 코드가 많음)
+     * 
      */
 
 
 
-    // 🟢 1) 서버에서 데이터 받아오는 로직인 것 같음
+    useEffect(() => { 
 
-    useEffect(() => { // index 혹은 filter 변경 -> 화면에 렌더링 되는 아이템 변화 (scroll 움직임과 연동)
+      setFilter(''); // 필터 초기화
       
-      const request = async () => {
-        try {
-        
-          // 1) 서버에서 데이터 불러온 후 -> 파싱함
-          const res = await fetch('http://cozshopping.codestates-seb.link/api/v1/products?count=8') 
-          const data = await res.json();
+      fetch('http://cozshopping.codestates-seb.link/api/v1/products?count=8')
+        .then(res => res.json())
+        .then(data => {
+          localStorage.setItem('all_Items', JSON.stringify(data));
+          setItems(data)})
+        .catch(error => console.error('response error', error))
       
-
-          // 2. 기존에 저장했던 데이터를 불러와서
-          const previousItem = JSON.parse(localStorage.getItem('all_Items')); 
-      
-          // 3-1. 저장했던 데이터가 있을 경우
-          if(previousItem !== null){
-            // 중복 체크를 시행함
-            const newItem = data.filter((item) => { 
-              let result = 0;
-              for(let i=0; i<previousItem.length; i++){(previousItem[i].id === item.id) && (result = result + 1)} 
-              return (result === 0);
-            })
-      
-            // 기존 + 신규 데이터 합산한 새로운 데이터 -> 로컬 데이터에 저장
-            const newItemList =  [...previousItem, ...newItem] 
-            localStorage.setItem('all_Items', JSON.stringify(newItemList));
-
-            // 3-2. 저장했던 데이터가 없을 경우
-          } else {
-            // 서버에서 받아온 데이터 저장 
-            localStorage.setItem('all_Items', JSON.stringify(data));}
-
-        } catch (error) {
-          console.log('Response error', error)}
-        }
-  
-      request();
-
-      if(filter === '' || filter === 'all'){
-        setItems(all_Items);
-
-      } else {
-        const filtered_items = all_Items.filter((item) => item.type === filter);
-        setItems(filtered_items)
-      }
-
-      }, [filter])
-
-
-
+      }, [])
 
 
       // 무한 스크롤 -> 레퍼런스 참고해서 구현함 => 이를 활용해서 데이터 올바르게 처리할 로직 구현해야 함 (https://abangpa1ace.tistory.com/118) 참고
@@ -82,49 +42,32 @@ function ItemListPage ({ bookmark_List, setBookmark_List }) {
 
         if (scrollTop + clientHeight >= scrollHeight) {
 
+          fetch('http://cozshopping.codestates-seb.link/api/v1/products?count=8')
+            .then(res => res.json())
+            .then(data => {
 
-          const request = async () => {
-            try {
-            
-              const res = await fetch('http://cozshopping.codestates-seb.link/api/v1/products?count=8') 
-              const data = await res.json();
-          
-              // 2. 기존에 저장했던 데이터를 불러와서
-              const previousItem = JSON.parse(localStorage.getItem('all_Items')); 
-          
-              // 3-1. 저장했던 데이터가 있을 경우
-              if(previousItem !== null){
-                // 중복 체크를 시행함
-                const newItem = data.filter((item) => { 
-                  let result = 0;
-                  for(let i=0; i<previousItem.length; i++){(previousItem[i].id === item.id) && (result = result + 1)} 
-                  return (result === 0);
-                })
-          
-                // 기존 + 신규 데이터 합산한 새로운 데이터 -> 로컬 데이터에 저장
-                const newItemList =  [...previousItem, ...newItem] 
-                localStorage.setItem('all_Items', JSON.stringify(newItemList));
-    
-                // 3-2. 저장했던 데이터가 없을 경우
+              const existingItem = JSON.parse(localStorage.getItem('all_Items'));
+
+              const notDuplicateItem = data.filter(item => {
+                let result = 0;
+                for(let i=0; i<existingItem.length; i++){(existingItem[i].id === item.id) && (result = result + 1)} 
+                return (result === 0);
+              })
+
+              const renewalItem = [...existingItem, ...notDuplicateItem];
+              localStorage.setItem('all_Items', JSON.stringify(renewalItem));
+
+
+              if(filter === '' || filter === 'all'){
+                setItems(renewalItem);
+        
               } else {
-                // 서버에서 받아온 데이터 저장 
-                localStorage.setItem('all_Items', JSON.stringify(data));}
-    
-            } catch (error) {
-              console.log('Response error', error)}
-            }
-      
-          request();
-    
-          if(filter === '' || filter === 'all'){
-            setItems(all_Items);
-    
-          } else {
-            const filtered_items = all_Items.filter((item) => item.type === filter);
-            setItems(filtered_items)
-          }
-          
+                const filtered_items = renewalItem.filter((item) => item.type === filter);
+                setItems(filtered_items)
 
+              }})
+              .catch(error => console.error('Response error', error))
+          
           window.scrollTo(0, scrollTop-1)
         }
       }
@@ -193,5 +136,4 @@ const ItemBox = styled.div`
     flex-direction: row;
     justify-content: center;
     flex-wrap: wrap;
-
 `

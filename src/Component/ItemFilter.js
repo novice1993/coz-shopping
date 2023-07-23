@@ -6,34 +6,22 @@ import categoryImg from '../img/category.png';
 import exhibitionImg from '../img/exhibition.png';
 import brandImg from '../img/brand.png';
 
-const Container = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 40px;
-
-`
-
-const ButtonContainer = styled.div`
-    margin: 10px;
-
-    &:hover {
-        cursor: pointer;
-    }
-`
-
-const Img = styled.img`
-    width: 82px;
-    height: 82px;
-    border: 1px;
-    border-radius: 50%;
-`
-
-const Text = styled.div`
-    text-align: center;
-`
 
 function ItemFilter ({ setFilter }) {
+
+    // 🔴 필터링 관련 상태 및 로직을 해당 컴포넌트로 옮기는 게 더 직관적인듯
+    
+    // if(filter === '' || filter === 'all'){
+    //     setItems(all_Items);
+
+    //   } else {
+    //     const filtered_items = all_Items.filter((item) => item.type === filter);
+    //     setItems(filtered_items)
+    //   }
+
+    //   }, [filter])
+
+
 
     return (
         <Container>
@@ -66,3 +54,30 @@ function ItemFilter ({ setFilter }) {
 }
 
 export default ItemFilter;
+
+// 컴포넌트 생성
+const Container = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 40px;
+
+`
+const ButtonContainer = styled.div`
+    margin: 10px;
+
+    &:hover {
+        cursor: pointer;
+    }
+`
+
+const Img = styled.img`
+    width: 82px;
+    height: 82px;
+    border: 1px;
+    border-radius: 50%;
+`
+
+const Text = styled.div`
+    text-align: center;
+`

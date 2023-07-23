@@ -4,7 +4,6 @@ import Header from "../Component/MainComponent/Header";
 import Footer from "../Component/MainComponent/Footer";
 import ItemFilter from "../Component/ItemFilter";
 import Item from "../Component/Item";
-import Toast from "../Component/Toast";
 
 
 const Container = styled.div`
@@ -39,7 +38,6 @@ const ItemBox = styled.div`
     justify-content: center;
     flex-wrap: wrap;
 
-    /* gap: 95px; */
 `
 
 
@@ -48,8 +46,7 @@ function ItemListPage ({ bookmark_List, setBookmark_List }) {
     const [items, setItems] = useState([]); // 서버에서 받아오는 상품 데이터
     const [filter, setFilter] = useState(''); 
     const [index, setIndex] = useState(0); // 화면에 표시할 아이템 개수 관련 상태
-    const [toast, setToast] = useState(false); // toast 메세지 띄울지 여부
-    const [toastContent, setToastContent] = useState(''); // toast에 들어가는 문구
+
 
     const all_Items = JSON.parse(localStorage.getItem('all_Items')); // 로컬에 저장한 상품 데이터
 
@@ -140,15 +137,13 @@ function ItemListPage ({ bookmark_List, setBookmark_List }) {
                     {items.map((item) => {
                         return <Item 
                         key={item.id} item={item} 
-                        bookmark_List={bookmark_List} setBookmark_List={setBookmark_List}
-                        setToast={setToast} setToastContent={setToastContent}/>
+                        bookmark_List={bookmark_List} setBookmark_List={setBookmark_List}/>
                     })}
                 </ItemBox>
             </Main>
             <FooterBox>
                 <Footer />
             </FooterBox>
-            <Toast toast={toast} toastContent={toastContent}/>
         </Container>
     )
 }

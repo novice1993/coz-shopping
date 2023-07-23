@@ -23,7 +23,7 @@ const ImgContainer = styled.div`
 
 const Img = styled.img`
     z-index: 0;
-    width: 264px;
+    width: 264px
     height: 210px;
     border-radius: 12px;
     border: 1px solid black;

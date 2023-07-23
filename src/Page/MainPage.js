@@ -4,7 +4,7 @@ import Header from "../Component/MainComponent/Header";
 import Footer from "../Component/MainComponent/Footer";
 import ItemList from "../Component/MainComponent/ItemList";
 import BookmarkList from "../Component/MainComponent/BookmarkList";
-import Toast from "../Component/Toast";
+
 
 const Main = styled.main`
   display: flex;
@@ -32,8 +32,6 @@ const Container = styled.div`
 function MainPage ({ bookmark_List, setBookmark_List }) {
 
   const [items, setItems] = useState([]); // 서버에서 받아온 상품 리스트
-  const [toast, setToast] = useState(false); // toast 메세지 띄울지 여부
-  const [toastContent, setToastContent] = useState(''); // toast에 들어가는 문구
   
 
   useEffect(() => {
@@ -57,16 +55,13 @@ function MainPage ({ bookmark_List, setBookmark_List }) {
       </header>
       <Main>
         <Container>
-          <ItemList items={items}  bookmark_List={bookmark_List} setBookmark_List={setBookmark_List}
-          setToast={setToast} setToastContent={setToastContent}/> </Container>
+          <ItemList items={items}  bookmark_List={bookmark_List} setBookmark_List={setBookmark_List}/></Container>
         <Container> 
-          <BookmarkList bookmark_List={bookmark_List} setBookmark_List={setBookmark_List}
-          setToast={setToast} setToastContent={setToastContent}/> </Container>
+          <BookmarkList bookmark_List={bookmark_List} setBookmark_List={setBookmark_List}/> </Container>
       </Main>
       <footer>
         <Footer />
       </footer>
-      <Toast toast={toast} toastContent={toastContent}/>
       </>
     );
   }

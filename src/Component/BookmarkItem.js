@@ -2,8 +2,15 @@ import { styled } from "styled-components";
 import { useState, useEffect } from "react";
 import Modal from "./Modal";
 
-
 // 전체 type 공통 적용
+
+const Container = styled.div`
+    margin-left: 45px;
+    margin-right: 45px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+`
+
 const ContentContainer = styled.div`
     display: flex;
     flex-direction: row;
@@ -57,46 +64,63 @@ const Followers = styled.div`
     text-align: right;
 `
 
-function BookmarkItem ({ bookmarkItem, bookmark_List, setBookmark_List, bookmarkPage_Items, setBookmarkPage}) {
+function BookmarkItem ({
+     bookmarkItem, // 렌더링 할 개별 아이템
+     bookmark_List, setBookmark_List,
+     all_bookmark, index, filter,  // 1) 로컬 스토리지 (북마크 리스트)  2) 렌더링할 아이템 기준 index  3) 필터링 조건
+     setToast, setToastContent
+    }) {
 
-    const [bookmark, setBookmark] = useState(true); // 아이템 북마크 여부
-    const [modal, setModal] = useState(false); // 모달창 on/off 
+    const [bookmark, setBookmark] = useState(true); 
+    const [modal, setModal] = useState(false); 
+
+    const bookmarkButtonClick = () => {
+        setBookmark(!bookmark)
+        setToast(true)}
+
+    const modalButtonClick = () => { setModal(!modal) }
 
 
-    const bookmarkButtonClick = () => { 
-        setBookmark(!bookmark);
-    }
-
-    const modalButtonClick = () => {
-        setModal(!modal);
-    }
-
-
+    // 북마크 취소 -> 1) 로컬 스토리지 데이터 갱신  2) 전역 상태 변경 ( 북마크 리스트에서 해당 아이템 삭제 )
     useEffect(() => {
+
         if(!bookmark){
-            setBookmark_List(bookmark_List.filter((item) => {
-                return item.id !== bookmarkItem.id
-            }))
 
-            if(bookmarkPage_Items !== undefined ){ // 북마크 리스트 페이지에서 화면에 표시되는 데이터 갱신
-                setBookmarkPage(bookmarkPage_Items.filter((item) => {
-                    return item.id !== bookmarkItem.id
-                }))
+            setToastContent('상품이 북마크에서 제거되었습니다.');
+            setTimeout(() => { setToast(false) }, 3000);
+            
+            const bookmarkData = (all_bookmark.filter((item) => item.id !== bookmarkItem.id)) // 갱신된 북마크 리스트 (북마크 해제한 아이템 제외)
+            localStorage.setItem('bookmark', JSON.stringify(bookmarkData));
+
+            // 1. MainPage의 BookmarkList에서 아이템 삭제했을 때
+            if (filter === undefined) {
+                setBookmark_List(bookmarkData)}
+
+            // 2. BookmarkListPage 에서 아이템 삭제했을 때 -> filter 조건에 맞춰서 렌더링 설정
+            else {
+                if(filter === '' || filter === 'all'){
+                    const data = bookmarkData.filter((item, idx) => (index-8 <= idx && idx < index))
+                    setBookmark_List(data)}
+        
+                else {
+                    const filtered = bookmarkData.filter((item) => item.type === filter);
+                    const filtered_data = filtered.filter((item, idx) => (index-8 <= idx && idx < index));
+                    setBookmark_List(filtered_data)}
             }
-        }
-    }, [bookmark]) // 북마크에 변화 (버튼 클릭) -> 화면 렌더링에 관여하는 데이터를 갱신 (해당 화면에서는 갱신 ok)
 
-    useEffect(() => {
-        const bookmarkData = JSON.stringify(bookmark_List) // 로컬 스토리지에 저장
-        localStorage.setItem('bookmark', bookmarkData);
-
-    }, [bookmark_List])
+        }}, [bookmark]) 
+        
 
     return (
         <>
-        {(modal) && <Modal item={bookmarkItem} setModal={setModal} bookmark={bookmark} setBookmark={setBookmark}/>}
+        {(modal) && 
+            <Modal
+            item={bookmarkItem} setModal={setModal}
+            bookmark={bookmark} setBookmark={setBookmark}
+            setToast={setToast} setToastContent={setToastContent}/>}
+
         {(bookmarkItem.type === 'Product') && ( // product type
-            <div onClick={modalButtonClick}>
+            <Container onClick={modalButtonClick}>
                 <Img src={bookmarkItem.image_url}/>
                 <BookmarkButton onClick={(event) => {
                     event.stopPropagation();
@@ -106,32 +130,32 @@ function BookmarkItem ({ bookmarkItem, bookmark_List, setBookmark_List, bookmark
                     <DiscountPer>{(bookmarkItem.discountPercentage !== null) && `${bookmarkItem.discountPercentage}%`}</DiscountPer>
                 </ContentContainer>
                 <Price>{parseInt(bookmarkItem.price).toLocaleString()}원</Price>
-            </div>
+            </Container>
         )}
 
         {(bookmarkItem.type === 'Category') && ( // Category type
-            <div onClick={modalButtonClick}>
+            <Container onClick={modalButtonClick}>
                 <Img src={bookmarkItem.image_url}/>
                 <BookmarkButton onClick={(event) => {
                     event.stopPropagation();
                     bookmarkButtonClick()}} bookmark={bookmark}>&#9733;</BookmarkButton>
                 <Title># {bookmarkItem.title}</Title>
-            </div>
+            </Container>
         )}
         
         {(bookmarkItem.type === 'Exhibition') && ( // Exhibition type
-            <div onClick={modalButtonClick}>
+            <Container onClick={modalButtonClick}>
                 <Img src={bookmarkItem.image_url}/>
                 <BookmarkButton onClick={(event) => {
                     event.stopPropagation();
                     bookmarkButtonClick()}} bookmark={bookmark}>&#9733;</BookmarkButton>
                 <Title>{bookmarkItem.title}</Title>
                 <SubTitle>{bookmarkItem.sub_title}</SubTitle>
-            </div>
+            </Container>
         )}
         
         {(bookmarkItem.type === 'Brand') && ( // Brand type
-            <div onClick={modalButtonClick}>
+            <Container onClick={modalButtonClick}>
                 <Img src={bookmarkItem.brand_image_url}/>
                 <BookmarkButton onClick={(event) => {
                     event.stopPropagation();
@@ -141,7 +165,7 @@ function BookmarkItem ({ bookmarkItem, bookmark_List, setBookmark_List, bookmark
                     <InterestedCustomer>관심고객수</InterestedCustomer>
                 </ContentContainer>
                 <Followers>{parseInt(bookmarkItem.follower).toLocaleString()}</Followers>
-            </div>
+            </Container>
         )}
         </>
     )

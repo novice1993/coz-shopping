@@ -1,7 +1,8 @@
 import { styled } from "styled-components";
+import { useEffect } from "react";
 
 const Background = styled.div`
-    position: absolute;
+    position: fixed;
     z-index: 99;
     top: 0;
     left: 0;
@@ -66,16 +67,30 @@ const Title = styled.div`
     font-size: 1.5rem;
 `
 
+function Modal ({ item, setModal, bookmark, setBookmark, setToast, setToastContent }) {
 
+    const bookmarkButtonClick = () => {
+        setBookmark(!bookmark)
+        setToast(true)}
 
-function Modal ({ item, setModal, bookmark, setBookmark }) {
+    useEffect(() => {
+
+        if(bookmark === true){
+            setToastContent('상품이 북마크에 추가되었습니다.');
+            setTimeout(() => { setToast(false) }, 3000);
+        } else {
+            setToastContent('상품이 북마크에서 제거되었습니다.');
+            setTimeout(() => { setToast(false) }, 3000);
+        }
+    }, [bookmark])
+
     return (
         <Background onClick={() => {setModal(false)}}>
             <Content>
                 <img src={(item.type === 'Brand') ? item.brand_image_url : item.image_url} />
                 <ModalCloseButton onClick={() => {setModal(false)}}>&#10005;</ModalCloseButton>
                 <Container>
-                    <BookmarkButton bookmark={bookmark} onClick={() => {setBookmark(!bookmark)}} >&#9733;</BookmarkButton>
+                    <BookmarkButton bookmark={bookmark} onClick={bookmarkButtonClick} >&#9733;</BookmarkButton>
                     <Title>{(item.type === 'Category') && '# '}{(item.type === 'Brand') ? item.brand_name : item.title}</Title>
                 </Container>
             </Content>

@@ -4,6 +4,7 @@ const Container = styled.div`
     height: 100%;
     display: flex;
     flex-direction: column;
+    border-top: 0.1px solid gray;
 
     color: gray;
 `
@@ -20,9 +21,14 @@ const Content2 = styled.div`
     flex: 1 0 0;
     text-align: center;
 `
+const Test = styled.div`
+    text-align: center;
+    font-size: 1.5rem;
+`
 
 
 function Footer () {
+
     return (
         <Container>
             <Content1>개인정보 처리방침 | 이용 약관</Content1>

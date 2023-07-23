@@ -33,23 +33,7 @@ const Text = styled.div`
     text-align: center;
 `
 
-function ItemFilter ({ setItems, all_Items, bookmarkPage_Items }) {
-
-    const [filter, setFilter] = useState(''); // 필터링 조건
-
-    useEffect(() => {
-
-        // 1. 상품 리스트에서 필터링 할 때
-        if(bookmarkPage_Items === undefined){
-            (filter === 'all') ? setItems(all_Items)
-            : setItems(all_Items.filter((item) => item.type === filter))
-        // 2. 북마크 리스트에서 필터링 할 때
-        } else {
-            (filter === 'all') ? setItems(all_Items)
-            : setItems(bookmarkPage_Items.filter((item) => item.type === filter))
-        }
-    }, [filter])
-
+function ItemFilter ({ setFilter }) {
 
     return (
         <Container>

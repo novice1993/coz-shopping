@@ -1,5 +1,6 @@
 import { styled } from "styled-components";
 import BookmarkItem from "../BookmarkItem";
+import { useEffect } from "react";
 
 const Container = styled.div`
     height: 100%;
@@ -23,7 +24,6 @@ const ItemBox = styled.div`
     flex-direction: row;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 95px;
 
 `
 
@@ -40,20 +40,29 @@ const Emptybox = styled.div`
     border: 1px solid gray;
     width: 100%;
     margin: 10px;
+    margin-bottom: 20px;
     margin-left: 45px;
     margin-right: 45px;
 
 `
 
 
-function BookmarkList ({ bookmark_List, setBookmark_List }) {
+function BookmarkList ({ bookmark_List, setBookmark_List, setToast, setToastContent }) {
+
+    // MainPage로 이동 시 -> 로컬 스토리지에 있는 전체 북마크 리스트를 화면에 불러옴
+    const all_bookmark = JSON.parse(localStorage.getItem('bookmark'));
+    useEffect(() => { setBookmark_List(all_bookmark) }, [])
+
     return (
         <Container>
             <Title>북마크 리스트</Title>
             <ItemBox>
                 { (bookmark_List.length !== 0) ?
                 bookmark_List.map((bookmarkItem, idx) => {
-                    return (idx < 4) && <BookmarkItem key={bookmarkItem.id} bookmarkItem={bookmarkItem} bookmark_List={bookmark_List} setBookmark_List={setBookmark_List}/>
+                    return (idx < 4) && <BookmarkItem key={bookmarkItem.id}
+                    bookmarkItem={bookmarkItem} bookmark_List={bookmark_List} setBookmark_List={setBookmark_List}
+                    all_bookmark={all_bookmark}
+                    setToast={setToast} setToastContent={setToastContent}/>
                 })
                 : <Emptybox>상품이 없습니다</Emptybox>
                 }

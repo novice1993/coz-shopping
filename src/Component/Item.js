@@ -63,15 +63,14 @@ const Followers = styled.div`
 `
 
 // setToast={setToast} setToastContent={setToastContent}
-function Item ({ item, bookmark_List, setBookmark_List, setToast, setToastContent }) {
+function Item ({ item, bookmark_List, setBookmark_List, }) {
 
     const [bookmark, setBookmark] = useState(false); 
     const [modal, setModal] = useState(false); 
     const check = bookmark_List.find((bookmakrItem) => bookmakrItem.id === item.id); // 이전에 북마크 등록된 아이템인지 체크
 
     const bookmarkButtonClick = () => {
-        setBookmark(!bookmark)
-        setToast(true)}
+        setBookmark(!bookmark)}
 
     const modalButtonClick = () => { setModal(true); }
 
@@ -83,17 +82,11 @@ function Item ({ item, bookmark_List, setBookmark_List, setToast, setToastConten
 
         if(bookmark === true && check === undefined){
 
-            setToastContent('상품이 북마크에 추가되었습니다.');
-            setTimeout(() => { setToast(false) }, 3000);
-
             const newData = [...bookmark_List, item]
             localStorage.setItem('bookmark', JSON.stringify(newData));
             setBookmark_List(newData);
 
         } else if (bookmark === false) {
-
-            setToastContent('상품이 북마크에서 제거되었습니다.');
-            setTimeout(() => { setToast(false) }, 3000);
             
             const newData = bookmark_List.filter((bookmarkItem) => {return bookmarkItem.id !== item.id});
             
@@ -115,8 +108,7 @@ function Item ({ item, bookmark_List, setBookmark_List, setToast, setToastConten
         {(modal) && 
             <Modal
             item={item} setModal={setModal}
-            bookmark={bookmark} setBookmark={setBookmark}
-            setToast={setToast} setToastContent={setToastContent}/>}
+            bookmark={bookmark} setBookmark={setBookmark}/>}
 
         {(item.type === 'Product') && ( // product type
             <Container onClick={modalButtonClick}>

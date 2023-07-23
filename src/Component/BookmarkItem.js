@@ -17,13 +17,9 @@ const ContentContainer = styled.div`
     justify-content: space-between;
 `
 
-const ImgContainer = styled.div`
-    position: relative;
-`
-
 const Img = styled.img`
     z-index: 0;
-    width: 264px
+    width: 264px;
     height: 210px;
     border-radius: 12px;
     border: 1px solid black;
@@ -68,15 +64,13 @@ function BookmarkItem ({
      bookmarkItem, // 렌더링 할 개별 아이템
      bookmark_List, setBookmark_List,
      all_bookmark, index, filter,  // 1) 로컬 스토리지 (북마크 리스트)  2) 렌더링할 아이템 기준 index  3) 필터링 조건
-     setToast, setToastContent
     }) {
 
     const [bookmark, setBookmark] = useState(true); 
     const [modal, setModal] = useState(false); 
 
     const bookmarkButtonClick = () => {
-        setBookmark(!bookmark)
-        setToast(true)}
+        setBookmark(!bookmark)}
 
     const modalButtonClick = () => { setModal(!modal) }
 
@@ -85,9 +79,6 @@ function BookmarkItem ({
     useEffect(() => {
 
         if(!bookmark){
-
-            setToastContent('상품이 북마크에서 제거되었습니다.');
-            setTimeout(() => { setToast(false) }, 3000);
             
             const bookmarkData = (all_bookmark.filter((item) => item.id !== bookmarkItem.id)) // 갱신된 북마크 리스트 (북마크 해제한 아이템 제외)
             localStorage.setItem('bookmark', JSON.stringify(bookmarkData));
@@ -116,8 +107,7 @@ function BookmarkItem ({
         {(modal) && 
             <Modal
             item={bookmarkItem} setModal={setModal}
-            bookmark={bookmark} setBookmark={setBookmark}
-            setToast={setToast} setToastContent={setToastContent}/>}
+            bookmark={bookmark} setBookmark={setBookmark}/>}
 
         {(bookmarkItem.type === 'Product') && ( // product type
             <Container onClick={modalButtonClick}>

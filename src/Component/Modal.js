@@ -67,22 +67,11 @@ const Title = styled.div`
     font-size: 1.5rem;
 `
 
-function Modal ({ item, setModal, bookmark, setBookmark, setToast, setToastContent }) {
+function Modal ({ item, setModal, bookmark, setBookmark, }) {
 
     const bookmarkButtonClick = () => {
-        setBookmark(!bookmark)
-        setToast(true)}
+        setBookmark(!bookmark)}
 
-    useEffect(() => {
-
-        if(bookmark === true){
-            setToastContent('상품이 북마크에 추가되었습니다.');
-            setTimeout(() => { setToast(false) }, 3000);
-        } else {
-            setToastContent('상품이 북마크에서 제거되었습니다.');
-            setTimeout(() => { setToast(false) }, 3000);
-        }
-    }, [bookmark])
 
     return (
         <Background onClick={() => {setModal(false)}}>

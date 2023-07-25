@@ -2,7 +2,7 @@ import { useState } from "react";
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
 import Menu from "./Menu";
-import LogoImg from '../../img/logo.jpg'
+import LogoImg from '../img/logo.jpg'
 
 const Container = styled.nav`
  height: 100%;

@@ -1,106 +1,64 @@
 import { styled } from "styled-components";
 import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { addBookmark, deleteBookmark } from "../redux/Bookmark-Reducer";
 import Modal from "./Modal";
 
-// 전체 type 공통 적용
-const Container = styled.div`
-    margin-left: 45px;
-    margin-right: 45px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-`
 
-const ContentContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-`
-
-const Img = styled.img`
-    position: relative;
-    z-index: -200;
-    width: 264px;
-    height: 210px;
-    border-radius: 12px;
-    border: 1px solid black;
-
-    margin-bottom: 5px;
-`
-
-const BookmarkButton = styled.div`
-    position: absolute;
-    z-index: 50;
-    transform: translate(227px, -48px);
-    color: ${(props) => (props.bookmark) ? '#FFD361;' : '#DFDFDF;'};
-    font-size: 1.5rem;
-    cursor: pointer;
-`
-
-const Title = styled.div`
-    font-weight: bolder;
-`
-
-// Product type
-const Price = styled.div`
-    text-align: right;
-`
-const DiscountPer = styled.div`
-    font-weight: bolder;
-    color: blue;
-`
-
-// Exhibition type 
-const SubTitle = styled.div`
-`
-
-// Brand type
-const InterestedCustomer = styled.div`
-    font-weight: bolder;
-`
-
-const Followers = styled.div`
-    text-align: right;
-`
-
-// setToast={setToast} setToastContent={setToastContent}
-function Item ({ item, bookmark_List, setBookmark_List, }) {
+function Item ({ item }) {
 
     const [bookmark, setBookmark] = useState(false); 
     const [modal, setModal] = useState(false); 
-    const check = bookmark_List.find((bookmakrItem) => bookmakrItem.id === item.id); // 이전에 북마크 등록된 아이템인지 체크
+
+    // redux 관리 상태
+    const bookmarkList = useSelector(state => state.bookmarkList);
+    const dispatch = useDispatch();
+
+    // bookmark_List -> bookmark 관련 전역 상태
+    let previousBookmarkAdded = bookmarkList.find(bookmakrItem => bookmakrItem.id === item.id); // 이전에 북마크 등록된 아이템인지 체크
+    previousBookmarkAdded === undefined ? (previousBookmarkAdded = 'no') : (previousBookmarkAdded = 'yes')
 
     const bookmarkButtonClick = () => {
-        setBookmark(!bookmark)}
+        setBookmark(!bookmark)
+    }
 
-    const modalButtonClick = () => { setModal(true); }
+    const modalButtonClick = () => { setModal(true);
+    }
+
 
     useEffect(() => { // item 정보 다시 불러왔을 때 -> 이전에 북마크 등록한 item일 경우 -> true값 부여
-        (check !== undefined) && setBookmark(true)}, [item]) 
+        (previousBookmarkAdded === 'yes') && setBookmark(true)}, [item]) 
 
 
     useEffect(() => { // 북마크 신규 등록 or 해제 -> 1) 로컬 데이터 갱신  2) 북마크 전역상태 갱신
 
-        if(bookmark === true && check === undefined){
+        if(bookmark === true && previousBookmarkAdded === 'no'){
 
-            const newData = [...bookmark_List, item]
-            localStorage.setItem('bookmark', JSON.stringify(newData));
-            setBookmark_List(newData);
+            dispatch(addBookmark(item));
+            localStorage.setItem('bookmark', JSON.stringify(bookmarkList));
 
         } else if (bookmark === false) {
+                
+            dispatch(deleteBookmark(item));
+            localStorage.setItem('bookmark', JSON.stringify(bookmarkList)); 
             
-            const newData = bookmark_List.filter((bookmarkItem) => {return bookmarkItem.id !== item.id});
             
-            // 상품 리스트에서 북마크 해제 했을 때
-            if(bookmark_List.length !== newData.length){
-                localStorage.setItem('bookmark', JSON.stringify(newData));
-                setBookmark_List(newData)
-            }
+            // 🔴 기존 로직이 잘 이해가 안감 (일단 보류)
+            // const newData = bookmarkList.filter((bookmarkItem) => {return bookmarkItem.id !== item.id});
+            // // 상품 리스트에서 북마크 해제 했을 때
+            // if(bookmarkList.length !== newData.length){  
+            //     // localStorage.setItem('bookmark', JSON.stringify(newData));
+            //     // setBookmark_List(newData) 
+            // }
+
         }
     }, [bookmark])
 
     // 북마크 리스트에서 북마크 해제했을 때 (상품 리스트에도 연동)
     useEffect(() => {
-        (check === undefined) && setBookmark(false)}, [bookmark_List])
+        (previousBookmarkAdded === 'no') && setBookmark(false)
+        console.log(bookmarkList);
+    }, [bookmarkList])
 
 
     return (
@@ -163,3 +121,64 @@ function Item ({ item, bookmark_List, setBookmark_List, }) {
 }
 
 export default Item;
+
+
+// 전체 type 공통 적용
+const Container = styled.div`
+    margin-left: 45px;
+    margin-right: 45px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+`
+
+const ContentContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+`
+
+const Img = styled.img`
+    position: relative;
+    z-index: -200;
+    width: 264px;
+    height: 210px;
+    border-radius: 12px;
+    border: 1px solid black;
+
+    margin-bottom: 5px;
+`
+
+const BookmarkButton = styled.div`
+    position: absolute;
+    z-index: 50;
+    transform: translate(227px, -48px);
+    color: ${(props) => (props.bookmark) ? '#FFD361;' : '#DFDFDF;'};
+    font-size: 1.5rem;
+    cursor: pointer;
+`
+
+const Title = styled.div`
+    font-weight: bolder;
+`
+
+// Product type
+const Price = styled.div`
+    text-align: right;
+`
+const DiscountPer = styled.div`
+    font-weight: bolder;
+    color: blue;
+`
+
+// Exhibition type 
+const SubTitle = styled.div`
+`
+
+// Brand type
+const InterestedCustomer = styled.div`
+    font-weight: bolder;
+`
+
+const Followers = styled.div`
+    text-align: right;
+`

@@ -1,9 +1,9 @@
 import { styled } from "styled-components";
 import { useState, useEffect } from "react";
-import Header from "../Component/MainComponent/Header";
-import Footer from "../Component/MainComponent/Footer";
-import ItemList from "../Component/MainComponent/ItemList";
-import BookmarkList from "../Component/MainComponent/BookmarkList";
+import Header from "../Component/Header";
+import Footer from "../Component/Footer";
+import ItemList from "../Component/ItemList";
+import BookmarkList from "../Component/BookmarkList";
 
 
 const Main = styled.main`
@@ -16,7 +16,7 @@ const Container = styled.div`
   padding: 0px;
 `
 
-function MainPage ({ bookmark_List, setBookmark_List }) {
+function MainPage () {
 
   const [items, setItems] = useState([]); // 서버에서 받아온 상품 리스트
   
@@ -42,9 +42,9 @@ function MainPage ({ bookmark_List, setBookmark_List }) {
       </header>
       <Main>
         <Container>
-          <ItemList items={items}  bookmark_List={bookmark_List} setBookmark_List={setBookmark_List}/></Container>
+          <ItemList items={items}/></Container>
         <Container> 
-          <BookmarkList bookmark_List={bookmark_List} setBookmark_List={setBookmark_List}/> </Container>
+          <BookmarkList/> </Container>
       </Main>
       <footer>
         <Footer />

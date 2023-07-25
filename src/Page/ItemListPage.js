@@ -1,23 +1,15 @@
 import { styled } from "styled-components";
 import { useState, useEffect } from "react";
-import Header from "../Component/MainComponent/Header";
-import Footer from "../Component/MainComponent/Footer";
+import Header from "../Component/Header";
+import Footer from "../Component/Footer";
 import ItemFilter from "../Component/ItemFilter";
 import Item from "../Component/Item";
 
 
-function ItemListPage ({ bookmark_List, setBookmark_List }) {
+function ItemListPage () {
 
     const [items, setItems] = useState([]); // 서버에서 받아오는 상품 데이터
     const [filter, setFilter] = useState(''); 
-
-    /**
-     * 🔴 ItemListPage 무한스크롤 렌더링 관련 로직은 수정함
-     *    1) 필터링 관련 로직 수정 필요 -> 상태 어디서 관리할 것인가? + 구현 로직
-     *      1-2) 필터 관련 상태/상태관리함수 네이밍 수정
-     *    2) 무한 스크롤 다시 알아본 후 로직 수정 (지금 가독성이 너무 떨어짐 + 내가 제대로 이해 못한 코드가 많음)
-     * 
-     */
 
 
 
@@ -87,9 +79,7 @@ function ItemListPage ({ bookmark_List, setBookmark_List }) {
                 <ItemFilter setFilter={setFilter}/>
                 <ItemBox>
                     {items.map((item) => {
-                        return <Item 
-                        key={item.id} item={item} 
-                        bookmark_List={bookmark_List} setBookmark_List={setBookmark_List}/>
+                        return <Item key={item.id} item={item}/>
                     })}
                 </ItemBox>
             </Main>

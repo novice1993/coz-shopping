@@ -63,7 +63,7 @@ const Followers = styled.div`
 function BookmarkItem ({
      bookmarkItem, // 렌더링 할 개별 아이템
      bookmark_List, setBookmark_List,
-     all_bookmark, index, filter,  // 1) 로컬 스토리지 (북마크 리스트)  2) 렌더링할 아이템 기준 index  3) 필터링 조건
+     all_bookmark, filter,  // 1) 로컬 스토리지 (북마크 리스트)  2) 렌더링할 아이템 기준 index  3) 필터링 조건
     }) {
 
     const [bookmark, setBookmark] = useState(true); 
@@ -90,12 +90,9 @@ function BookmarkItem ({
             // 2. BookmarkListPage 에서 아이템 삭제했을 때 -> filter 조건에 맞춰서 렌더링 설정
             else {
                 if(filter === '' || filter === 'all'){
-                    const data = bookmarkData.filter((item, idx) => (index-8 <= idx && idx < index))
-                    setBookmark_List(data)}
-        
-                else {
-                    const filtered = bookmarkData.filter((item) => item.type === filter);
-                    const filtered_data = filtered.filter((item, idx) => (index-8 <= idx && idx < index));
+                    setBookmark_List(bookmarkData)
+                } else {
+                    const filtered_data = bookmarkData.filter((item) => item.type === filter);
                     setBookmark_List(filtered_data)}
             }
 

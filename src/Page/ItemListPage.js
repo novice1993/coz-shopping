@@ -48,13 +48,13 @@ function ItemListPage ({ bookmark_List, setBookmark_List }) {
 
               const existingItem = JSON.parse(localStorage.getItem('all_Items'));
 
-              const notDuplicateItem = data.filter(item => {
+              const notDuplicatedItem = data.filter(item => {
                 let result = 0;
                 for(let i=0; i<existingItem.length; i++){(existingItem[i].id === item.id) && (result = result + 1)} 
                 return (result === 0);
               })
 
-              const renewalItem = [...existingItem, ...notDuplicateItem];
+              const renewalItem = [...existingItem, ...notDuplicatedItem];
               localStorage.setItem('all_Items', JSON.stringify(renewalItem));
 
 

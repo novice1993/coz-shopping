@@ -1,11 +1,12 @@
 import { styled } from "styled-components";
-import { useSelector } from "react-redux";
+import useGetItemList from "../Hooks/useGetItemList";
 import Item from "./Item";
+import { useEffect } from "react";
 
 
 function ItemList () {
 
-    const itemList = useSelector(state => state.itemList);
+    const itemList = useGetItemList();
 
     return (
         <Container>

@@ -5,6 +5,7 @@ import { addBookmark, deleteBookmark } from "../redux/Bookmark-Reducer";
 import Modal from "./Modal";
 
 
+
 function Item ({ item }) {
 
     const bookmarkList = useSelector(state => state.bookmarkList);
@@ -27,18 +28,18 @@ function Item ({ item }) {
 
 
     useEffect(() => { 
-        
-        if(bookmark === true && previousBookmarkAdded === 'no') {dispatch(addBookmark(item))}
-        else if (bookmark === false) {dispatch(deleteBookmark(item))}
+
+        (bookmark === true && previousBookmarkAdded === 'no') && dispatch(addBookmark(item));
+        (bookmark === false) && dispatch(deleteBookmark(item));
 
     }, [bookmark])
 
 
-
-    // 북마크 리스트에서 북마크 해제했을 때 (상품 리스트에도 연동)
     useEffect(() => {
-        localStorage.setItem('bookmark', JSON.stringify(bookmarkList));
-        (previousBookmarkAdded === 'no') && setBookmark(false)
+
+        localStorage.setItem('bookmark', JSON.stringify(bookmarkList)); 
+        (previousBookmarkAdded === 'no') && setBookmark(false) // 북마크 관련 컴포넌트에서 북마크 해제 -> 상품 리스트 컴포넌트에도 연동
+
     }, [bookmarkList])
 
 

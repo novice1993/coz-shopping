@@ -1,6 +1,6 @@
 import './App.css';
 import { useState } from 'react';
-import MainPage from './Page/MainPage';
+import MainPage from './Page/MainPage'
 import ItemListPage from './Page/ItemListPage';
 import BookmarkListPage from './Page/BookmarkListPage';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -19,6 +19,10 @@ function App() {
   //
   //  순서 : (2) -> (1) -> (3)
   //  redux-toolkit 부터 적용 
+
+  // redux-toolkit 적용 -> bookmarkList, itemList 적용 완료 
+  //  => filter 관련 로직 추가 필요 
+  //  => 완료 시, 컴포넌트 재조정 
   
   
   return (

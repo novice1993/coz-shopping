@@ -1,17 +1,15 @@
 import { styled } from "styled-components";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import Header from "../Component/Header";
 import Footer from "../Component/Footer";
 import ItemFilter from "../Component/ItemFilter";
-import BookmarkItem from "../Component/BookmarkItem";
+import Item from "../Component/Item";
 
 
 function BookmarkListPage () {
 
     const bookmarkList = useSelector(state => state.bookmarkList);
-    const [filter, setFilter] = useState(''); 
-
 
   
     return (
@@ -20,10 +18,10 @@ function BookmarkListPage () {
                 <Header />
             </HeaderBox>
             <Main>
-                <ItemFilter setFilter={setFilter}/>
+                <ItemFilter/>
                 <ItemBox>
                     {bookmarkList.map((item) => {
-                        return (<BookmarkItem key={item.id} bookmarkItem={item} filter={filter}/>)
+                        return (<Item key={item.id} item={item}/>)
                     })}
                 </ItemBox>
             </Main>

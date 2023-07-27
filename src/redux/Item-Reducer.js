@@ -4,20 +4,20 @@ const itemSlice = createSlice({
     name: 'itemList',
     initialState: [],
     reducers: {
-        addItemList: (state, action) => {
+        addItemList: (previousAddedItemList, action) => {
 
             const notOverlappingItem = action.payload.filter((item) => {
 
                 let result = 0;
 
-                for(let i=0; i<state.length; i++){
-                    (state[i].id === item.id) && (result += 1)
+                for(let i=0; i<previousAddedItemList.length; i++){
+                    (previousAddedItemList[i].id === item.id) && (result += 1)
                 }
                 
                 return (result === 0);
             })
 
-            return [...state, ...notOverlappingItem];
+            return [...previousAddedItemList, ...notOverlappingItem];
         }
     }
 })

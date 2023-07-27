@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { styled } from "styled-components";
 import allImg from '../img/all.jpg';
 import productImg from '../img/product.jpg';
@@ -41,6 +40,7 @@ function ItemFilter () {
 }
 
 export default ItemFilter;
+
 
 // 컴포넌트 생성
 const Container = styled.div`

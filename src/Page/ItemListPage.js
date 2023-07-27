@@ -1,5 +1,7 @@
 import { styled } from "styled-components";
 import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { addItemList } from "../redux/Item-Reducer";
 import Header from "../Component/Header";
 import Footer from "../Component/Footer";
 import ItemFilter from "../Component/ItemFilter";
@@ -8,23 +10,20 @@ import Item from "../Component/Item";
 
 function ItemListPage () {
 
-    const [items, setItems] = useState([]); // 서버에서 받아오는 상품 데이터
-    const [filter, setFilter] = useState(''); 
+    const itemList = useSelector(state => state.itemList);
+    const dispatch = useDispatch();
+    const getItemListFromServer = async () => {
 
+      try {
+        const res = await fetch('http://cozshopping.codestates-seb.link/api/v1/products?count=8')
+        const itemListData = await res.json();
+        dispatch(addItemList(itemListData));
+        
+      } catch (error) {
+        console.log('response error', error);
 
-
-    useEffect(() => { 
-
-      setFilter(''); // 필터 초기화
-      
-      fetch('http://cozshopping.codestates-seb.link/api/v1/products?count=8')
-        .then(res => res.json())
-        .then(data => {
-          localStorage.setItem('all_Items', JSON.stringify(data));
-          setItems(data)})
-        .catch(error => console.error('response error', error))
-      
-      }, [])
+      }
+    }
 
 
       // 무한 스크롤 -> 레퍼런스 참고해서 구현함 => 이를 활용해서 데이터 올바르게 처리할 로직 구현해야 함 (https://abangpa1ace.tistory.com/118) 참고
@@ -33,35 +32,10 @@ function ItemListPage () {
         const { scrollHeight, scrollTop, clientHeight } = document.documentElement;
 
         if (scrollTop + clientHeight >= scrollHeight) {
-
-          fetch('http://cozshopping.codestates-seb.link/api/v1/products?count=8')
-            .then(res => res.json())
-            .then(data => {
-
-              const existingItem = JSON.parse(localStorage.getItem('all_Items'));
-
-              const notDuplicatedItem = data.filter(item => {
-                let result = 0;
-                for(let i=0; i<existingItem.length; i++){(existingItem[i].id === item.id) && (result = result + 1)} 
-                return (result === 0);
-              })
-
-              const renewalItem = [...existingItem, ...notDuplicatedItem];
-              localStorage.setItem('all_Items', JSON.stringify(renewalItem));
-
-
-              if(filter === '' || filter === 'all'){
-                setItems(renewalItem);
-        
-              } else {
-                const filtered_items = renewalItem.filter((item) => item.type === filter);
-                setItems(filtered_items)
-
-              }})
-              .catch(error => console.error('Response error', error))
-          
-          window.scrollTo(0, scrollTop-1)
+          getItemListFromServer();
+          window.scrollTo(0, scrollTop-1);
         }
+        
       }
 
 
@@ -76,9 +50,9 @@ function ItemListPage () {
                 <Header />
             </HeaderBox>
             <Main>
-                <ItemFilter setFilter={setFilter}/>
+                <ItemFilter/>
                 <ItemBox>
-                    {items.map((item) => {
+                    {itemList.map((item) => {
                         return <Item key={item.id} item={item}/>
                     })}
                 </ItemBox>

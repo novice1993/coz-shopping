@@ -7,57 +7,38 @@ import Modal from "./Modal";
 
 function Item ({ item }) {
 
-    const [bookmark, setBookmark] = useState(false); 
-    const [modal, setModal] = useState(false); 
-
-    // redux 관리 상태
     const bookmarkList = useSelector(state => state.bookmarkList);
     const dispatch = useDispatch();
 
-    // bookmark_List -> bookmark 관련 전역 상태
-    let previousBookmarkAdded = bookmarkList.find(bookmakrItem => bookmakrItem.id === item.id); // 이전에 북마크 등록된 아이템인지 체크
-    previousBookmarkAdded === undefined ? (previousBookmarkAdded = 'no') : (previousBookmarkAdded = 'yes')
+    let previousBookmarkAdded = bookmarkList.find(bookmakrItem => bookmakrItem.id === item.id); 
+    previousBookmarkAdded !== undefined ? (previousBookmarkAdded = 'yes') : (previousBookmarkAdded = 'no');
+
+    const [bookmark, setBookmark] = useState(previousBookmarkAdded === 'yes' ? true : false); 
+    const [modal, setModal] = useState(false); 
+
 
     const bookmarkButtonClick = () => {
         setBookmark(!bookmark)
     }
 
-    const modalButtonClick = () => { setModal(true);
+    const modalButtonClick = () => { 
+        setModal(true);
     }
 
 
-    useEffect(() => { // item 정보 다시 불러왔을 때 -> 이전에 북마크 등록한 item일 경우 -> true값 부여
-        (previousBookmarkAdded === 'yes') && setBookmark(true)}, [item]) 
+    useEffect(() => { 
+        
+        if(bookmark === true && previousBookmarkAdded === 'no') {dispatch(addBookmark(item))}
+        else if (bookmark === false) {dispatch(deleteBookmark(item))}
 
-
-    useEffect(() => { // 북마크 신규 등록 or 해제 -> 1) 로컬 데이터 갱신  2) 북마크 전역상태 갱신
-
-        if(bookmark === true && previousBookmarkAdded === 'no'){
-
-            dispatch(addBookmark(item));
-            localStorage.setItem('bookmark', JSON.stringify(bookmarkList));
-
-        } else if (bookmark === false) {
-                
-            dispatch(deleteBookmark(item));
-            localStorage.setItem('bookmark', JSON.stringify(bookmarkList)); 
-            
-            
-            // 🔴 기존 로직이 잘 이해가 안감 (일단 보류)
-            // const newData = bookmarkList.filter((bookmarkItem) => {return bookmarkItem.id !== item.id});
-            // // 상품 리스트에서 북마크 해제 했을 때
-            // if(bookmarkList.length !== newData.length){  
-            //     // localStorage.setItem('bookmark', JSON.stringify(newData));
-            //     // setBookmark_List(newData) 
-            // }
-
-        }
     }, [bookmark])
+
+
 
     // 북마크 리스트에서 북마크 해제했을 때 (상품 리스트에도 연동)
     useEffect(() => {
+        localStorage.setItem('bookmark', JSON.stringify(bookmarkList));
         (previousBookmarkAdded === 'no') && setBookmark(false)
-        console.log(bookmarkList);
     }, [bookmarkList])
 
 

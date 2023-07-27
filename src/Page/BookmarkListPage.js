@@ -13,22 +13,7 @@ function BookmarkListPage () {
     const [filter, setFilter] = useState(''); 
 
 
-    // 🔴 filter 관련 로직 다시 생각
-    // useEffect(() => { // filter 변경 -> 화면에 렌더링 되는 아이템 변화 (scroll 움직임과 연동)
   
-    //     // 1) 필터링 설정 안하거나 or '전체' 선택했을 때
-    //     if(filter === '' || filter === 'all'){
-    //         setBookmark_List(bookmarkList)
-    //     }
-
-    //     // 2) 특정 필터링 설정했을 때
-    //     else {
-    //         const filtered_data = bookmarkList.filter((item) => item.type === filter);
-    //         setBookmark_List(filtered_data)}
-
-    // }, [filter])
-
-
     return (
         <Container>
             <HeaderBox>

@@ -6,7 +6,6 @@ import { useSelector } from "react-redux";
 
 function BookmarkList () {
 
-    // MainPage로 이동 시 -> 로컬 스토리지에 있는 전체 북마크 리스트를 화면에 불러옴
     const bookmarkList = useSelector(state => state.bookmarkList);
 
     return (

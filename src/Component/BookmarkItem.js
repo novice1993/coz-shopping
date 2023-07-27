@@ -5,40 +5,30 @@ import { deleteBookmark } from "../redux/Bookmark-Reducer";
 import Modal from "./Modal";
 
 
-function BookmarkItem ({ bookmarkItem, filter }) {
+function BookmarkItem ({ bookmarkItem }) {
+
+    const bookmarkList = useSelector(state => state.bookmarkList);
+    const dispatch = useDispatch();
 
     const [bookmark, setBookmark] = useState(true); 
     const [modal, setModal] = useState(false); 
 
-    // redux에서 관리하는 bookmark 상태
-    const bookmarkList = useSelector(state => state.bookmarkList);
-    const dispatch = useDispatch();
 
-    const bookmarkButtonClick = () => {setBookmark(false)}
-    const modalButtonClick = () => {setModal(!modal)}
+    const bookmarkButtonClick = () => {
+        setBookmark(false)
+    }
+
+    const modalButtonClick = () => {
+        setModal(!modal)
+    }
 
 
-    // 북마크 취소 -> 1) 로컬 스토리지 데이터 갱신  2) 전역 상태 변경 ( 북마크 리스트에서 해당 아이템 삭제 )
     useEffect(() => {
 
         if(bookmark === false){
             
             dispatch(deleteBookmark(bookmarkItem));
             localStorage.setItem('bookmark', JSON.stringify(bookmarkList));
-
-            // 🔴 filter 관련 로직은 나중에 생각하기로 (보류)
-            // // 1. MainPage의 BookmarkList에서 아이템 삭제했을 때
-            // if (filter === undefined) {
-            //     setBookmark_List(bookmarkData)}
-
-            // // 2. BookmarkListPage 에서 아이템 삭제했을 때 -> filter 조건에 맞춰서 렌더링 설정
-            // else {
-            //     if(filter === '' || filter === 'all'){
-            //         setBookmark_List(bookmarkData)
-            //     } else {
-            //         const filtered_data = bookmarkData.filter((item) => item.type === filter);
-            //         setBookmark_List(filtered_data)}
-            // }
 
         }}, [bookmark]) 
         

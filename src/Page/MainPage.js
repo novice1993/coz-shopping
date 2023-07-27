@@ -1,39 +1,36 @@
 import { styled } from "styled-components";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { addItemList } from "../redux/Item-Reducer";
 import Header from "../Component/Header";
 import Footer from "../Component/Footer";
 import ItemList from "../Component/ItemList";
 import BookmarkList from "../Component/BookmarkList";
 
 
-const Main = styled.main`
-  display: flex;
-  flex-direction: column;
-`
-
-const Container = styled.div`
-  flex: 1 0 0;
-  padding: 0px;
-`
-
 function MainPage () {
 
-  const [items, setItems] = useState([]); // 서버에서 받아온 상품 리스트
-  
+  const itemList = useSelector(state => state.itemList);
+  const dispatch = useDispatch();
+
+
+  const getItemListFromServer = async () => {
+
+    try {
+      const res = await fetch('http://cozshopping.codestates-seb.link/api/v1/products?count=8')
+      const itemListData = await res.json();
+      dispatch(addItemList(itemListData));
+      
+    } catch (error) {
+      console.log('response error', error);
+
+    }
+  }
 
   useEffect(() => {
+    getItemListFromServer()
+  }, [])
 
-    const request = async () => {
-      try {
-        const res = await fetch('http://cozshopping.codestates-seb.link/api/v1/products?count=4') 
-        const data = await res.json();
-        setItems(data);
-
-      } catch (error) {
-        console.log('Response error', error);
-      }}
-      
-    request();}, [])
 
     return (
       <>
@@ -41,10 +38,8 @@ function MainPage () {
         <Header />
       </header>
       <Main>
-        <Container>
-          <ItemList items={items}/></Container>
-        <Container> 
-          <BookmarkList/> </Container>
+        <Container> <ItemList/> </Container>
+        <Container> <BookmarkList/> </Container>
       </Main>
       <footer>
         <Footer />
@@ -54,3 +49,15 @@ function MainPage () {
   }
   
   export default MainPage;
+
+
+// 컴포넌트 생성
+const Main = styled.main`
+  display: flex;
+  flex-direction: column;
+`
+
+const Container = styled.div`
+  flex: 1 0 0;
+  padding: 0px;
+`

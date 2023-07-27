@@ -7,45 +7,32 @@ import exhibitionImg from '../img/exhibition.png';
 import brandImg from '../img/brand.png';
 
 
-function ItemFilter ({ setFilter }) {
-
-    // 🔴 필터링 관련 상태 및 로직을 해당 컴포넌트로 옮기는 게 더 직관적인듯
-    
-    // if(filter === '' || filter === 'all'){
-    //     setItems(all_Items);
-
-    //   } else {
-    //     const filtered_items = all_Items.filter((item) => item.type === filter);
-    //     setItems(filtered_items)
-    //   }
-
-    //   }, [filter])
-
+function ItemFilter () {
 
 
     return (
         <Container>
-            <ButtonContainer onClick={() => {setFilter('all')}}>
+            <ButtonContainer onClick={() => {}}>
                 <Img src={allImg}/>
                 <Text>전체</Text>
             </ButtonContainer>
 
-            <ButtonContainer onClick={() => setFilter('Product')}>
+            <ButtonContainer onClick={() => {}}>
                 <Img src={productImg}/>
                 <Text>상품</Text>
             </ButtonContainer>
 
-            <ButtonContainer onClick={() => setFilter('Category')}>
+            <ButtonContainer onClick={() => {}}>
                 <Img src={categoryImg}/>
                 <Text>카테고리</Text>
             </ButtonContainer>
 
-            <ButtonContainer onClick={() => setFilter('Exhibition')}>
+            <ButtonContainer onClick={() => {}}>
                 <Img src={exhibitionImg}/>
                 <Text>기획전</Text>
             </ButtonContainer>
 
-            <ButtonContainer onClick={() => setFilter('Brand')}>
+            <ButtonContainer onClick={() => {}}>
                 <Img src={brandImg}/>
                 <Text>브랜드</Text>
             </ButtonContainer>

@@ -5,27 +5,13 @@ import Header from "../Component/Header";
 import Footer from "../Component/Footer";
 import ItemFilter from "../Component/ItemFilter";
 import Item from "../Component/Item";
+import useGetFilterdItemList from "../Hooks/useGetFilterdItemList";
 
 
 function BookmarkListPage () {
 
     const bookmarkList = useSelector(state => state.bookmarkList);
-    const [itemFilter, setItemFilter] = useState('All');
-    const [filterdItemList, setFilterdItemList] = useState(bookmarkList);
-
-    const itemFilterChange = (filter) => {
-        setItemFilter(filter);
-    }
-
-    useEffect(() => {
-        
-        if(itemFilter === 'All'){
-            setFilterdItemList(bookmarkList);
-        } else {
-            setFilterdItemList(bookmarkList.filter(item => item.type === itemFilter));
-        }
-
-    }, [itemFilter])
+    const { filterdItemList, itemFilterChange } = useGetFilterdItemList(bookmarkList);
 
   
     return (

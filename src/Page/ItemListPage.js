@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addItemList } from "../redux/Item-Reducer";
 import Header from "../Component/Header";
@@ -7,29 +7,16 @@ import Footer from "../Component/Footer";
 import ItemFilter from "../Component/ItemFilter";
 import Item from "../Component/Item";
 import getItemFromServer from "../Utils/getItemFromServer";
+import useGetFilterdItemList from "../Hooks/useGetFilterdItemList";
 
 
 function ItemListPage () {
 
     const itemList = useSelector(state => state.itemList);
-    const [itemFilter, setItemFilter] = useState('All');
-    const [filterdItemList, setFilterdItemList] = useState(itemList);
     const dispatch = useDispatch();
 
-    const itemFilterChange = (filter) => {
-        setItemFilter(filter);
-    }
+    const { filterdItemList, itemFilterChange } = useGetFilterdItemList(itemList);
 
-
-    useEffect(() => {
-        
-        if(itemFilter === 'All'){
-            setFilterdItemList(itemList);
-        } else {
-            setFilterdItemList(itemList.filter(item => item.type === itemFilter));
-        }
-
-    }, [itemFilter])
 
 
     // 무한스크롤 관련 로직

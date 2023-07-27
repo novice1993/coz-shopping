@@ -1,7 +1,6 @@
 import { styled } from "styled-components";
 import useGetItemList from "../Hooks/useGetItemList";
 import Item from "./Item";
-import { useEffect } from "react";
 
 
 function ItemList () {

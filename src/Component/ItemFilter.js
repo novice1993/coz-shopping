@@ -6,32 +6,32 @@ import exhibitionImg from '../img/exhibition.png';
 import brandImg from '../img/brand.png';
 
 
-function ItemFilter () {
+function ItemFilter ({ itemFilterChange }) {
 
 
     return (
         <Container>
-            <ButtonContainer onClick={() => {}}>
+            <ButtonContainer onClick={() => itemFilterChange('All')}>
                 <Img src={allImg}/>
                 <Text>전체</Text>
             </ButtonContainer>
 
-            <ButtonContainer onClick={() => {}}>
+            <ButtonContainer onClick={() => itemFilterChange('Product')}>
                 <Img src={productImg}/>
                 <Text>상품</Text>
             </ButtonContainer>
 
-            <ButtonContainer onClick={() => {}}>
+            <ButtonContainer onClick={() => itemFilterChange('Category')}>
                 <Img src={categoryImg}/>
                 <Text>카테고리</Text>
             </ButtonContainer>
 
-            <ButtonContainer onClick={() => {}}>
+            <ButtonContainer onClick={() => itemFilterChange('Exhibition')}>
                 <Img src={exhibitionImg}/>
                 <Text>기획전</Text>
             </ButtonContainer>
 
-            <ButtonContainer onClick={() => {}}>
+            <ButtonContainer onClick={() => itemFilterChange('Brand')}>
                 <Img src={brandImg}/>
                 <Text>브랜드</Text>
             </ButtonContainer>

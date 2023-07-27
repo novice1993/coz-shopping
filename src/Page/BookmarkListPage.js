@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import Header from "../Component/Header";
 import Footer from "../Component/Footer";
@@ -10,6 +10,22 @@ import Item from "../Component/Item";
 function BookmarkListPage () {
 
     const bookmarkList = useSelector(state => state.bookmarkList);
+    const [itemFilter, setItemFilter] = useState('All');
+    const [filterdItemList, setFilterdItemList] = useState(bookmarkList);
+
+    const itemFilterChange = (filter) => {
+        setItemFilter(filter);
+    }
+
+    useEffect(() => {
+        
+        if(itemFilter === 'All'){
+            setFilterdItemList(bookmarkList);
+        } else {
+            setFilterdItemList(bookmarkList.filter(item => item.type === itemFilter));
+        }
+
+    }, [itemFilter])
 
   
     return (
@@ -18,9 +34,9 @@ function BookmarkListPage () {
                 <Header />
             </HeaderBox>
             <Main>
-                <ItemFilter/>
+                <ItemFilter itemFilterChange={itemFilterChange}/>
                 <ItemBox>
-                    {bookmarkList.map((item) => {
+                    {filterdItemList.map((item) => {
                         return (<Item key={item.id} item={item}/>)
                     })}
                 </ItemBox>

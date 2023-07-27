@@ -12,9 +12,27 @@ import getItemFromServer from "../Utils/getItemFromServer";
 function ItemListPage () {
 
     const itemList = useSelector(state => state.itemList);
+    const [itemFilter, setItemFilter] = useState('All');
+    const [filterdItemList, setFilterdItemList] = useState(itemList);
     const dispatch = useDispatch();
 
-    
+    const itemFilterChange = (filter) => {
+        setItemFilter(filter);
+    }
+
+
+    useEffect(() => {
+        
+        if(itemFilter === 'All'){
+            setFilterdItemList(itemList);
+        } else {
+            setFilterdItemList(itemList.filter(item => item.type === itemFilter));
+        }
+
+    }, [itemFilter])
+
+
+    // 무한스크롤 관련 로직
     const handleScroll = () => {
 
         const { scrollHeight, scrollTop, clientHeight } = document.documentElement;
@@ -41,9 +59,9 @@ function ItemListPage () {
                 <Header />
             </HeaderBox>
             <Main>
-                <ItemFilter/>
+                <ItemFilter itemFilterChange={itemFilterChange}/>
                 <ItemBox>
-                {itemList.map((item) => {
+                {filterdItemList.map((item) => {
                     return <Item key={item.id} item={item}/>
                 })}
                 </ItemBox>

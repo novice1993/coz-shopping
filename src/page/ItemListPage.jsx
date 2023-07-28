@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { addItemList } from "../redux/Item-Reducer";
 
@@ -17,33 +17,47 @@ function ItemListPage () {
 
     const itemList = useGetItemList();
     const dispatch = useDispatch();
+    const targetRef = useRef(null);
 
     const { filterdItemList, itemFilterChange } = useGetFilterdItemList(itemList);
 
 
+    // intersectionObserver 통해 무한스크롤 구현
+    useEffect(() => {
 
-    // 무한스크롤 관련 로직
-    const handleScroll = () => {
-
-        const { scrollHeight, scrollTop, clientHeight } = document.documentElement;
-
-        if (scrollTop + clientHeight >= scrollHeight) {
-
-            getItemFromServer()
-            .then(itemListData => dispatch(addItemList(itemListData)));
-
-            window.scrollTo(0, scrollTop-1);
+        const callback = (entries) => {
+          
+          entries.forEach((entry) => {
             
-            }
-        }
+            if (entry.isIntersecting) {
+                
+                getItemFromServer()
+                .then(itemListData => dispatch(addItemList(itemListData)));
 
-      useEffect(() => {
-        window.addEventListener('scroll', handleScroll); 
-        return () => window.removeEventListener('scroll', handleScroll)}, [handleScroll])
+            }})
+        }
     
+        const options = {
+          threshold: 0.5,
+        };
     
+        const observer = new IntersectionObserver(callback, options);
+    
+        if (targetRef.current) {
+          observer.observe(targetRef.current);
+        }
+    
+        // 컴포넌트 언마운트 시 옵저버 해제
+        return () => {
+          if (targetRef.current) {
+            observer.unobserve(targetRef.current);
+          }
+        };
+      }, []);
+
 
     return (
+        
         <Container>
             <HeaderBox>
                 <Header />
@@ -52,14 +66,15 @@ function ItemListPage () {
                 <ItemFilter itemFilterChange={itemFilterChange}/>
                 <ItemBox>
                 {filterdItemList.map((item) => {
-                    return <Item key={item.id} item={item}/>
+                    return <Item key={item.id} item={item} />
                 })}
                 </ItemBox>
             </Main>
-            <FooterBox>
+            <FooterBox ref={targetRef}>
                 <Footer />
             </FooterBox>
         </Container>
+        
     )
 }
 

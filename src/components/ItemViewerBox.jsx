@@ -9,7 +9,7 @@ const ItemViewerBox = ({ item, bookmark,  bookmarkStateChange, modalStateChange 
         {(item.type === 'Product') && ( // product type
             <Container>
                 <Img src={item.image_url} onClick={modalStateChange}/>
-                <BookmarkButton bookmark={bookmark} bookmarkStateChange={bookmarkStateChange}/>
+                <BookmarkButton bookmark={bookmark} bookmarkStateChange={bookmarkStateChange} parentComponent='ItemViewerBox'/>
                 <ContentContainer>
                     <Title>{item.title}</Title>
                     <DiscountPer>{(item.discountPercentage !== null) && `${item.discountPercentage}%`}</DiscountPer>
@@ -21,7 +21,7 @@ const ItemViewerBox = ({ item, bookmark,  bookmarkStateChange, modalStateChange 
         {(item.type === 'Category') && ( // Category type
             <Container>
                 <Img src={item.image_url} onClick={modalStateChange}/>
-                <BookmarkButton bookmark={bookmark} bookmarkStateChange={bookmarkStateChange}/>
+                <BookmarkButton bookmark={bookmark} bookmarkStateChange={bookmarkStateChange} parentComponent='ItemViewerBox'/>
                 <Title># {item.title}</Title>
             </Container>
         )}
@@ -29,7 +29,7 @@ const ItemViewerBox = ({ item, bookmark,  bookmarkStateChange, modalStateChange 
         {(item.type === 'Exhibition') && ( // Exhibition type
             <Container>
                 <Img src={item.image_url} onClick={modalStateChange}/>
-                <BookmarkButton bookmark={bookmark} bookmarkStateChange={bookmarkStateChange}/>
+                <BookmarkButton bookmark={bookmark} bookmarkStateChange={bookmarkStateChange} parentComponent='ItemViewerBox'/>
                 <Title>{item.title}</Title>
                 <SubTitle>{item.sub_title}</SubTitle>
             </Container>
@@ -38,7 +38,7 @@ const ItemViewerBox = ({ item, bookmark,  bookmarkStateChange, modalStateChange 
         {(item.type === 'Brand') && ( // Brand type
             <Container>
                 <Img src={item.brand_image_url} onClick={modalStateChange}/>
-                <BookmarkButton bookmark={bookmark} bookmarkStateChange={bookmarkStateChange}/>
+                <BookmarkButton bookmark={bookmark} bookmarkStateChange={bookmarkStateChange} parentComponent='ItemViewerBox'/>
                 <ContentContainer>
                     <Title>{item.brand_name}</Title>
                     <InterestedCustomer>관심고객수</InterestedCustomer>

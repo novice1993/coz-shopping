@@ -12,7 +12,7 @@ function Modal ({ item, bookmark, modalStateChange, bookmarkStateChange}) {
                 <img src={(item.type === 'Brand') ? item.brand_image_url : item.image_url} />
                 <ModalCloseButton>&#10005;</ModalCloseButton>
                 <Container>
-                    <BookmarkButton bookmark={bookmark} bookmarkStateChange={bookmarkStateChange}>&#9733;</BookmarkButton>
+                    <BookmarkButton bookmark={bookmark} bookmarkStateChange={bookmarkStateChange} parentComponent='Modal'>&#9733;</BookmarkButton>
                     <Title>{(item.type === 'Category') && '# '}{(item.type === 'Brand') ? item.brand_name : item.title}</Title>
                 </Container>
             </Content>

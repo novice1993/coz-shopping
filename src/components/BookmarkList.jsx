@@ -1,6 +1,5 @@
 import { styled } from "styled-components";
-import BookmarkItem from "./BookmarkItem";
-import { useEffect } from "react";
+import Item from "./Item";
 import { useSelector } from "react-redux";
 
 
@@ -13,8 +12,8 @@ function BookmarkList () {
             <Title>북마크 리스트</Title>
             <ItemBox>
                 { (bookmarkList.length !== 0) ?
-                bookmarkList.map((bookmarkItem, idx) => {
-                    return (idx < 4) && <BookmarkItem key={bookmarkItem.id} bookmarkItem={bookmarkItem}/>
+                bookmarkList.map((item, idx) => {
+                    return (idx < 4) && <Item key={item.id} item={item}/>
                 })
                 : <Emptybox>상품이 없습니다</Emptybox>
                 }
@@ -36,14 +35,12 @@ const Title = styled.div`
     flex: 1 0 0;
     padding-top: 10px;
     padding-left: 50px;
-
     font-weight: bolder;
     font-size: 1.2rem;
 `
 
 const ItemBox = styled.div`
     flex: 9 0 0;
-
     display: flex;
     flex-direction: row;
     justify-content: center;

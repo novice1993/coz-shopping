@@ -1,5 +1,27 @@
 import { styled } from "styled-components";
 import { useEffect } from "react";
+import BookmarkButton from "./BookmarkButton";
+
+
+function Modal ({ item, bookmark, modalStateChange, bookmarkStateChange}) {
+
+
+    return (
+        <Background>
+            <Content onClick={modalStateChange}>
+                <img src={(item.type === 'Brand') ? item.brand_image_url : item.image_url} />
+                <ModalCloseButton>&#10005;</ModalCloseButton>
+                <Container>
+                    <BookmarkButton bookmark={bookmark} bookmarkStateChange={bookmarkStateChange} parentComponent='Modal'>&#9733;</BookmarkButton>
+                    <Title>{(item.type === 'Category') && '# '}{(item.type === 'Brand') ? item.brand_name : item.title}</Title>
+                </Container>
+            </Content>
+        </Background>
+    )
+}
+
+export default Modal;
+
 
 const Background = styled.div`
     position: fixed;
@@ -54,37 +76,15 @@ const Container = styled.div`
     gap: 5px;
 `
 
-const BookmarkButton = styled.div`
+// const BookmarkButton = styled.div`
 
-    color: ${(props) => (props.bookmark) ? '#FFD361;' : '#DFDFDF;'};
-    font-size: 1.5rem;
-    cursor: pointer;
-`
+//     color: ${(props) => (props.bookmark) ? '#FFD361;' : '#DFDFDF;'};
+//     font-size: 1.5rem;
+//     cursor: pointer;
+// `
 
 const Title = styled.div`
     color: white;
     font-weight: bolder;
     font-size: 1.5rem;
 `
-
-function Modal ({ item, setModal, bookmark, setBookmark, }) {
-
-    const bookmarkButtonClick = () => {
-        setBookmark(!bookmark)}
-
-
-    return (
-        <Background onClick={() => {setModal(false)}}>
-            <Content>
-                <img src={(item.type === 'Brand') ? item.brand_image_url : item.image_url} />
-                <ModalCloseButton onClick={() => {setModal(false)}}>&#10005;</ModalCloseButton>
-                <Container>
-                    <BookmarkButton bookmark={bookmark} onClick={bookmarkButtonClick} >&#9733;</BookmarkButton>
-                    <Title>{(item.type === 'Category') && '# '}{(item.type === 'Brand') ? item.brand_name : item.title}</Title>
-                </Container>
-            </Content>
-        </Background>
-    )
-}
-
-export default Modal;

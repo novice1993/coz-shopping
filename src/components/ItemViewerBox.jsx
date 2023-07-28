@@ -18,6 +18,7 @@ const ItemViewerBox = ({ item, bookmark,  bookmarkStateChange, modalStateChange 
             </Container>
         )}
 
+
         {(item.type === 'Category') && ( // Category type
             <Container>
                 <Img src={item.image_url} onClick={modalStateChange}/>
@@ -26,6 +27,7 @@ const ItemViewerBox = ({ item, bookmark,  bookmarkStateChange, modalStateChange 
             </Container>
         )}
         
+
         {(item.type === 'Exhibition') && ( // Exhibition type
             <Container>
                 <Img src={item.image_url} onClick={modalStateChange}/>
@@ -34,6 +36,7 @@ const ItemViewerBox = ({ item, bookmark,  bookmarkStateChange, modalStateChange 
                 <SubTitle>{item.sub_title}</SubTitle>
             </Container>
         )}
+        
         
         {(item.type === 'Brand') && ( // Brand type
             <Container>

@@ -1,9 +1,10 @@
 import { styled } from "styled-components";
 import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addItemList } from "../redux/Item-Reducer";
 
 import getItemFromServer from "../utils/getItemFromServer";
+import useGetItemList from "../hooks/useGetItemList";
 import useGetFilterdItemList from "../hooks/useGetFilterdItemList";
 
 import Header from "../components/Header";
@@ -14,7 +15,7 @@ import Item from "../components/Item";
 
 function ItemListPage () {
 
-    const itemList = useSelector(state => state.itemList);
+    const itemList = useGetItemList();
     const dispatch = useDispatch();
 
     const { filterdItemList, itemFilterChange } = useGetFilterdItemList(itemList);

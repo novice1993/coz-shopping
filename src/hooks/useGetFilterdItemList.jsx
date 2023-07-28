@@ -17,7 +17,7 @@ const useGetFilterdItemList = (unfilterdItemList) => {
             setFilterdItemList(unfilterdItemList.filter(item => item.type === itemFilter));
         }
 
-    }, [itemFilter])
+    }, [itemFilter, unfilterdItemList])
 
     return { filterdItemList, itemFilterChange };
 

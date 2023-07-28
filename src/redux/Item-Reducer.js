@@ -6,7 +6,7 @@ const itemSlice = createSlice({
     reducers: {
         addItemList: (previousAddedItemList, action) => {
 
-            const notOverlappingItem = action.payload.filter((item) => {
+            const notOverlappingItem = action.payload.filter((item) => { // 데이터 중복검사 시행
 
                 let result = 0;
 

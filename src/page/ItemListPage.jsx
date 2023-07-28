@@ -2,12 +2,14 @@ import { styled } from "styled-components";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addItemList } from "../redux/Item-Reducer";
-import Header from "../Component/Header";
-import Footer from "../Component/Footer";
-import ItemFilter from "../Component/ItemFilter";
-import Item from "../Component/Item";
-import getItemFromServer from "../Utils/getItemFromServer";
-import useGetFilterdItemList from "../Hooks/useGetFilterdItemList";
+
+import getItemFromServer from "../utils/getItemFromServer";
+import useGetFilterdItemList from "../hooks/useGetFilterdItemList";
+
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import ItemFilter from "../components/ItemFilter";
+import Item from "../components/Item";
 
 
 function ItemListPage () {

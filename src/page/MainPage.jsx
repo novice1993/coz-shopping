@@ -1,8 +1,8 @@
 import { styled } from "styled-components";
-import Header from "../Component/Header";
-import Footer from "../Component/Footer";
-import ItemList from "../Component/ItemList";
-import BookmarkList from "../Component/BookmarkList";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import ItemList from "../components/ItemList";
+import BookmarkList from "../components/BookmarkList";
 
 
 function MainPage () {

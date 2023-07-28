@@ -35,7 +35,7 @@ const Content = styled.div`
     flex: 1 0 0;
 
     position: relative;
-    z-index: 300;
+    z-index: 400;
     
     display: flex;
     justify-content: center;

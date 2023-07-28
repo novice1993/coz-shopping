@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { addItemList } from "../redux/Item-Reducer";
-import getItemFromServer from "../Utils/getItemFromServer";
+import getItemFromServer from "../utils/getItemFromServer";
 import { useEffect } from "react";
 
 const useGetItemList = () => {

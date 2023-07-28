@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import useGetItemList from "../Hooks/useGetItemList";
+import useGetItemList from "../hooks/useGetItemList";
 import Item from "./Item";
 
 

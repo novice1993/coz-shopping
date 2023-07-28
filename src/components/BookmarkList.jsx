@@ -35,14 +35,12 @@ const Title = styled.div`
     flex: 1 0 0;
     padding-top: 10px;
     padding-left: 50px;
-
     font-weight: bolder;
     font-size: 1.2rem;
 `
 
 const ItemBox = styled.div`
     flex: 9 0 0;
-
     display: flex;
     flex-direction: row;
     justify-content: center;

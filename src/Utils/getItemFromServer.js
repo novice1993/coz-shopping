@@ -7,7 +7,7 @@ const getItemFromServer = async () => {
       return itemListData;
       
     } catch (error) {
-      console.log('response error', error);
+      console.error('response error', error);
     }
 }
 

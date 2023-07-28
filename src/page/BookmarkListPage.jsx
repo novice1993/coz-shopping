@@ -1,11 +1,12 @@
 import { styled } from "styled-components";
-import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import Header from "../Component/Header";
-import Footer from "../Component/Footer";
-import ItemFilter from "../Component/ItemFilter";
-import Item from "../Component/Item";
-import useGetFilterdItemList from "../Hooks/useGetFilterdItemList";
+
+import useGetFilterdItemList from "../hooks/useGetFilterdItemList";
+
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import ItemFilter from "../components/ItemFilter";
+import Item from "../components/Item";
 
 
 function BookmarkListPage () {

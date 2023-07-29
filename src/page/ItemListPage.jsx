@@ -9,13 +9,14 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import ItemFilter from "../components/ItemFilter";
 import Item from "../components/Item";
+import LoadingIndicator from "../components/LoadingIndicator";
 
 
 function ItemListPage () {
 
     const itemList = useGetItemList();
     const { filterdItemList, itemFilterChange } = useGetFilterdItemList(itemList);
-    const { observer, observerTargetRef } = useInfiniteScroll();
+    const { observer, observerTargetRef, loading } = useInfiniteScroll();
 
 
     useEffect(() => {
@@ -47,6 +48,7 @@ function ItemListPage () {
                 })}
                 </ItemBox>
             </Main>
+            {loading && <LoadingIndicator />}
             <FooterBox ref={observerTargetRef}>
                 <Footer />
             </FooterBox>

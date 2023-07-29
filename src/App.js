@@ -5,7 +5,6 @@ import BookmarkListPage from './page/BookmarkListPage';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 // 나머지 리팩토링 부분
-//  1) 무한 스크롤 -> iO 사용 + 커스텀 훅 생성
 //  2) 토스트 메세지 -> react-tostify 라이브러리 사용
 //
 //  3) css 요소와 컴포넌트 요소 분리

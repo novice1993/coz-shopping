@@ -61,6 +61,7 @@ export default ItemInfoBox;
 
 // 전체 type 공통 적용
 const Container = styled.div`
+
     margin-left: 45px;
     margin-right: 45px;
     margin-top: 10px;

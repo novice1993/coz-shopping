@@ -2,7 +2,7 @@ import { useState } from "react";
 import useManageBookmarkList from "../../hooks/useManageBookmarkList";
 
 import Modal from "../Modal";
-import ItemViewerBox from "./ItemInfoBox";
+import ItemInfoBox from "./ItemInfoBox";
 
 
 function ItemViewer ({ item }) {
@@ -29,7 +29,7 @@ function ItemViewer ({ item }) {
     else {
 
         return (
-            <ItemViewerBox
+            <ItemInfoBox
             item={item}
             bookmark={bookmark}
             bookmarkStateChange={bookmarkStateChange}

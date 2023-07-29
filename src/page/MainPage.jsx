@@ -8,7 +8,7 @@ import BookmarkList from "../components/MainPage-BookmarkList";
 function MainPage () {
 
     return (
-      <>
+      <TotalContainer>
       <header>
         <Header/>
       </header>
@@ -19,14 +19,23 @@ function MainPage () {
       <footer>
         <Footer />
       </footer>
-      </>
+      </TotalContainer>
     );
   }
   
   export default MainPage;
 
+const TotalContainer = styled.div`
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+`
 
 const Main = styled.main`
+  flex: 8 0 0;
+
   display: flex;
   flex-direction: column;
 `

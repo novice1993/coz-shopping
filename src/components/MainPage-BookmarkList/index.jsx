@@ -9,45 +9,56 @@ function BookmarkList () {
 
     return (
         <Container>
-            <Title>북마크 리스트</Title>
-            <ItemBox>
-                { (bookmarkList.length !== 0) ?
-                bookmarkList.map((item, idx) => {
-                    return (idx < 4) && <ItemViewer key={item.id} item={item}/>
-                })
-                : <Emptybox>상품이 없습니다</Emptybox>
-                }
-            </ItemBox>
+            <Main>
+                <Title>북마크 리스트</Title>
+                <ItemBox>
+                    { (bookmarkList.length !== 0) ?
+                    bookmarkList.map((item, idx) => {
+                        return (idx < 4) && <ItemViewer key={item.id} item={item}/>
+                    })
+                    : <Emptybox>상품이 없습니다</Emptybox>
+                    }
+                </ItemBox>
+            </Main>
         </Container>
     )
 }
 
 export default BookmarkList;
 
-
 const Container = styled.div`
-    height: 100%;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 `
 
-const Title = styled.div`
+const Main = styled.main`
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    align-items: flex-start;
+`
+
+const Title = styled.h2`
     flex: 1 0 0;
     padding-top: 10px;
     padding-left: 50px;
+
     font-weight: bolder;
     font-size: 1.2rem;
 `
 
 const ItemBox = styled.div`
     flex: 9 0 0;
+
     display: flex;
     flex-direction: row;
     justify-content: center;
     flex-wrap: wrap;
-
 `
 
+//
 const Emptybox = styled.div`
     display: flex;
     flex-direction: row;

@@ -10,12 +10,12 @@ function ItemList () {
 
     return (
         <Container>
+            <Main>
             <Title>{sectionTitle}</Title>
             <ItemBox>
-                {itemList.map((item, idx) => {
-                    return (idx < 4) && <ItemViewer key={item.id} item={item}/>
-                })}
+                {itemList.map((item, idx) => (idx < 4) && <ItemViewer style ={{ flex : `0 0 25%`}} key={item.id} item={item}/>)}
             </ItemBox>
+            </Main>
         </Container>
     )
 }
@@ -24,9 +24,17 @@ export default ItemList;
 
 
 const Container = styled.div`
-    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+`
+
+const Main = styled.main`
     display: flex;
     flex-direction: column;
+    margin-top: 20px;
+    align-items: flex-start;
 `
 
 const Title = styled.h2`

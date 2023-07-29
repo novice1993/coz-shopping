@@ -40,13 +40,17 @@ function ItemListPage () {
             <HeaderBox>
                 <Header />
             </HeaderBox>
+
             <Main>
                 <ItemFilter itemFilterChange={itemFilterChange}/>
-                <ItemBox>
-                    {filterdItemList.map(item => <ItemViewer key={item.id} item={item}/>)}
-                </ItemBox>
+                <ItemBoxContainer>
+                    <ItemBox>
+                        {filterdItemList.map(item => <ItemViewer key={item.id} item={item}/>)}
+                    </ItemBox>
+                </ItemBoxContainer>
             </Main>
             {loading && <LoadingIndicator />}
+
             <FooterBox ref={observerTargetRef}>
                 <Footer />
             </FooterBox>
@@ -81,9 +85,14 @@ const Main = styled.main`
     flex-direction: column;
 `
 
+const ItemBoxContainer = styled.section`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    
+`
+
 const ItemBox = styled.div`
-    width: 100%;
-    height: 100%;
 
     display: flex;
     flex-direction: row;

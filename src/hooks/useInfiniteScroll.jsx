@@ -15,7 +15,7 @@ const useInfiniteScroll = () => {
 
             if(entry.isIntersecting){
 
-                getItemFromServer()
+                getItemFromServer(4)
                 .then(itemListData => {
                     setLoading(true);
                     return itemListData

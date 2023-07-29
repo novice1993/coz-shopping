@@ -10,7 +10,7 @@ const useGetItemList = () => {
     
     useEffect(() => {
 
-        getItemFromServer()
+        getItemFromServer(8)
         .then(itemListData => dispatch(addItemList(itemListData)));
 
     },[])

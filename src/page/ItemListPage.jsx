@@ -8,7 +8,7 @@ import useInfiniteScroll from "../hooks/useInfiniteScroll";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import ItemFilter from "../components/ItemFilter";
-import Item from "../components/Item";
+import ItemViewer from "../components/ItemViewer";
 import LoadingIndicator from "../components/LoadingIndicator";
 
 
@@ -44,7 +44,7 @@ function ItemListPage () {
                 <ItemFilter itemFilterChange={itemFilterChange}/>
                 <ItemBox>
                 {filterdItemList.map((item) => {
-                    return <Item key={item.id} item={item} />
+                    return <ItemViewer key={item.id} item={item} />
                 })}
                 </ItemBox>
             </Main>

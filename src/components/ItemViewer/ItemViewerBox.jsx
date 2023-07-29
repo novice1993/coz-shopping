@@ -1,5 +1,5 @@
 import { styled } from "styled-components"
-import BookmarkButton from "./BookmarkButton"
+import BookmarkButton from "../BookmarkButton"
 
 const ItemViewerBox = ({ item, bookmark,  bookmarkStateChange, modalStateChange }) => {
 

@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
-import BookmarkButton from "./BookmarkButton";
-import starYellow from '../img/bookmark-on.png';
-import starGray from '../img/bookmark-off.png';
+import BookmarkButton from "../BookmarkButton";
+import starYellow from '../../img/bookmark-on.png';
+import starGray from '../../img/bookmark-off.png';
 
 
 function Modal ({ item, bookmark, modalStateChange, bookmarkStateChange}) {

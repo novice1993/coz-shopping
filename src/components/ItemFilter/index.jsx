@@ -1,9 +1,9 @@
 import { styled } from "styled-components";
-import allImg from '../img/all.jpg';
-import productImg from '../img/product.jpg';
-import categoryImg from '../img/category.png';
-import exhibitionImg from '../img/exhibition.png';
-import brandImg from '../img/brand.png';
+import allImg from '../../img/all.jpg';
+import productImg from '../../img/product.jpg';
+import categoryImg from '../../img/category.png';
+import exhibitionImg from '../../img/exhibition.png';
+import brandImg from '../../img/brand.png';
 
 
 function ItemFilter ({ itemFilterChange }) {

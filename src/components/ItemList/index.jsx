@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
-import useGetItemList from "../hooks/useGetItemList";
-import Item from "./Item";;
+import useGetItemList from "../../hooks/useGetItemList";
+import Item from "../ItemViewer";;
 
 function ItemList () {
 

@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 import { toast } from "react-toastify";
-import starYellow from '../img/bookmark-on.png';
-import starGray from '../img/bookmark-off.png';
+import starYellow from '../../img/bookmark-on.png';
+import starGray from '../../img/bookmark-off.png';
 
 const BookmarkButton = ({ parentComponent, bookmark, bookmarkStateChange }) => {
 

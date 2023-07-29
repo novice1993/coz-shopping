@@ -1,11 +1,11 @@
 import { useState } from "react";
-import useManageBookmarkList from "../hooks/useManageBookmarkList";
+import useManageBookmarkList from "../../hooks/useManageBookmarkList";
 
-import Modal from "./Modal";
+import Modal from "../ItemModal";
 import ItemViewerBox from "./ItemViewerBox";
 
 
-function Item ({ item }) {
+function ItemViewer ({ item }) {
 
     const { bookmark, bookmarkStateChange } = useManageBookmarkList(item);
     const [ modalState, setModalState ] = useState(false);
@@ -39,4 +39,4 @@ function Item ({ item }) {
 
 }
 
-export default Item;
+export default ItemViewer;

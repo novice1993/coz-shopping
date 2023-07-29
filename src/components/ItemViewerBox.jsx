@@ -50,8 +50,6 @@ const ItemViewerBox = ({ item, bookmark,  bookmarkStateChange, modalStateChange 
             </Container>
             
         )}
-
-    
         </>
 
     )

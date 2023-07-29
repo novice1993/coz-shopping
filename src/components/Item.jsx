@@ -14,7 +14,6 @@ function Item ({ item }) {
         setModalState(!modalState);
     }
 
-
     if(modalState === true) {
 
         return (
@@ -24,6 +23,7 @@ function Item ({ item }) {
             bookmarkStateChange={bookmarkStateChange}
             modalStateChange={modalStateChange}
             />)
+            
     }
 
     else {

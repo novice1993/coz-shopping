@@ -10,7 +10,7 @@ function MainPage () {
     return (
       <>
       <header>
-        <Header />
+        <Header/>
       </header>
       <Main>
         <Container> <ItemList/> </Container>

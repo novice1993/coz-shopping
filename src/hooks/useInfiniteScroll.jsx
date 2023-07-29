@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
-import { addItemList, itemReducer } from "../redux/Item-Reducer";
+import { addItemList } from "../redux/Item-Reducer";
 import getItemFromServer from "../utils/getItemFromServer";
 
 const useInfiniteScroll = () => {
@@ -16,20 +16,20 @@ const useInfiniteScroll = () => {
             if(entry.isIntersecting){
 
                 getItemFromServer()
-                .then(itemReducer => {
+                .then(itemListData => {
                     setLoading(true);
-                    return itemReducer
+                    return itemListData
                 })
                 .then(itemListData => {setTimeout(() => {
                     dispatch(addItemList(itemListData))
                     setLoading(false)
-                }, 1500)})
+                }, 2000)})
             }
         })
     }
 
     const options = {
-        threshold: 0.8,
+        threshold: 0.2,
     }
 
     const observer = new IntersectionObserver(callback, options);

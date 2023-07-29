@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import Item from "../ItemViewer";
+import ItemViewer from "../ItemViewer";
 import { useSelector } from "react-redux";
 
 
@@ -13,7 +13,7 @@ function BookmarkList () {
             <ItemBox>
                 { (bookmarkList.length !== 0) ?
                 bookmarkList.map((item, idx) => {
-                    return (idx < 4) && <Item key={item.id} item={item}/>
+                    return (idx < 4) && <ItemViewer key={item.id} item={item}/>
                 })
                 : <Emptybox>상품이 없습니다</Emptybox>
                 }
@@ -24,7 +24,7 @@ function BookmarkList () {
 
 export default BookmarkList;
 
-// 컴포넌트 생성
+
 const Container = styled.div`
     height: 100%;
     display: flex;

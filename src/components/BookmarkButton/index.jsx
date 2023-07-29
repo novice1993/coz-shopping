@@ -6,7 +6,7 @@ import starGray from '../../img/bookmark-off.png';
 const BookmarkButton = ({ parentComponent, bookmark, bookmarkStateChange }) => {
 
     const notifyToastMessage = (state) => {
-        const toastMessage = state ? '상품이 추가 되었습니다' : '상품이 제거 되었습니다.';
+        const toastMessage = state ? '상품이 북마크에 추가 되었습니다' : '상품이 북마크에서 제거 되었습니다.';
         toast(toastMessage, {closeButton: false, icon: <img src={state ? starYellow : starGray}/>});
     }
 
@@ -16,7 +16,7 @@ const BookmarkButton = ({ parentComponent, bookmark, bookmarkStateChange }) => {
         notifyToastMessage(state);
     }
 
-    if(parentComponent === 'ItemViewerBox'){
+    if(parentComponent === 'ItemInfoBox'){
         return (
             <ButtonInItemList
             onClick={changeBookmarkState}

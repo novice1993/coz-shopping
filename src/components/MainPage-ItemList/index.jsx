@@ -1,6 +1,8 @@
 import { styled } from "styled-components";
 import useGetItemList from "../../hooks/useGetItemList";
-import Item from "../ItemViewer";;
+import ItemViewer from "../ItemViewer";
+
+const sectionTitle = '상품 리스트'
 
 function ItemList () {
 
@@ -8,10 +10,10 @@ function ItemList () {
 
     return (
         <Container>
-            <Title>상품 리스트</Title>
+            <Title>{sectionTitle}</Title>
             <ItemBox>
                 {itemList.map((item, idx) => {
-                    return (idx < 4) && <Item key={item.id} item={item}/>
+                    return (idx < 4) && <ItemViewer key={item.id} item={item}/>
                 })}
             </ItemBox>
         </Container>
@@ -21,14 +23,13 @@ function ItemList () {
 export default ItemList;
 
 
-// 컴포넌트 생성
 const Container = styled.div`
     height: 100%;
     display: flex;
     flex-direction: column;
 `
 
-const Title = styled.div`
+const Title = styled.h2`
     flex: 1 0 0;
     padding-top: 10px;
     padding-left: 50px;

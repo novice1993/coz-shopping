@@ -38,7 +38,6 @@ function BookmarkListPage () {
 export default BookmarkListPage;
 
 
-// 컴포넌트 생성
 const Container = styled.div`
     width: 100vw;
     height: 100vh;

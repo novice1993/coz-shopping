@@ -1,8 +1,8 @@
 import { styled } from "styled-components";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import ItemList from "../components/ItemList";
-import BookmarkList from "../components/BookmarkList";
+import ItemList from "../components/MainPage-ItemList";
+import BookmarkList from "../components/MainPage-BookmarkList";
 
 
 function MainPage () {
@@ -26,7 +26,6 @@ function MainPage () {
   export default MainPage;
 
 
-// 컴포넌트 생성
 const Main = styled.main`
   display: flex;
   flex-direction: column;

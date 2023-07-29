@@ -1,8 +1,8 @@
 import { useState } from "react";
 import useManageBookmarkList from "../../hooks/useManageBookmarkList";
 
-import Modal from "../ItemModal";
-import ItemViewerBox from "./ItemViewerBox";
+import Modal from "../Modal";
+import ItemViewerBox from "./ItemInfoBox";
 
 
 function ItemViewer ({ item }) {

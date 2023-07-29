@@ -43,9 +43,7 @@ function ItemListPage () {
             <Main>
                 <ItemFilter itemFilterChange={itemFilterChange}/>
                 <ItemBox>
-                {filterdItemList.map((item) => {
-                    return <ItemViewer key={item.id} item={item} />
-                })}
+                    {filterdItemList.map(item => <ItemViewer key={item.id} item={item}/>)}
                 </ItemBox>
             </Main>
             {loading && <LoadingIndicator />}
@@ -60,8 +58,6 @@ function ItemListPage () {
 export default ItemListPage;
 
 
-
-// 컴포넌트 생성
 const Container = styled.div`
     width: 100vw;
     height: 100vh;

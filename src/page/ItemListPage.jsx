@@ -1,11 +1,9 @@
 import { styled } from "styled-components";
-import { useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
-import { addItemList } from "../redux/Item-Reducer";
+import { useEffect } from "react";
 
-import getItemFromServer from "../utils/getItemFromServer";
 import useGetItemList from "../hooks/useGetItemList";
 import useGetFilterdItemList from "../hooks/useGetFilterdItemList";
+import useInfiniteScroll from "../hooks/useInfiniteScroll";
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -16,44 +14,23 @@ import Item from "../components/Item";
 function ItemListPage () {
 
     const itemList = useGetItemList();
-    const dispatch = useDispatch();
-    const targetRef = useRef(null);
-
     const { filterdItemList, itemFilterChange } = useGetFilterdItemList(itemList);
+    const { observer, observerTargetRef } = useInfiniteScroll();
 
 
-    // intersectionObserver 통해 무한스크롤 구현
     useEffect(() => {
 
-        const callback = (entries) => {
-          
-          entries.forEach((entry) => {
-            
-            if (entry.isIntersecting) {
-                
-                getItemFromServer()
-                .then(itemListData => dispatch(addItemList(itemListData)));
-
-            }})
-        }
-    
-        const options = {
-          threshold: 0.5,
-        };
-    
-        const observer = new IntersectionObserver(callback, options);
-    
-        if (targetRef.current) {
-          observer.observe(targetRef.current);
-        }
-    
-        // 컴포넌트 언마운트 시 옵저버 해제
-        return () => {
-          if (targetRef.current) {
-            observer.unobserve(targetRef.current);
+        if (observerTargetRef.current) {
+            observer.observe(observerTargetRef.current);
           }
-        };
-      }, []);
+      
+          return () => {
+            if (observerTargetRef.current) {
+              observer.unobserve(observerTargetRef.current);
+            }
+          };
+        
+    }, [])
 
 
     return (
@@ -70,7 +47,7 @@ function ItemListPage () {
                 })}
                 </ItemBox>
             </Main>
-            <FooterBox ref={targetRef}>
+            <FooterBox ref={observerTargetRef}>
                 <Footer />
             </FooterBox>
         </Container>

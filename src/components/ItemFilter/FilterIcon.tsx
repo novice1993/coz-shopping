@@ -1,6 +1,17 @@
 import { styled } from "styled-components";
+import FilterChange from "../../models/FilterChange";
 
-const FilterIcon = ({ itemFilterChange, type, img, text }) => {
+interface OwnProps {
+    itemFilterChange: FilterChange,
+    type: string,
+    img: string,
+    text: string
+}
+
+
+const FilterIcon = ( props :OwnProps ) => {
+
+    const { itemFilterChange, type, img, text } = props
 
     return (
         <ButtonContainer onClick={() => itemFilterChange(type)}>

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
 import Menu from "../HeaderMenu";
-import LogoImg from '../../img/logo.jpg'
+import LogoImg from 'images/logo.jpg'
 
 
 function Header () {

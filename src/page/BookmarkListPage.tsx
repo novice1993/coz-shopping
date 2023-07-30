@@ -2,6 +2,8 @@ import { styled } from "styled-components";
 import { useSelector } from "react-redux";
 
 import useGetFilterdItemList from "../hooks/useGetFilterdItemList";
+import StateProps from "../models/StateProps";
+import ItemProps from "../models/ItemProps";
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -11,7 +13,7 @@ import ItemViewer from "../components/ItemViewer";
 
 function BookmarkListPage () {
 
-    const bookmarkList = useSelector(state => state.bookmarkList);
+    const bookmarkList = useSelector((state: StateProps) => state.bookmarkList);
     const { filterdItemList, itemFilterChange } = useGetFilterdItemList(bookmarkList);
 
   
@@ -23,7 +25,7 @@ function BookmarkListPage () {
             <Main>
                 <ItemFilter itemFilterChange={itemFilterChange}/>
                 <ItemBox>
-                    {filterdItemList.map((item) => {
+                    {filterdItemList.map((item: ItemProps) => {
                         return (<ItemViewer key={item.id} item={item}/>)
                     })}
                 </ItemBox>

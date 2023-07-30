@@ -1,8 +1,10 @@
 import { styled } from "styled-components";
 import BookmarkButton from "../BookmarkButton";
 
+import InfoBoxAndModal from "../../models/InfoBoxAndModal";
 
-function Modal (props) {
+
+function Modal (props :InfoBoxAndModal) {
 
     const { item, bookmark, modalStateChange, bookmarkStateChange } = props;
 

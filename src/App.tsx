@@ -8,11 +8,10 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 // 나머지 리팩토링 부분
-//
-//
-//  5) css 수정 (화면 비율)
-// 
-//  6) ts 적용
+// 1) pr 
+// 2) ts 적용 
+// 3) grid 레이아웃 적용
+// 4) 리액트 쿼리 적용
 
 function App() {
 

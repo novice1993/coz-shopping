@@ -1,7 +1,15 @@
 import { styled } from "styled-components"
+import InfoBoxAndModal from "../../models/InfoBoxAndModal"
+
 import BookmarkButton from "../BookmarkButton"
 
-const ItemInfoBox = ({ item, bookmark,  bookmarkStateChange, modalStateChange }) => {
+
+const ItemInfoBox = (props: InfoBoxAndModal) => {
+
+    const { item, bookmark,  bookmarkStateChange, modalStateChange } = props;
+    
+
+    
 
     return (
 
@@ -46,7 +54,7 @@ const ItemInfoBox = ({ item, bookmark,  bookmarkStateChange, modalStateChange })
                     <Title>{item.brand_name}</Title>
                     <InterestedCustomer>관심고객수</InterestedCustomer>
                 </ContentContainer>
-                <Followers>{parseInt(item.follower).toLocaleString()}</Followers>
+                <Followers>{item.follower.toLocaleString()}</Followers>
             </Container>
             
         )}

@@ -1,6 +1,6 @@
 import { toast } from "react-toastify"
 
-const alertToastMessage = (bookmark) => {
+const alertToastMessage = (bookmark: boolean) => {
 
     if(bookmark) {
         toast("상품이 추가되었습니다.")

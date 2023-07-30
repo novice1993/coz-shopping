@@ -3,14 +3,22 @@ import { toast } from "react-toastify";
 import starYellow from '../../img/bookmark-on.png';
 import starGray from '../../img/bookmark-off.png';
 
-const BookmarkButton = ({ parentComponent, bookmark, bookmarkStateChange }) => {
+interface OwnProps {
+    parentComponent : string,
+    bookmark : boolean,
+    bookmarkStateChange: (state:boolean) => void
+}
 
-    const notifyToastMessage = (state) => {
+const BookmarkButton = (props: OwnProps) => {
+
+    const { parentComponent, bookmark, bookmarkStateChange } = props;
+
+    const notifyToastMessage = (state: boolean) => {
         const toastMessage = state ? '상품이 북마크에 추가 되었습니다' : '상품이 북마크에서 제거 되었습니다.';
         toast(toastMessage, {closeButton: false, icon: <img src={state ? starYellow : starGray}/>});
     }
 
-    const changeBookmarkState = (state) => {
+    const changeBookmarkState = (state: boolean): void => {
         state = !bookmark;
         bookmarkStateChange(state);
         notifyToastMessage(state);

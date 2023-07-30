@@ -5,6 +5,8 @@ import useGetItemList from "../hooks/useGetItemList";
 import useGetFilterdItemList from "../hooks/useGetFilterdItemList";
 import useInfiniteScroll from "../hooks/useInfiniteScroll";
 
+import ItemProps from "../models/ItemProps";
+
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import ItemFilter from "../components/ItemFilter";
@@ -45,7 +47,7 @@ function ItemListPage () {
                 <ItemFilter itemFilterChange={itemFilterChange}/>
                 <ItemBoxContainer>
                     <ItemBox>
-                        {filterdItemList.map(item => <ItemViewer key={item.id} item={item}/>)}
+                        {filterdItemList.map((item: ItemProps) => <ItemViewer key={item.id} item={item}/>)}
                     </ItemBox>
                 </ItemBoxContainer>
             </Main>

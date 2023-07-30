@@ -1,21 +1,18 @@
-import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { addBookmark, deleteBookmark } from "../redux/Bookmark-Reducer";
-import useManageBookmarkList from "../hooks/useManageBookmarkList";
+import { useState } from "react";
+import useManageBookmarkList from "../../hooks/useManageBookmarkList";
 
-import Modal from "./Modal";
-import ItemViewerBox from "./ItemViewerBox";
+import Modal from "../Modal";
+import ItemInfoBox from "./ItemInfoBox";
 
 
-function Item ({ item }) {
+function ItemViewer ({ item }) {
 
     const { bookmark, bookmarkStateChange } = useManageBookmarkList(item);
-    const [modalState, setModalState] = useState(false);
+    const [ modalState, setModalState ] = useState(false);
 
     const modalStateChange = () => {
         setModalState(!modalState);
     }
-
 
     if(modalState === true) {
 
@@ -26,12 +23,13 @@ function Item ({ item }) {
             bookmarkStateChange={bookmarkStateChange}
             modalStateChange={modalStateChange}
             />)
+            
     }
 
     else {
 
         return (
-            <ItemViewerBox
+            <ItemInfoBox
             item={item}
             bookmark={bookmark}
             bookmarkStateChange={bookmarkStateChange}
@@ -41,4 +39,4 @@ function Item ({ item }) {
 
 }
 
-export default Item;
+export default ItemViewer;

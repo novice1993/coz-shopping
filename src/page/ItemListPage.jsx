@@ -1,72 +1,67 @@
 import { styled } from "styled-components";
 import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { addItemList } from "../redux/Item-Reducer";
 
-import getItemFromServer from "../utils/getItemFromServer";
+import useGetItemList from "../hooks/useGetItemList";
 import useGetFilterdItemList from "../hooks/useGetFilterdItemList";
+import useInfiniteScroll from "../hooks/useInfiniteScroll";
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import ItemFilter from "../components/ItemFilter";
-import Item from "../components/Item";
+import ItemViewer from "../components/ItemViewer";
+import LoadingIndicator from "../components/LoadingIndicator";
 
 
 function ItemListPage () {
 
-    const itemList = useSelector(state => state.itemList);
-    const dispatch = useDispatch();
-
+    const itemList = useGetItemList();
     const { filterdItemList, itemFilterChange } = useGetFilterdItemList(itemList);
+    const { observer, observerTargetRef, loading } = useInfiniteScroll();
 
 
+    useEffect(() => {
 
-    // 무한스크롤 관련 로직
-    const handleScroll = () => {
-
-        const { scrollHeight, scrollTop, clientHeight } = document.documentElement;
-
-        if (scrollTop + clientHeight >= scrollHeight) {
-
-            getItemFromServer()
-            .then(itemListData => dispatch(addItemList(itemListData)));
-
-            window.scrollTo(0, scrollTop-1);
-            
+        if (observerTargetRef.current) {
+            observer.observe(observerTargetRef.current);
+          }
+      
+          return () => {
+            if (observerTargetRef.current) {
+              observer.unobserve(observerTargetRef.current);
             }
-        }
+          };
+        
+    }, [])
 
-      useEffect(() => {
-        window.addEventListener('scroll', handleScroll); 
-        return () => window.removeEventListener('scroll', handleScroll)}, [handleScroll])
-    
-    
 
     return (
+        
         <Container>
             <HeaderBox>
                 <Header />
             </HeaderBox>
+
             <Main>
                 <ItemFilter itemFilterChange={itemFilterChange}/>
-                <ItemBox>
-                {filterdItemList.map((item) => {
-                    return <Item key={item.id} item={item}/>
-                })}
-                </ItemBox>
+                <ItemBoxContainer>
+                    <ItemBox>
+                        {filterdItemList.map(item => <ItemViewer key={item.id} item={item}/>)}
+                    </ItemBox>
+                </ItemBoxContainer>
             </Main>
-            <FooterBox>
+            {loading && <LoadingIndicator />}
+
+            <FooterBox ref={observerTargetRef}>
                 <Footer />
             </FooterBox>
         </Container>
+        
     )
 }
 
 export default ItemListPage;
 
 
-
-// 컴포넌트 생성
 const Container = styled.div`
     width: 100vw;
     height: 100vh;
@@ -90,9 +85,14 @@ const Main = styled.main`
     flex-direction: column;
 `
 
+const ItemBoxContainer = styled.section`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    
+`
+
 const ItemBox = styled.div`
-    width: 100%;
-    height: 100%;
 
     display: flex;
     flex-direction: row;

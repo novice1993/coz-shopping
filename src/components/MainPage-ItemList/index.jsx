@@ -1,7 +1,8 @@
 import { styled } from "styled-components";
-import useGetItemList from "../hooks/useGetItemList";
-import Item from "./Item";
+import useGetItemList from "../../hooks/useGetItemList";
+import ItemViewer from "../ItemViewer";
 
+const sectionTitle = '상품 리스트'
 
 function ItemList () {
 
@@ -9,12 +10,12 @@ function ItemList () {
 
     return (
         <Container>
-            <Title>상품 리스트</Title>
+            <Main>
+            <Title>{sectionTitle}</Title>
             <ItemBox>
-                {itemList.map((item, idx) => {
-                    return (idx < 4) && <Item key={item.id} item={item}/>
-                })}
+                {itemList.map((item, idx) => (idx < 4) && <ItemViewer style ={{ flex : `0 0 25%`}} key={item.id} item={item}/>)}
             </ItemBox>
+            </Main>
         </Container>
     )
 }
@@ -22,14 +23,21 @@ function ItemList () {
 export default ItemList;
 
 
-// 컴포넌트 생성
 const Container = styled.div`
-    height: 100%;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 `
 
-const Title = styled.div`
+const Main = styled.main`
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    align-items: flex-start;
+`
+
+const Title = styled.h2`
     flex: 1 0 0;
     padding-top: 10px;
     padding-left: 50px;

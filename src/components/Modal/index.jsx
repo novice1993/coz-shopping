@@ -1,20 +1,20 @@
 import { styled } from "styled-components";
-import { useEffect } from "react";
-import BookmarkButton from "./BookmarkButton";
+import BookmarkButton from "../BookmarkButton";
 
 
-function Modal ({ item, bookmark, modalStateChange, bookmarkStateChange}) {
+function Modal (props) {
 
+    const { item, bookmark, modalStateChange, bookmarkStateChange } = props;
 
     return (
         <Background>
             <Content onClick={modalStateChange}>
                 <img src={(item.type === 'Brand') ? item.brand_image_url : item.image_url} />
                 <ModalCloseButton>&#10005;</ModalCloseButton>
-                <Container>
-                    <BookmarkButton bookmark={bookmark} bookmarkStateChange={bookmarkStateChange} parentComponent='Modal'>&#9733;</BookmarkButton>
+                <ItemInfoViewer>
+                    <BookmarkButton bookmark={bookmark} bookmarkStateChange={bookmarkStateChange} parentComponent='Modal' />
                     <Title>{(item.type === 'Category') && '# '}{(item.type === 'Brand') ? item.brand_name : item.title}</Title>
-                </Container>
+                </ItemInfoViewer>
             </Content>
         </Background>
     )
@@ -40,11 +40,9 @@ const Background = styled.div`
 
 const Content = styled.div`
     position: relative;
-    
     z-index: 100;
     width: 744px;
     height: 480px;
-    
     border-radius: 12px;
 
     & img {
@@ -65,7 +63,7 @@ const ModalCloseButton = styled.div`
     }
 `
 
-const Container = styled.div`
+const ItemInfoViewer = styled.div`
     position: absolute;
     transform: translate(10px, -50px);
     padding: 0px;
@@ -76,15 +74,9 @@ const Container = styled.div`
     gap: 5px;
 `
 
-// const BookmarkButton = styled.div`
-
-//     color: ${(props) => (props.bookmark) ? '#FFD361;' : '#DFDFDF;'};
-//     font-size: 1.5rem;
-//     cursor: pointer;
-// `
-
 const Title = styled.div`
     color: white;
     font-weight: bolder;
     font-size: 1.5rem;
 `
+

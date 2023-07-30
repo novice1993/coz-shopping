@@ -1,19 +1,27 @@
 import { styled } from "styled-components";
-
+import { toast } from "react-toastify";
+import starYellow from '../../img/bookmark-on.png';
+import starGray from '../../img/bookmark-off.png';
 
 const BookmarkButton = ({ parentComponent, bookmark, bookmarkStateChange }) => {
 
-    const changeBookmarkState = () => {
-        bookmark ? bookmarkStateChange(false) : bookmarkStateChange(true)
+    const notifyToastMessage = (state) => {
+        const toastMessage = state ? '상품이 북마크에 추가 되었습니다' : '상품이 북마크에서 제거 되었습니다.';
+        toast(toastMessage, {closeButton: false, icon: <img src={state ? starYellow : starGray}/>});
     }
-    
-    
-    if(parentComponent === 'ItemViewerBox'){
+
+    const changeBookmarkState = (state) => {
+        state = !bookmark;
+        bookmarkStateChange(state);
+        notifyToastMessage(state);
+    }
+
+    if(parentComponent === 'ItemInfoBox'){
         return (
             <ButtonInItemList
             onClick={changeBookmarkState}
             bookmark={bookmark}>
-                &#9733;
+                <img src={bookmark ? starYellow : starGray}/>
             </ButtonInItemList>
         )
     }
@@ -23,6 +31,7 @@ const BookmarkButton = ({ parentComponent, bookmark, bookmarkStateChange }) => {
             <ButtonInModal
             onClick={changeBookmarkState}
             bookmark={bookmark}>
+                {/* <img src={bookmark ? starYellow : starGray}/> */}
                 &#9733;
             </ButtonInModal>
         )
@@ -46,4 +55,5 @@ const ButtonInModal = styled.div`
     color: ${(props) => (props.bookmark) ? '#FFD361;' : '#DFDFDF;'};
     font-size: 1.5rem;
     cursor: pointer;
+
 `

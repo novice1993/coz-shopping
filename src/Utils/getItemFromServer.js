@@ -1,7 +1,7 @@
-const getItemFromServer = async () => {
+const getItemFromServer = async (count) => {
 
     try {
-      const res = await fetch('http://cozshopping.codestates-seb.link/api/v1/products?count=8')
+      const res = await fetch(`http://cozshopping.codestates-seb.link/api/v1/products?count=${count}`)
       const itemListData = await res.json();
       
       return itemListData;

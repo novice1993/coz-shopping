@@ -1,8 +1,32 @@
 import { useState } from "react";
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
-import Menu from "./Menu";
-import LogoImg from '../img/logo.jpg'
+import Menu from "../HeaderMenu";
+import LogoImg from '../../img/logo.jpg'
+
+
+function Header () {
+
+    const [menu, setMenu] = useState(false); // 햄버거 버튼 클릭 -> 메뉴바 on/off
+
+    return (
+        <Container>
+            <LogoNameContainer>
+                <Link to='/' className="Link">
+                    <Logo src={LogoImg}/>
+                    <Name>COZ Shopping</Name>
+                </Link>
+            </LogoNameContainer>
+            <MenuContainer>
+                <MenuButton onClick={() => setMenu(!menu)}>&#9776;</MenuButton>
+                {(menu) && <Menu />}
+            </MenuContainer>
+        </Container>
+    )
+}
+
+export default Header;
+
 
 const Container = styled.nav`
  height: 100%;
@@ -52,25 +76,3 @@ const MenuButton = styled.span`
     cursor: pointer;
  }
 `
-
-function Header () {
-
-    const [menu, setMenu] = useState(false); // 햄버거 버튼 클릭 -> 메뉴바 on/off
-
-    return (
-        <Container>
-            <LogoNameContainer>
-                <Link to='/' className="Link">
-                    <Logo src={LogoImg}/>
-                    <Name>COZ Shopping</Name>
-                </Link>
-            </LogoNameContainer>
-            <MenuContainer>
-                <MenuButton onClick={() => setMenu(!menu)}>&#9776;</MenuButton>
-                {(menu) && <Menu />}
-            </MenuContainer>
-        </Container>
-    )
-}
-
-export default Header;

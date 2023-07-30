@@ -1,15 +1,15 @@
 import { styled } from "styled-components"
-import BookmarkButton from "./BookmarkButton"
+import BookmarkButton from "../BookmarkButton"
 
-const ItemViewerBox = ({ item, bookmark,  bookmarkStateChange, modalStateChange }) => {
+const ItemInfoBox = ({ item, bookmark,  bookmarkStateChange, modalStateChange }) => {
 
     return (
 
-        <>
+        <> 
         {(item.type === 'Product') && ( // product type
             <Container>
                 <Img src={item.image_url} onClick={modalStateChange}/>
-                <BookmarkButton bookmark={bookmark} bookmarkStateChange={bookmarkStateChange} parentComponent='ItemViewerBox'/>
+                <BookmarkButton bookmark={bookmark} bookmarkStateChange={bookmarkStateChange} parentComponent='ItemInfoBox'/>
                 <ContentContainer>
                     <Title>{item.title}</Title>
                     <DiscountPer>{(item.discountPercentage !== null) && `${item.discountPercentage}%`}</DiscountPer>
@@ -18,27 +18,30 @@ const ItemViewerBox = ({ item, bookmark,  bookmarkStateChange, modalStateChange 
             </Container>
         )}
 
+
         {(item.type === 'Category') && ( // Category type
             <Container>
                 <Img src={item.image_url} onClick={modalStateChange}/>
-                <BookmarkButton bookmark={bookmark} bookmarkStateChange={bookmarkStateChange} parentComponent='ItemViewerBox'/>
+                <BookmarkButton bookmark={bookmark} bookmarkStateChange={bookmarkStateChange} parentComponent='ItemInfoBox'/>
                 <Title># {item.title}</Title>
             </Container>
         )}
         
+
         {(item.type === 'Exhibition') && ( // Exhibition type
             <Container>
                 <Img src={item.image_url} onClick={modalStateChange}/>
-                <BookmarkButton bookmark={bookmark} bookmarkStateChange={bookmarkStateChange} parentComponent='ItemViewerBox'/>
+                <BookmarkButton bookmark={bookmark} bookmarkStateChange={bookmarkStateChange} parentComponent='ItemInfoBox'/>
                 <Title>{item.title}</Title>
                 <SubTitle>{item.sub_title}</SubTitle>
             </Container>
         )}
         
+        
         {(item.type === 'Brand') && ( // Brand type
             <Container>
                 <Img src={item.brand_image_url} onClick={modalStateChange}/>
-                <BookmarkButton bookmark={bookmark} bookmarkStateChange={bookmarkStateChange} parentComponent='ItemViewerBox'/>
+                <BookmarkButton bookmark={bookmark} bookmarkStateChange={bookmarkStateChange} parentComponent='ItemInfoBox'/>
                 <ContentContainer>
                     <Title>{item.brand_name}</Title>
                     <InterestedCustomer>관심고객수</InterestedCustomer>
@@ -47,19 +50,18 @@ const ItemViewerBox = ({ item, bookmark,  bookmarkStateChange, modalStateChange 
             </Container>
             
         )}
-
-    
         </>
 
     )
 
 }
 
-export default ItemViewerBox;
+export default ItemInfoBox;
 
 
 // 전체 type 공통 적용
 const Container = styled.div`
+
     margin-left: 45px;
     margin-right: 45px;
     margin-top: 10px;

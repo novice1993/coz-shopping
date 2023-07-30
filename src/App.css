@@ -20,15 +20,7 @@ header {
   position: sticky;
 }
 
-main {
-  flex: 8 0 0;
-}
-
 footer {
   flex: 0.7 0 0;
 }
-
-/* div {
-  border: 1px solid black;
-} */
 

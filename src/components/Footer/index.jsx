@@ -1,5 +1,18 @@
 import { styled } from "styled-components";
 
+function Footer () {
+
+    return (
+        <Container>
+            <Content1>개인정보 처리방침 | 이용 약관</Content1>
+            <Content2>All rights reserved @ Codestates</Content2>
+        </Container>
+    )
+}
+
+export default Footer;
+
+
 const Container = styled.div`
     height: 100%;
     display: flex;
@@ -21,16 +34,3 @@ const Content2 = styled.div`
     flex: 1 0 0;
     text-align: center;
 `
-
-
-function Footer () {
-
-    return (
-        <Container>
-            <Content1>개인정보 처리방침 | 이용 약관</Content1>
-            <Content2>All rights reserved @ Codestates</Content2>
-        </Container>
-    )
-}
-
-export default Footer;

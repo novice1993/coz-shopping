@@ -1,16 +1,16 @@
 import { styled } from "styled-components";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import ItemList from "../components/ItemList";
-import BookmarkList from "../components/BookmarkList";
+import ItemList from "../components/MainPage-ItemList";
+import BookmarkList from "../components/MainPage-BookmarkList";
 
 
 function MainPage () {
 
     return (
-      <>
+      <TotalContainer>
       <header>
-        <Header />
+        <Header/>
       </header>
       <Main>
         <Container> <ItemList/> </Container>
@@ -19,15 +19,23 @@ function MainPage () {
       <footer>
         <Footer />
       </footer>
-      </>
+      </TotalContainer>
     );
   }
   
   export default MainPage;
 
+const TotalContainer = styled.div`
+  width: 100vw;
+  height: 100vh;
 
-// 컴포넌트 생성
+  display: flex;
+  flex-direction: column;
+`
+
 const Main = styled.main`
+  flex: 8 0 0;
+
   display: flex;
   flex-direction: column;
 `

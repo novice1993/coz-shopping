@@ -6,7 +6,7 @@ import useGetFilterdItemList from "../hooks/useGetFilterdItemList";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import ItemFilter from "../components/ItemFilter";
-import Item from "../components/Item";
+import ItemViewer from "../components/ItemViewer";
 
 
 function BookmarkListPage () {
@@ -24,7 +24,7 @@ function BookmarkListPage () {
                 <ItemFilter itemFilterChange={itemFilterChange}/>
                 <ItemBox>
                     {filterdItemList.map((item) => {
-                        return (<Item key={item.id} item={item}/>)
+                        return (<ItemViewer key={item.id} item={item}/>)
                     })}
                 </ItemBox>
             </Main>
@@ -38,7 +38,6 @@ function BookmarkListPage () {
 export default BookmarkListPage;
 
 
-// 컴포넌트 생성
 const Container = styled.div`
     width: 100vw;
     height: 100vh;

@@ -11,7 +11,7 @@ function Modal (props :InfoBoxAndModal) {
     return (
         <Background>
             <Content onClick={modalStateChange}>
-                <img src={(item.type === 'Brand') ? item.brand_image_url : item.image_url} />
+                <img src={(item.type === 'Brand') ? item.brand_image_url as string : item.image_url as string} />
                 <ModalCloseButton>&#10005;</ModalCloseButton>
                 <ItemInfoViewer>
                     <BookmarkButton bookmark={bookmark} bookmarkStateChange={bookmarkStateChange} parentComponent='Modal' />

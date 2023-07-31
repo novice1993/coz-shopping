@@ -2,11 +2,11 @@ import { styled } from "styled-components";
 import FilterIcon from "./FilterIcon";
 import FilterChange from "../../models/FilterChange";
 
-import allImg from 'images/all.jpg';
-import productImg from 'images/product.jpg';
-import categoryImg from 'images/category.png';
-import exhibitionImg from 'images/exhibition.png';
-import brandImg from 'images/brand.png';
+import allImg from '../../asset/FilterImg-All.jpg';
+import productImg from '../../asset/FilterImg-Product.jpg';
+import categoryImg from '../../asset/FilterImg-Category.png'
+import exhibitionImg from '../../asset/FilterImg-Exhibition.png';
+import brandImg from '../../asset/FilterImg-Brand.png';
 
 interface OwnProps {
     itemFilterChange: FilterChange,

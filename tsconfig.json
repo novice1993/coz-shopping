@@ -21,9 +21,9 @@
       "isolatedModules": true,
       "noEmit": true,
       "jsx": "react-jsx",
-      "paths": {
-        "images/*" : ["./src/asset/*"],
-      }
+      // "paths": {
+      //   "images/*" : ["./src/asset/*"],
+      // }
     },
     "include": [
       "src/**/*"

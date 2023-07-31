@@ -9,7 +9,7 @@ const useInfiniteScroll = () => {
     const observerTargetRef = useRef(null);
     const dispatch = useDispatch();
 
-    const callback = (entries) => {
+    const callback = (entries: IntersectionObserverEntry[]) => {
 
         entries.forEach((entry) => {
 

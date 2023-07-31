@@ -1,12 +1,13 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import ItemProps from "../models/ItemProps";
 
+const initialState: ItemProps[] = [];
 
 const itemSlice = createSlice({
     name: 'itemList',
-    initialState: [],
+    initialState: initialState,
     reducers: {
-        addItemList: (state: ItemProps[], action: PayloadAction<ItemProps[]>) => {
+        addItemList: (state: ItemProps[], action: PayloadAction<ItemProps[]>): ItemProps[] => {
 
             const notOverlappingItem = action.payload.filter((item: ItemProps) => { // 데이터 중복검사 시행
 

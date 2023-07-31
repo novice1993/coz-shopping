@@ -1,14 +1,16 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import ItemProps from "../models/ItemProps";
 
-const previousAddedBookmarkList = JSON.parse(localStorage.getItem('bookmark'));
+
+const previousAddedBookmarkList = JSON.parse(localStorage.getItem('bookmark') as string);
+const initialState: ItemProps[] = previousAddedBookmarkList !== null ? previousAddedBookmarkList : [];
 
 const bookmarkSlice = createSlice({
     name: 'bookmarkList',
-    initialState: previousAddedBookmarkList !== null ? previousAddedBookmarkList : [],
+    initialState: initialState,
     reducers: {
-        addBookmark: (state, action) => [action.payload, ...state],
-        deleteBookmark: (state, action) => state.filter((item: ItemProps) => item.id !== action.payload.id)
+        addBookmark: (state: ItemProps[], action: PayloadAction<ItemProps>): ItemProps[] => [action.payload, ...state],
+        deleteBookmark: (state: ItemProps[], action: PayloadAction<ItemProps>): ItemProps[] => state.filter((item: ItemProps) => item.id !== action.payload.id)
     }
 })
 

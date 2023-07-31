@@ -9,27 +9,25 @@ const ItemInfoBox = (props: InfoBoxAndModal) => {
     const { item, bookmark,  bookmarkStateChange, modalStateChange } = props;
     
 
-    
-
     return (
 
         <> 
         {(item.type === 'Product') && ( // product type
             <Container>
-                <Img src={item.image_url} onClick={modalStateChange}/>
+                <Img src={item.image_url as string} onClick={modalStateChange}/>
                 <BookmarkButton bookmark={bookmark} bookmarkStateChange={bookmarkStateChange} parentComponent='ItemInfoBox'/>
                 <ContentContainer>
                     <Title>{item.title}</Title>
                     <DiscountPer>{(item.discountPercentage !== null) && `${item.discountPercentage}%`}</DiscountPer>
                 </ContentContainer>
-                <Price>{parseInt(item.price).toLocaleString()}원</Price>
+                <Price>{parseInt(item.price as string).toLocaleString()}원</Price>
             </Container>
         )}
 
 
         {(item.type === 'Category') && ( // Category type
             <Container>
-                <Img src={item.image_url} onClick={modalStateChange}/>
+                <Img src={item.image_url as string} onClick={modalStateChange}/>
                 <BookmarkButton bookmark={bookmark} bookmarkStateChange={bookmarkStateChange} parentComponent='ItemInfoBox'/>
                 <Title># {item.title}</Title>
             </Container>
@@ -38,7 +36,7 @@ const ItemInfoBox = (props: InfoBoxAndModal) => {
 
         {(item.type === 'Exhibition') && ( // Exhibition type
             <Container>
-                <Img src={item.image_url} onClick={modalStateChange}/>
+                <Img src={item.image_url as string} onClick={modalStateChange}/>
                 <BookmarkButton bookmark={bookmark} bookmarkStateChange={bookmarkStateChange} parentComponent='ItemInfoBox'/>
                 <Title>{item.title}</Title>
                 <SubTitle>{item.sub_title}</SubTitle>
@@ -48,13 +46,13 @@ const ItemInfoBox = (props: InfoBoxAndModal) => {
         
         {(item.type === 'Brand') && ( // Brand type
             <Container>
-                <Img src={item.brand_image_url} onClick={modalStateChange}/>
+                <Img src={item.brand_image_url as string} onClick={modalStateChange}/>
                 <BookmarkButton bookmark={bookmark} bookmarkStateChange={bookmarkStateChange} parentComponent='ItemInfoBox'/>
                 <ContentContainer>
                     <Title>{item.brand_name}</Title>
                     <InterestedCustomer>관심고객수</InterestedCustomer>
                 </ContentContainer>
-                <Followers>{item.follower.toLocaleString()}</Followers>
+                <Followers>{(item.follower as number).toLocaleString()}</Followers>
             </Container>
             
         )}

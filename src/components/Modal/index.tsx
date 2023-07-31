@@ -1,15 +1,17 @@
 import { styled } from "styled-components";
 import BookmarkButton from "../BookmarkButton";
 
+import InfoBoxAndModal from "../../models/InfoBoxAndModal";
 
-function Modal (props) {
+
+function Modal (props :InfoBoxAndModal) {
 
     const { item, bookmark, modalStateChange, bookmarkStateChange } = props;
 
     return (
         <Background>
             <Content onClick={modalStateChange}>
-                <img src={(item.type === 'Brand') ? item.brand_image_url : item.image_url} />
+                <img src={(item.type === 'Brand') ? item.brand_image_url as string : item.image_url as string} />
                 <ModalCloseButton>&#10005;</ModalCloseButton>
                 <ItemInfoViewer>
                     <BookmarkButton bookmark={bookmark} bookmarkStateChange={bookmarkStateChange} parentComponent='Modal' />

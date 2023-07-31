@@ -1,11 +1,15 @@
 import { useState } from "react";
 import useManageBookmarkList from "../../hooks/useManageBookmarkList";
+import ItemProps from "../../models/ItemProps";
 
 import Modal from "../Modal";
 import ItemInfoBox from "./ItemInfoBox";
 
+interface OwnProps {
+    item: ItemProps
+}
 
-function ItemViewer ({ item }) {
+function ItemViewer ({ item }: OwnProps) {
 
     const { bookmark, bookmarkStateChange } = useManageBookmarkList(item);
     const [ modalState, setModalState ] = useState(false);

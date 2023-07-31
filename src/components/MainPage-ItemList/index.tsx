@@ -13,7 +13,7 @@ function ItemList () {
             <Main>
             <Title>{sectionTitle}</Title>
             <ItemBox>
-                {itemList.map((item, idx) => (idx < 4) && <ItemViewer style ={{ flex : `0 0 25%`}} key={item.id} item={item}/>)}
+                {itemList.map((item, idx) => (idx < 4) && <ItemViewer key={item.id} item={item}/>)}
             </ItemBox>
             </Main>
         </Container>

@@ -1,19 +1,27 @@
 import { styled } from "styled-components";
 import { toast } from "react-toastify";
-import starYellow from '../../img/bookmark-on.png';
-import starGray from '../../img/bookmark-off.png';
+import starYellow from '../../asset/bookmark-on.png';
+import starGray from '../../asset/bookmark-off.png';
+import React from "react";
 
-const BookmarkButton = ({ parentComponent, bookmark, bookmarkStateChange }) => {
+interface OwnProps {
+    parentComponent? : string,
+    bookmark : boolean,
+    bookmarkStateChange: (state:boolean) => void
+}
 
-    const notifyToastMessage = (state) => {
+const BookmarkButton = (props: OwnProps) => {
+
+    const { parentComponent, bookmark, bookmarkStateChange } = props;
+
+    const notifyToastMessage = (state: boolean) => {
         const toastMessage = state ? '상품이 북마크에 추가 되었습니다' : '상품이 북마크에서 제거 되었습니다.';
         toast(toastMessage, {closeButton: false, icon: <img src={state ? starYellow : starGray}/>});
     }
 
-    const changeBookmarkState = (state) => {
-        state = !bookmark;
-        bookmarkStateChange(state);
-        notifyToastMessage(state);
+    const changeBookmarkState = () => {
+        bookmarkStateChange(!bookmark);
+        notifyToastMessage(!bookmark);
     }
 
     if(parentComponent === 'ItemInfoBox'){
@@ -41,7 +49,11 @@ const BookmarkButton = ({ parentComponent, bookmark, bookmarkStateChange }) => {
 export default BookmarkButton;
 
 
-const ButtonInItemList = styled.div`
+interface ButtonProps {
+    bookmark: boolean,
+}
+
+const ButtonInItemList = styled.div<ButtonProps>`
     position: absolute;
     z-index: 50;
     transform: translate(227px, -48px);
@@ -50,7 +62,7 @@ const ButtonInItemList = styled.div`
     cursor: pointer;
 `
 
-const ButtonInModal = styled.div`
+const ButtonInModal = styled.div<ButtonProps>`
 
     color: ${(props) => (props.bookmark) ? '#FFD361;' : '#DFDFDF;'};
     font-size: 1.5rem;

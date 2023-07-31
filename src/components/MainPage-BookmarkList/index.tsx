@@ -1,11 +1,11 @@
 import { styled } from "styled-components";
 import ItemViewer from "../ItemViewer";
 import { useSelector } from "react-redux";
-
+import StateProps from "../../models/StateProps";
 
 function BookmarkList () {
 
-    const bookmarkList = useSelector(state => state.bookmarkList);
+    const bookmarkList = useSelector((state: StateProps) => state.bookmarkList);
 
     return (
         <Container>

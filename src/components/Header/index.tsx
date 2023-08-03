@@ -4,21 +4,28 @@ import { Link } from "react-router-dom";
 import Menu from "../HeaderMenu";
 import LogoImg from '../../asset/logo.jpg'
 
+const name = 'COZ Shopping'
+
 
 function Header () {
 
-    const [menu, setMenu] = useState(false); // 햄버거 버튼 클릭 -> 메뉴바 on/off
+    const [menu, setMenu] = useState(false);
+
+    const setHeaderMenu = (): void => {
+        setMenu(!menu);
+    }
+
 
     return (
         <Container>
             <LogoNameContainer>
                 <Link to='/' className="Link">
                     <Logo src={LogoImg}/>
-                    <Name>COZ Shopping</Name>
+                    <Name>{name}</Name>
                 </Link>
             </LogoNameContainer>
             <MenuContainer>
-                <MenuButton onClick={() => setMenu(!menu)}>&#9776;</MenuButton>
+                <MenuButton onClick={setHeaderMenu}>&#9776;</MenuButton>
                 {(menu) && <Menu />}
             </MenuContainer>
         </Container>
@@ -29,14 +36,14 @@ export default Header;
 
 
 const Container = styled.nav`
- height: 100%;
- border-bottom: 1px solid rgba(184, 184, 184, 0.89);
- box-shadow: 0px 2px 15px rgba(184, 184, 184, 0.89);
 
- display: flex;
- flex-direction: row;
- justify-content: space-between;
- align-items: center;
+    height: 100%;
+    border-bottom: 1px solid rgba(184, 184, 184, 0.89);
+    box-shadow: 0px 2px 15px rgba(184, 184, 184, 0.89);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 `
 
 const LogoNameContainer = styled.div`
@@ -66,7 +73,6 @@ const Name = styled.span`
 const MenuContainer = styled.div`
     z-index: 90;
     margin-right: 50px;
-    /* margin-bottom: 5px; */
 `
 
 const MenuButton = styled.span`

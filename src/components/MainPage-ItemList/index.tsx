@@ -24,6 +24,7 @@ export default ItemList;
 
 
 const Container = styled.div`
+
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -31,6 +32,7 @@ const Container = styled.div`
 `
 
 const Main = styled.main`
+
     display: flex;
     flex-direction: column;
     margin-top: 20px;
@@ -38,17 +40,17 @@ const Main = styled.main`
 `
 
 const Title = styled.h2`
+
     flex: 1 0 0;
     padding-top: 10px;
     padding-left: 50px;
-
     font-weight: bolder;
     font-size: 1.2rem;
 `
 
 const ItemBox = styled.div`
-    flex: 9 0 0;
 
+    flex: 9 0 0;
     display: flex;
     flex-direction: row;
     justify-content: center;

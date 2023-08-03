@@ -7,16 +7,15 @@ function Menu () {
     return (
         <Container>
             <Arrow />
-            <Box>
-                <Content>OOO님, 안녕하세요!</Content>
-                <Content>
+            <MenuBox>
+                <MenuContent>OOO님, 안녕하세요!</MenuContent>
+                <MenuContent>
                     <Link to='/products/list' className="Link"><img src={itemImg}/> 상품리스트 페이지</ Link>
-                </Content>
-                <Content>
+                </MenuContent>
+                <MenuContent>
                     <Link to='/bookmark' className="Link">&#9734; 북마크 페이지</Link>
-                </Content>
-            </Box>
-            
+                </MenuContent>
+            </MenuBox>
         </Container>
     )
 }
@@ -25,10 +24,12 @@ export default Menu;
 
 
 const Container = styled.div`
+
     position: relative;
 `
 
 const Arrow = styled.div`
+
     position: absolute;
     transform: translate(15px);
     right: 15%;
@@ -37,7 +38,8 @@ const Arrow = styled.div`
     border-bottom: 30px solid white; 
 `
 
-const Box = styled.div`
+const MenuBox = styled.div`
+
     display: flex;
     flex-direction: column;
     position: absolute;
@@ -50,7 +52,8 @@ const Box = styled.div`
     color: black;
 `
 
-const Content = styled.div`
+const MenuContent = styled.div`
+
     flex: 1 0 0;
     position: relative;
     z-index: 400;

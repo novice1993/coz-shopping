@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
-import { addBookmark, deleteBookmark } from "../redux/Bookmark-Reducer";
+import { addBookmark, deleteBookmark } from "../reducer/Bookmark-Reducer";
 
 import StateProps from "../models/StateProps";
 import ItemProps from "../models/ItemProps";

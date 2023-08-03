@@ -26,6 +26,7 @@ export default Modal;
 
 
 const Background = styled.div`
+
     position: fixed;
     z-index: 99;
     top: 0;
@@ -41,6 +42,7 @@ const Background = styled.div`
 `
 
 const Content = styled.div`
+
     position: relative;
     z-index: 100;
     width: 744px;
@@ -55,6 +57,7 @@ const Content = styled.div`
 `
 
 const ModalCloseButton = styled.div`
+
     position: absolute;
     transform: translate(700px, -470px);
     color: rgba(255, 240, 240, 1);
@@ -66,6 +69,7 @@ const ModalCloseButton = styled.div`
 `
 
 const ItemInfoViewer = styled.div`
+
     position: absolute;
     transform: translate(10px, -50px);
     padding: 0px;
@@ -77,6 +81,7 @@ const ItemInfoViewer = styled.div`
 `
 
 const Title = styled.div`
+
     color: white;
     font-weight: bolder;
     font-size: 1.5rem;

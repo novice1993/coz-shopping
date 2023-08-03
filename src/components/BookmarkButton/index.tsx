@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 import { toast } from "react-toastify";
 import starYellow from '../../asset/bookmark-on.png';
 import starGray from '../../asset/bookmark-off.png';
-import React from "react";
+
 
 interface OwnProps {
     parentComponent? : string,
@@ -39,7 +39,6 @@ const BookmarkButton = (props: OwnProps) => {
             <ButtonInModal
             onClick={changeBookmarkState}
             bookmark={bookmark}>
-                {/* <img src={bookmark ? starYellow : starGray}/> */}
                 &#9733;
             </ButtonInModal>
         )
@@ -54,6 +53,7 @@ interface ButtonProps {
 }
 
 const ButtonInItemList = styled.div<ButtonProps>`
+
     position: absolute;
     z-index: 50;
     transform: translate(227px, -48px);

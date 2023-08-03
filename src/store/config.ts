@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { bookmarkReducer } from "./Bookmark-Reducer";
-import { itemReducer } from "./Item-Reducer";
+import { bookmarkReducer } from "../reducer/Bookmark-Reducer";
+import { itemReducer } from "../reducer/Item-Reducer";
 
 const store = configureStore({
     reducer:{

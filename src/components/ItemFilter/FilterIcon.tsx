@@ -26,6 +26,7 @@ export default FilterIcon;
 
 
 const ButtonContainer = styled.div`
+
     margin: 10px;
 
     &:hover {
@@ -34,6 +35,7 @@ const ButtonContainer = styled.div`
 `
 
 const Img = styled.img`
+
     width: 82px;
     height: 82px;
     border: 1px;
@@ -41,5 +43,6 @@ const Img = styled.img`
 `
 
 const Text = styled.div`
+
     text-align: center;
 `

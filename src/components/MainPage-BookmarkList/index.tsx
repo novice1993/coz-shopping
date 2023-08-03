@@ -3,6 +3,9 @@ import ItemViewer from "../ItemViewer";
 import { useSelector } from "react-redux";
 import StateProps from "../../models/StateProps";
 
+const sectionTitle = '북마크 리스트'
+const emptyMessage = '상품이 없습니다'
+
 function BookmarkList () {
 
     const bookmarkList = useSelector((state: StateProps) => state.bookmarkList);
@@ -10,13 +13,13 @@ function BookmarkList () {
     return (
         <Container>
             <Main>
-                <Title>북마크 리스트</Title>
+                <Title>{sectionTitle}</Title>
                 <ItemBox>
                     { (bookmarkList.length !== 0) ?
                     bookmarkList.map((item, idx) => {
                         return (idx < 4) && <ItemViewer key={item.id} item={item}/>
                     })
-                    : <Emptybox>상품이 없습니다</Emptybox>
+                    : <Emptybox>{emptyMessage}</Emptybox>
                     }
                 </ItemBox>
             </Main>
@@ -27,6 +30,7 @@ function BookmarkList () {
 export default BookmarkList;
 
 const Container = styled.div`
+
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -34,6 +38,7 @@ const Container = styled.div`
 `
 
 const Main = styled.main`
+
     display: flex;
     flex-direction: column;
     margin-top: 20px;
@@ -41,6 +46,7 @@ const Main = styled.main`
 `
 
 const Title = styled.h2`
+
     flex: 1 0 0;
     padding-top: 10px;
     padding-left: 50px;
@@ -50,16 +56,16 @@ const Title = styled.h2`
 `
 
 const ItemBox = styled.div`
-    flex: 9 0 0;
 
+    flex: 9 0 0;
     display: flex;
     flex-direction: row;
     justify-content: center;
     flex-wrap: wrap;
 `
 
-//
 const Emptybox = styled.div`
+
     display: flex;
     flex-direction: row;
     justify-content: center;

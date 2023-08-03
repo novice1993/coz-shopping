@@ -1,7 +1,8 @@
 import { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
-import { addItemList } from "../redux/Item-Reducer";
+import { addItemList } from "../reducer/Item-Reducer";
 import getItemFromServer from "../utils/getItemFromServer";
+
 
 const useInfiniteScroll = () => {
 
@@ -29,7 +30,7 @@ const useInfiniteScroll = () => {
     }
 
     const options = {
-        threshold: 0.2,
+        threshold: 0.9,
     }
 
     const observer = new IntersectionObserver(callback, options);

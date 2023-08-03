@@ -25,6 +25,8 @@ function ItemListPage () {
 
         if (observerTargetRef.current) {
             observer.observe(observerTargetRef.current);
+            window.scrollTo(0, -150);
+            
           }
       
           return () => {
@@ -65,6 +67,7 @@ export default ItemListPage;
 
 
 const Container = styled.div`
+
     width: 100vw;
     height: 100vh;
 
@@ -73,31 +76,31 @@ const Container = styled.div`
 `
 
 const HeaderBox = styled.header`
+
     flex: 1 0 0;
 `
 
 const FooterBox = styled.header`
-    flex: 0.7 0 0;
+
+    flex: 1 0 0;
 `
 
 const Main = styled.main`
-    flex: 8 0 0;
 
+    flex: 8 0 0;
     display: flex;
     flex-direction: column;
 `
 
 const ItemBoxContainer = styled.section`
+
     display: flex;
     flex-direction: row;
     justify-content: center;
-    
 `
 
 const ItemBox = styled.div`
 
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
 `

@@ -26,21 +26,22 @@ function MainPage () {
   export default MainPage;
 
 const TotalContainer = styled.div`
+
   width: 100vw;
   height: 100vh;
-
   display: flex;
   flex-direction: column;
 `
 
 const Main = styled.main`
-  flex: 8 0 0;
 
+  flex: 8 0 0;
   display: flex;
   flex-direction: column;
 `
 
 const Container = styled.div`
+
   flex: 1 0 0;
   padding: 0px;
 `

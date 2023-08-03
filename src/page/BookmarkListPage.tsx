@@ -24,11 +24,13 @@ function BookmarkListPage () {
             </HeaderBox>
             <Main>
                 <ItemFilter itemFilterChange={itemFilterChange}/>
-                <ItemBox>
-                    {filterdItemList.map((item: ItemProps) => {
-                        return (<ItemViewer key={item.id} item={item}/>)
-                    })}
-                </ItemBox>
+                <ItemBoxContainer>
+                    <ItemBox>
+                        {filterdItemList.map((item: ItemProps) => {
+                            return (<ItemViewer key={item.id} item={item}/>)
+                        })}
+                    </ItemBox>
+                </ItemBoxContainer>
             </Main>
             <FooterBox>
                 <Footer />
@@ -41,6 +43,7 @@ export default BookmarkListPage;
 
 
 const Container = styled.div`
+
     width: 100vw;
     height: 100vh;
     
@@ -49,26 +52,31 @@ const Container = styled.div`
 `
 
 const HeaderBox = styled.header`
+
     flex: 1 0 0;
 `
 
 const FooterBox = styled.div`
+
     flex: 0.7 0 0;
 `
 
 const Main = styled.main`
-    flex: 8 0 0;
 
+    flex: 8 0 0;
     display: flex;
     flex-direction: column;
 `
 
-const ItemBox = styled.div`
-    width: 100%;
-    height: 100%;
+const ItemBoxContainer = styled.section`
 
     display: flex;
     flex-direction: row;
     justify-content: center;
-    flex-wrap: wrap;
+`
+
+const ItemBox = styled.div`
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
 `

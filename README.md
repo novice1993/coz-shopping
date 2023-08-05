@@ -1,12 +1,12 @@
 # 🎁 COZ Shopping
 > TypeScript와 React 라이브러리를 사용해서 구현한 쇼핑몰 사이트입니다. 
+* 참여인원 : 1명
 * [요구사항 명세서](https://codestates.notion.site/codestates/S4-05073c7f88a942c0ad5e5fcdd68c1dec)
 * [디자인 시안](https://www.figma.com/file/TfWAvMXegGEJiS3etqOSfs/FE-S4-project?node-id=0%3A1&t=cHu4rWaqJ0c5CTVV-1)
 
 ## 🔧 기술 스택
 
 ### 🔨 Front-End
-<p>
 
 <img src="https://img.shields.io/badge/typescript-3178C6?style=flat&logo=typescript&logoColor=white"/>
     <img src="https://img.shields.io/badge/react-61DAFB?style=flat&logo=react&logoColor=white"/>
@@ -14,9 +14,6 @@
  <img src="https://img.shields.io/badge/redux-764ABC?style=flat&logo=redux&logoColor=white"/>
  
   <img src="https://img.shields.io/badge/styledcomponents-DB7093?style=flat&logo=styledcomponents&logoColor=white"/>
-
-
-</P>
 
   
 ## 📁 폴더 구조

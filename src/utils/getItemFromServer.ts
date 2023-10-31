@@ -1,14 +1,14 @@
-const getItemFromServer = async (count: number) => {
+import { apiEndpoint } from "../constants/apiConstant";
 
-    try {
-      const res = await fetch(`http://cozshopping.codestates-seb.link/api/v1/products?count=${count}`)
-      const itemListData = await res.json();
-      
-      return itemListData;
-      
-    } catch (error) {
-      console.error('response error', error);
-    }
-}
+const getItemFromServer = async (count: number) => {
+  try {
+    const res = await fetch(`${apiEndpoint}/api/v1/products?count=${count}`);
+    const itemListData = await res.json();
+
+    return itemListData;
+  } catch (error) {
+    console.error("response error", error);
+  }
+};
 
 export default getItemFromServer;

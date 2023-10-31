@@ -3,6 +3,13 @@
 * 참여인원 : 1명
 * [요구사항 명세서](https://codestates.notion.site/codestates/S4-05073c7f88a942c0ad5e5fcdd68c1dec)
 * [디자인 시안](https://www.figma.com/file/TfWAvMXegGEJiS3etqOSfs/FE-S4-project?node-id=0%3A1&t=cHu4rWaqJ0c5CTVV-1)
+<br/>
+
+## 🏃‍♂️ 실행 명령어
+* 설치 : npm run install
+* 서버 실행 : npm run server
+* 클라이언트 실행 : npm run start
+<br/>
 
 ## 🔧 기술 스택
 
@@ -13,8 +20,8 @@
 <img src="https://img.shields.io/badge/reactrouter-CA4245?style=flat&logo=reactrouter&logoColor=white"/>
 <img src="https://img.shields.io/badge/redux-764ABC?style=flat&logo=redux&logoColor=white"/>
 <img src="https://img.shields.io/badge/styledcomponents-DB7093?style=flat&logo=styledcomponents&logoColor=white"/>
+<br/>
 
-  
 ## 📁 폴더 구조
 ```
 📦coz-shopping
@@ -42,6 +49,7 @@
  ┣ 📜App.tsx
  ┗ 📜index.tsx
 ```
+<br/>
 
 ## 🖥 구현 이미지
 
